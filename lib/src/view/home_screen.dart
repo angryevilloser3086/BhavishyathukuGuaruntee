@@ -64,9 +64,16 @@ class _HomeScreenState extends State<HomeScreen> {
             InkWell(
                 onTap: () {
                   //Navigator.
+                  if(w<450){
+                    setState(() {
+                    scrollController.animateTo(MediaQuery.of(context).size.height*0.5, duration: Duration(seconds: 2), curve: Curves.bounceOut);
+                  });
+                  }else{
+
                   setState(() {
                     scrollController.animateTo(MediaQuery.of(context).size.height*1.6, duration: Duration(seconds: 2), curve: Curves.bounceOut);
                   });
+                  }
                 },
                 child: btn()),
             Stack(
