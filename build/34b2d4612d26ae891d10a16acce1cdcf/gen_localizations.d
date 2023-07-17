@@ -1,0 +1,1 @@
+ C:\\Users\\SIVARAMAKRISHNA\\STC\\vregistration\\.dart_tool\\flutter_gen\\gen_l10n\\app_localizations_en.dart C:\\Users\\SIVARAMAKRISHNA\\STC\\vregistration\\.dart_tool\\flutter_gen\\gen_l10n\\app_localizations.dart:  C:\\Users\\SIVARAMAKRISHNA\\STC\\vregistration\\l10n.yaml C:\\Users\\SIVARAMAKRISHNA\\STC\\vregistration\\lib/src/localization\\app_en.arb
