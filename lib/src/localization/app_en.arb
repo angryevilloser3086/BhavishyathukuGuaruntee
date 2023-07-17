@@ -1,0 +1,40 @@
+{
+  "appTitle": "vregistration",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "cc": "+{cc}",
+  "@cc": {
+    "description": "otp verify failed",
+    "placeholders": {
+      "cc": {
+        "type": "String",
+        "example": "+91"
+      }
+    }
+  },
+  "registration":"Provide your details here",
+  "vRegister":"Volunteer Registration",
+  "login":"Login",
+  "name":"పేరు / Name",
+  "age":"వయస్సు / Age",
+  "constitution":"అసెంబ్లీ నియోజకవర్గం / AC",
+  "district":"జిల్లా / District",
+  "mandal":"మండలం / Mandal",
+  "address":"చిరునామా / Address",
+  "pinCode":"పిన్ కోడ్ / PIN Code",
+  "demands":"డిమాండ్లు / Demands",
+  "issues":"సమస్యలు / Issues (optional)",
+  "mobileNum":"వాలంటీర్ ఫోన్ నంబర్/ Volunteer Phone Number (required)",
+  "gramaPanchayat":"గ్రామ పంచాయతీ/ GRAMAPANCHAYATI",
+  "mNumberReq":"Phone Number (required)",
+  "verifyCode":"Verify Code (required)",
+  "welcomeToMahaShakti":"Welcome to MahaShakti",
+  "verification":"VERIFICATION",
+  "ssentCode":"Please enter your OTP Number",
+  "submit":"Submit",
+  "tdpReachOut":"Did the TDP cadre reach out to you?",
+  "ifYes":"If yes then Mention their Name and Phone Number",
+  "yes":"Yes",
+  "no":"NO"
+}
