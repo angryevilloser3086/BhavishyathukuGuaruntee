@@ -27,6 +27,7 @@
   "issues":"సమస్యలు / Issues (optional)",
   "mobileNum":"వాలంటీర్ ఫోన్ నంబర్/ Volunteer Phone Number (required)",
   "gramaPanchayat":"గ్రామ పంచాయతీ/ GRAMAPANCHAYATI",
+  "gender":"లింగం / Gender",
   "mNumberReq":"Phone Number (required)",
   "verifyCode":"Verify Code (required)",
   "welcomeToMahaShakti":"Welcome to MahaShakti",
@@ -36,5 +37,7 @@
   "tdpReachOut":"Did the TDP cadre reach out to you?",
   "ifYes":"If yes then Mention their Name and Phone Number",
   "yes":"Yes",
-  "no":"NO"
+  "no":"NO",
+  "male":"Male",
+  "female":"Female"
 }

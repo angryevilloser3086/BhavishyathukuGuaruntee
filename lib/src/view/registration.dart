@@ -10,7 +10,6 @@ import '../provider/registration_provider.dart';
 class RegistratioScreen extends StatelessWidget {
   const RegistratioScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -20,7 +19,6 @@ class RegistratioScreen extends StatelessWidget {
         backgroundColor: Colors.amber[50],
         body: SafeArea(
             child: SingleChildScrollView(
-              controller:Provider.of<RegistrationProvider>(context,listen: false).scrollController,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Consumer<RegistrationProvider>(
@@ -31,6 +29,7 @@ class RegistratioScreen extends StatelessWidget {
               // }
               return Form(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(Strings.of(context).registration,
                         style: GoogleFonts.inter(
@@ -40,6 +39,7 @@ class RegistratioScreen extends StatelessWidget {
                         textAlign: TextAlign.right),
                     AppConstants.h_20,
                     fNamefield1(context, registrationProvider),
+                    genderSet(context, registrationProvider),
                     ageField(context, registrationProvider),
                     selectDistrict(context, registrationProvider),
                     selectConstituency(context, registrationProvider),
@@ -59,6 +59,59 @@ class RegistratioScreen extends StatelessWidget {
           ),
         )),
       ),
+    );
+  }
+
+  genderSet(BuildContext context, RegistrationProvider registrationProvider) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          Strings.of(context).gender,
+          style: GoogleFonts.inter(
+              fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.45,
+          child: Column(
+            children: [
+              ListTileTheme(
+                minVerticalPadding: 0,
+                horizontalTitleGap: 5,
+                child: RadioListTile<int>(
+                  contentPadding: AppConstants.leftRight_5,
+                  value: 1,
+                  groupValue: registrationProvider.selectedGRadio,
+                  activeColor: Colors.black,
+                  onChanged: (int? val) {
+                    registrationProvider.setGender(val!);
+                  },
+                  title: Text(
+                    Strings.of(context).male,
+                    style: GoogleFonts.inter(color: Colors.black, fontSize: 15,fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+              ListTileTheme(
+                horizontalTitleGap: 5,
+                child: RadioListTile<int>(
+                  contentPadding: AppConstants.leftRight_5,
+                  value: 2,
+                  groupValue: registrationProvider.selectedGRadio,
+                  activeColor: Colors.black,
+                  onChanged: (int? val) {
+                    registrationProvider.setGender(val!);
+                  },
+                  title: Text(Strings.of(context).female,
+                      style:
+                          GoogleFonts.inter(color: Colors.black, fontSize: 15,fontWeight: FontWeight.w500)),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -286,8 +339,8 @@ class RegistratioScreen extends StatelessWidget {
                 value!.trim().isEmpty ? 'phone number required' : null,
           ),
         AppConstants.h_10,
-        // if (registrationProvider.enableOTPtext &&
-        //     !registrationProvider.showSubmit)
+        if (registrationProvider.enableOTPtext &&
+            !registrationProvider.showSubmit)
         InkWell(
             onTap: () {
               registrationProvider.otpVerify(

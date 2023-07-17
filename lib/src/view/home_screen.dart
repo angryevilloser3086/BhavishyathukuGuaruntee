@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   PageController pageController =
       PageController(viewportFraction: 0.8, initialPage: 0);
+      ScrollController scrollController =ScrollController();
   int activePage = 0;
   List<String> images = [
     "assets/images/Frame_30_1.png",
@@ -34,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.yellowAccent,
       body: SafeArea(
           child: SingleChildScrollView(
+            controller: scrollController,
         child: Column(
           children: [
             Container(
@@ -62,21 +64,53 @@ class _HomeScreenState extends State<HomeScreen> {
             InkWell(
                 onTap: () {
                   //Navigator.
+                  setState(() {
+                    scrollController.animateTo(MediaQuery.of(context).size.height*1.6, duration: Duration(seconds: 2), curve: Curves.bounceOut);
+                  });
                 },
                 child: btn()),
-           
-            Image.asset(images[0]),
-            Image.asset(images[1]),
-            Image.asset(images[2]),
-            Image.asset(images[3]),
-            Image.asset(images[4]),
-            Image.asset(images[5]),
+            Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Image.asset(images[activePage]),
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: InkWell(
+                    onTap: (){
+                      if(activePage>=0&&activePage<images.length-1) {
+                        setState(() {
+                        setState(() {
+                          activePage--;
+                        });
+                      });
+                      }else{
+                        activePage=images.length-1;
+                      }
+                    },
+                    child: Icon(Icons.arrow_back_ios),
+                  ),
+                ),
+                Align(
+                  alignment: AlignmentDirectional.centerEnd,
+                  child: InkWell(
+                    onTap: (){
+                      if(activePage>=0&&activePage<images.length-1) {
+                        setState(() {
+                        activePage++;
+                      });
+                      }else{
+                        setState(() {
+                          activePage=0;
+                        });
+                      }
+                    },
+                    child: Icon(Icons.arrow_forward_ios),
+                  ),
+                )
+              ],
+            ),
             Image.asset("assets/images/header-website.png1_.png"),
-            // if (w < 580)
-            //   Container(
-            //     height: h * 0.6,
-            //     color: Colors.white,
-            //   )
+           
             SizedBox(
               height: h*1.4,
               width: w/1.5,

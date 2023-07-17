@@ -17,6 +17,8 @@ class RegistrationProvider extends ChangeNotifier {
   String selectedConstituency = '';
   bool showSubmit = false;
   int selectedRadio =0;
+  int selectedGRadio =0;
+  bool isVerified = false;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   TextEditingController name = TextEditingController();
   TextEditingController gpController = TextEditingController();
@@ -29,7 +31,8 @@ class RegistrationProvider extends ChangeNotifier {
   TextEditingController address = TextEditingController();
   TextEditingController pincode = TextEditingController();
   bool showLoader = false;
-  ScrollController scrollController= ScrollController();
+  String gender='';
+  
   String cc = "91";
   String sDistrcts = '';
   String sMandals = '';
@@ -1128,7 +1131,7 @@ class RegistrationProvider extends ChangeNotifier {
   }
 
   setdistritcs(String value) {
-    print(value);
+   // print(value);
     //formKey.currentState!.validate();
     if (value == "Select District") {
       sDistrcts = '';
@@ -1162,21 +1165,21 @@ class RegistrationProvider extends ChangeNotifier {
               smsCode: credential.smsCode!);
         },
         verificationFailed: (FirebaseAuthException e) {
-          print(e);
+         // print(e);
           AppConstants.showSnackBar(context, "Failed to login$e");
         },
         codeSent: (String verficationID, int? resendToken) async {
           //getStorage.write("verificationID", verficationID);
           enableOTPtext = true;
-          print("${resendToken} resendToken");
-          print("$verficationID codesent");
+          // print("${resendToken} resendToken");
+          // print("$verficationID codesent");
           verificatioID = verficationID;
           notifyListeners();
           //showLoader = false;
           // AppConstants.showSnackBar(context, "$verficationID codesent");
         },
         codeAutoRetrievalTimeout: (String verificationID) {
-          print(verificationID);
+          //print(verificationID);
           verificatioID = verificationID;
           // Get.showSnackbar(GetSnackBar(message: verificationID));
           // Get.offAllNamed(Routes.OTPSCREEN);
@@ -1187,7 +1190,8 @@ class RegistrationProvider extends ChangeNotifier {
 
   otpVerify(BuildContext context) async {
     showLoader = true;
-    print("e.toString()");
+    // print("e.toString()");
+    // print(verificatioID);
     try {
       await FirebaseAuth.instance
           .signInWithCredential(PhoneAuthProvider.credential(
@@ -1197,6 +1201,7 @@ class RegistrationProvider extends ChangeNotifier {
           showLoader = false;
           AppConstants.showSnackBar(
               context, "User numer verified Successfully");
+          isVerified =true;
           showSubmit = true;
           FirebaseAuth.instance.signOut();
 
@@ -1207,7 +1212,7 @@ class RegistrationProvider extends ChangeNotifier {
       showLoader = false;
       AppConstants.showSnackBar(context, e.toString());
       verifyPhone(context, phoneTextController.text);
-      print(e.toString());
+     // print(e.toString());
     }
     notifyListeners();
   }
@@ -1240,6 +1245,18 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  setGender(int val){
+    if(val == 1){
+      gender= "Male";
+      selectedGRadio = val;
+
+    }else if(val==2){
+      gender ="Female";
+      selectedGRadio=val;
+    }
+    notifyListeners();
+  }
+
   void registerUser(BuildContext context) {
     showLoader = true;
     RegistrationModel rModel = RegistrationModel(
@@ -1249,11 +1266,10 @@ class RegistrationProvider extends ChangeNotifier {
         district: sDistrcts,
         mandal: sMandals,
         address: address.text,
-        demands:
-            optionSelected.keys.isNotEmpty ? optionSelected.keys.toList() : [],
         pincode: pincode.text,
-        vNum: vNumController.text,
-        number: "$cc${phoneTextController.text}");
+        vNum: vNumController.text.isNotEmpty?vNumController.text:"",
+        vName: vName.text.isNotEmpty?vName.text:"",
+        number: "$cc${phoneTextController.text}", gender: gender, isVerified:isVerified );
 
     _db
         .collection('users')
@@ -1282,20 +1298,20 @@ class RegistrationProvider extends ChangeNotifier {
 
   setSelectedRadio(int? val) {
     selectedRadio = val!;
-    print("${val}selected");
+   // print("${val}selected");
     
     notifyListeners();
   }
 
   searchVolunteer(BuildContext context) async {
-    print("number:${FirebaseAuth.instance.currentUser!.phoneNumber}");
+   // print("number:${FirebaseAuth.instance.currentUser!.phoneNumber}");
     showLoader = true;
     var body = await _db
         .collection('Mahashakti_volunteers')
         .doc(FirebaseAuth.instance.currentUser!.phoneNumber)
         .get();
     if (body.data() != null) {
-      print("Mobile:${body.data()}");
+     // print("Mobile:${body.data()}");
 
       //print(body['name']);
       //print(data);
@@ -1339,7 +1355,7 @@ class RegistrationProvider extends ChangeNotifier {
         mandal: sMandals,
         panchayat: gpController.text);
     FirebaseAuth.instance.currentUser!.updateDisplayName(name.text);
-    print(vRegistration.toJSON());
+   // print(vRegistration.toJSON());
     showLoader = true;
 
     _db
@@ -1387,7 +1403,7 @@ class RegistrationProvider extends ChangeNotifier {
     } catch (e) {
       showLoader = false;
       AppConstants.showSnackBar(context, '$e');
-      print(e.toString());
+    //  print(e.toString());
     }
 
     notifyListeners();
