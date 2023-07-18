@@ -4,7 +4,9 @@ import 'dart:collection';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
+import 'package:excel/excel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../model/checkbox.dart';
 import '../../model/reg_model.dart';
@@ -16,8 +18,8 @@ import '../view/home_screen.dart';
 class RegistrationProvider extends ChangeNotifier {
   String selectedConstituency = '';
   bool showSubmit = false;
-  int selectedRadio =0;
-  int selectedGRadio =0;
+  int selectedRadio = 0;
+  int selectedGRadio = 0;
   bool isVerified = false;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   TextEditingController name = TextEditingController();
@@ -31,12 +33,13 @@ class RegistrationProvider extends ChangeNotifier {
   TextEditingController address = TextEditingController();
   TextEditingController pincode = TextEditingController();
   bool showLoader = false;
-  String gender='';
-  
+  String gender = '';
+
   String cc = "91";
   String sDistrcts = '';
   String sMandals = '';
-   List<String> sendList(String value) {
+  bool showLoaderOTP =false;
+  List<String> sendList(String value) {
     if (value.isNotEmpty && value != 'Select the district') {
       if (value == 'Alluri Sitharama Raju') {
         return asRaju;
@@ -784,7 +787,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Vontimitta mandal",
     "Yerraguntla mandal"
   ];
-   List<String> districts = <String>[
+  List<String> districts = <String>[
     'Select the district',
     'Alluri Sitharama Raju',
     'Anakapalli',
@@ -1131,7 +1134,7 @@ class RegistrationProvider extends ChangeNotifier {
   }
 
   setdistritcs(String value) {
-   // print(value);
+    // print(value);
     //formKey.currentState!.validate();
     if (value == "Select District") {
       sDistrcts = '';
@@ -1155,7 +1158,7 @@ class RegistrationProvider extends ChangeNotifier {
   }
 
   verifyPhone(BuildContext context, String phone) async {
-    //showLoader = true;
+    showLoaderOTP = true;
     //var credential = PhoneAuthProvider.credential(verificationId: , smsCode: smsCodeController.text);
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: "+$cc$phone",
@@ -1165,12 +1168,14 @@ class RegistrationProvider extends ChangeNotifier {
               smsCode: credential.smsCode!);
         },
         verificationFailed: (FirebaseAuthException e) {
-         // print(e);
+          // print(e);
+          showLoaderOTP = false;
           AppConstants.showSnackBar(context, "Failed to login$e");
         },
         codeSent: (String verficationID, int? resendToken) async {
           //getStorage.write("verificationID", verficationID);
           enableOTPtext = true;
+          showLoaderOTP= false;
           // print("${resendToken} resendToken");
           // print("$verficationID codesent");
           verificatioID = verficationID;
@@ -1201,7 +1206,7 @@ class RegistrationProvider extends ChangeNotifier {
           showLoader = false;
           AppConstants.showSnackBar(
               context, "User numer verified Successfully");
-          isVerified =true;
+          isVerified = true;
           showSubmit = true;
           FirebaseAuth.instance.signOut();
 
@@ -1212,7 +1217,7 @@ class RegistrationProvider extends ChangeNotifier {
       showLoader = false;
       AppConstants.showSnackBar(context, e.toString());
       verifyPhone(context, phoneTextController.text);
-     // print(e.toString());
+      // print(e.toString());
     }
     notifyListeners();
   }
@@ -1245,14 +1250,13 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  setGender(int val){
-    if(val == 1){
-      gender= "Male";
+  setGender(int val) {
+    if (val == 1) {
+      gender = "Male";
       selectedGRadio = val;
-
-    }else if(val==2){
-      gender ="Female";
-      selectedGRadio=val;
+    } else if (val == 2) {
+      gender = "Female";
+      selectedGRadio = val;
     }
     notifyListeners();
   }
@@ -1267,9 +1271,11 @@ class RegistrationProvider extends ChangeNotifier {
         mandal: sMandals,
         address: address.text,
         pincode: pincode.text,
-        vNum: vNumController.text.isNotEmpty?vNumController.text:"",
-        vName: vName.text.isNotEmpty?vName.text:"",
-        number: "$cc${phoneTextController.text}", gender: gender, isVerified:isVerified );
+        vNum: vNumController.text.isNotEmpty ? vNumController.text : "",
+        vName: vName.text.isNotEmpty ? vName.text : "",
+        number: "$cc${phoneTextController.text}",
+        gender: gender,
+        isVerified: isVerified);
 
     _db
         .collection('users')
@@ -1298,79 +1304,79 @@ class RegistrationProvider extends ChangeNotifier {
 
   setSelectedRadio(int? val) {
     selectedRadio = val!;
-   // print("${val}selected");
-    
-    notifyListeners();
-  }
-
-  searchVolunteer(BuildContext context) async {
-   // print("number:${FirebaseAuth.instance.currentUser!.phoneNumber}");
-    showLoader = true;
-    var body = await _db
-        .collection('Mahashakti_volunteers')
-        .doc(FirebaseAuth.instance.currentUser!.phoneNumber)
-        .get();
-    if (body.data() != null) {
-     // print("Mobile:${body.data()}");
-
-      //print(body['name']);
-      //print(data);
-      VRegistration vRegistration = VRegistration(
-          name: body['name'] ?? "",
-          phone: body['phone'],
-          constituency: body['constituency'] ?? "",
-          district: body['district'] ?? "",
-          mandal: body['mandal'] ?? "",
-          panchayat: body['panchayat'] ?? "");
-      
-      // AppConstants.moveNextstl(
-      //     context,
-      //     VolunteerRegistration(
-      //       vRegistration: vRegistration,
-      //     ));
-
-    } else {
-      VRegistration vRegistration = VRegistration(
-          name: '',
-          phone: FirebaseAuth.instance.currentUser?.phoneNumber ?? "",
-          constituency: '',
-          district: '',
-          mandal: '',
-          panchayat: '');
-      // AppConstants.moveNextstl(
-      //     context,
-      //     VolunteerRegistration(
-      //       vRegistration: vRegistration,
-      //     ));
-    }
-    notifyListeners();
-  }
-
-  updateVolunteer(BuildContext context) async {
-    VRegistration vRegistration = VRegistration(
-        name: name.text,
-        phone: FirebaseAuth.instance.currentUser!.phoneNumber,
-        constituency: selectedConstituency,
-        district: sDistrcts,
-        mandal: sMandals,
-        panchayat: gpController.text);
-    FirebaseAuth.instance.currentUser!.updateDisplayName(name.text);
-   // print(vRegistration.toJSON());
-    showLoader = true;
-
-    _db
-        .collection('Mahashakti_volunteers')
-        .doc('${FirebaseAuth.instance.currentUser!.phoneNumber}')
-        .set(vRegistration.toJSON())
-        .then((value) {
-      showLoader = false;
-      AppConstants.showSnackBar(
-          context, "Volunteer Registration Successfully done");
-      AppConstants.moveNextClearAll(context, const HomeScreen());
-    });
+    // print("${val}selected");
 
     notifyListeners();
   }
+
+  // searchVolunteer(BuildContext context) async {
+  //  // print("number:${FirebaseAuth.instance.currentUser!.phoneNumber}");
+  //   showLoader = true;
+  //   var body = await _db
+  //       .collection('Mahashakti_volunteers')
+  //       .doc(FirebaseAuth.instance.currentUser!.phoneNumber)
+  //       .get();
+  //   if (body.data() != null) {
+  //    // print("Mobile:${body.data()}");
+
+  //     //print(body['name']);
+  //     //print(data);
+  //     VRegistration vRegistration = VRegistration(
+  //         name: body['name'] ?? "",
+  //         phone: body['phone'],
+  //         constituency: body['constituency'] ?? "",
+  //         district: body['district'] ?? "",
+  //         mandal: body['mandal'] ?? "",
+  //         panchayat: body['panchayat'] ?? "");
+
+  //     // AppConstants.moveNextstl(
+  //     //     context,
+  //     //     VolunteerRegistration(
+  //     //       vRegistration: vRegistration,
+  //     //     ));
+
+  //   } else {
+  //     VRegistration vRegistration = VRegistration(
+  //         name: '',
+  //         phone: FirebaseAuth.instance.currentUser?.phoneNumber ?? "",
+  //         constituency: '',
+  //         district: '',
+  //         mandal: '',
+  //         panchayat: '');
+  //     // AppConstants.moveNextstl(
+  //     //     context,
+  //     //     VolunteerRegistration(
+  //     //       vRegistration: vRegistration,
+  //     //     ));
+  //   }
+  //   notifyListeners();
+  // }
+
+  // // updateVolunteer(BuildContext context) async {
+  //   VRegistration vRegistration = VRegistration(
+  //       name: name.text,
+  //       phone: FirebaseAuth.instance.currentUser!.phoneNumber,
+  //       constituency: selectedConstituency,
+  //       district: sDistrcts,
+  //       mandal: sMandals,
+  //       panchayat: gpController.text);
+  //   FirebaseAuth.instance.currentUser!.updateDisplayName(name.text);
+  //  // print(vRegistration.toJSON());
+  //   showLoader = true;
+
+  //   _db
+  //       .collection('Mahashakti_volunteers')
+  //       .doc('${FirebaseAuth.instance.currentUser!.phoneNumber}')
+  //       .set(vRegistration.toJSON())
+  //       .then((value) {
+  //     showLoader = false;
+  //     AppConstants.showSnackBar(
+  //         context, "Volunteer Registration Successfully done");
+  //     AppConstants.moveNextClearAll(context, const HomeScreen());
+  //   });
+
+  //   notifyListeners();
+  // }
 
   @override
   void dispose() {
@@ -1380,7 +1386,6 @@ class RegistrationProvider extends ChangeNotifier {
     super.dispose();
   }
 
- 
   Future otpSaved(BuildContext context, String verificatioID) async {
     // print(verificationCode);
     showLoader = false;
@@ -1396,18 +1401,17 @@ class RegistrationProvider extends ChangeNotifier {
           // sharedPref.save('id', value.user?.uid);
           // sharedPref.saveBool('keyVerified', true);
           showLoader = false;
-
-        
         }
       });
     } catch (e) {
       showLoader = false;
       AppConstants.showSnackBar(context, '$e');
-    //  print(e.toString());
+      //  print(e.toString());
     }
 
     notifyListeners();
   }
+
 }
 
 

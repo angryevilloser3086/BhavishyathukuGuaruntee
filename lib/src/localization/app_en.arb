@@ -39,5 +39,6 @@
   "yes":"Yes",
   "no":"NO",
   "male":"Male",
-  "female":"Female"
+  "female":"Female",
+  "getOtp":"Get OTP"
 }

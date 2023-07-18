@@ -301,12 +301,13 @@ class RegistratioScreen extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                         color: Colors.black),
-                    onFieldSubmitted: (value) =>
-                        registrationProvider.verifyPhone(context, value),
-                    onEditingComplete: () {
-                      registrationProvider.verifyPhone(context,
-                          registrationProvider.phoneTextController.text);
-                    },
+                    // onFieldSubmitted: (value) =>
+                    //     registrationProvider.verifyPhone(context, value),
+                    // onEditingComplete: () {
+                    //   registrationProvider.verifyPhone(context,
+                    //       registrationProvider.phoneTextController.text);
+                   // },
+                    maxLength: 10,
                     validator: (value) =>
                         value!.trim().isEmpty ? 'phone number required' : null,
                   ),
@@ -315,7 +316,11 @@ class RegistratioScreen extends StatelessWidget {
             );
           }),
         ),
+
         AppConstants.h_5,
+          if(!registrationProvider.enableOTPtext)
+          getOtpBtn(context, registrationProvider),
+          AppConstants.h_5,
         if (registrationProvider.enableOTPtext &&
             !registrationProvider.showSubmit)
           TextFormField(
@@ -365,6 +370,7 @@ class RegistratioScreen extends StatelessWidget {
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500),
                           )))),
+        
         if (registrationProvider.showSubmit)
           Center(
             child: Padding(
@@ -393,6 +399,40 @@ class RegistratioScreen extends StatelessWidget {
           )
       ],
     );
+  }
+
+  getOtpBtn(BuildContext context,RegistrationProvider registrationProvider ){
+    print("${registrationProvider.phoneTextController.text.length}");
+    return InkWell(
+            onTap: () {
+             if(registrationProvider.phoneTextController.text.length==10){
+               registrationProvider.verifyPhone(context,
+                          registrationProvider.phoneTextController.text);
+             }else{
+              AppConstants.showSnackBar(context, "please enter valid Number");
+             }
+               //AppConstants.moveNextClearAll(context, const HomeScreen());
+            },
+            child: Container(
+                width: MediaQuery.of(context).size.width * 0.15,
+                height: 60,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.black),
+                    borderRadius: const BorderRadius.all(Radius.circular(5))),
+                child: Center(
+                    child: registrationProvider.showLoaderOTP
+                        ? const CircularProgressIndicator(
+                            color: Colors.black,
+                          )
+                        : Text(
+                            Strings.of(context).getOtp,
+                            style: GoogleFonts.inter(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500),
+                          ))));
+        
   }
 
   fNamefield1(BuildContext context, RegistrationProvider registrationProvider) {
