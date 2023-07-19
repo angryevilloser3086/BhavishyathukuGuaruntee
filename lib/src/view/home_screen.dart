@@ -129,6 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child:const RegistratioScreen(),
             ),
             //RegistratioScreen()
+
+
+            
             // InkWell(
             //   onTap: (){
             //       setState(() {
@@ -219,10 +222,10 @@ class _HomeScreenState extends State<HomeScreen> {
     // Write headers (optional) - Assuming jsonData is a list of Maps with identical keys
     // var headers = jsonData[0].toList();
     List<String> headers = [
-      'name'
-      
+      'name',
       'age',
       'gender',
+      "phone",
       'district',
       "constituency",
       'mandal',
@@ -230,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'pincode',
       'volunteer_number',
       'volunteer_name',
-      "phone",
+      
       "isVerified"
     ];
     for (var i = 0; i < headers.length; i++) {
@@ -248,14 +251,16 @@ class _HomeScreenState extends State<HomeScreen> {
        val.add(row.age!);
        val.add(row.gender!);
        val.add(row.number!);
-        val.add(row.address!);
        val.add(row.district!);
-       val.add(row.constituency!);
+        val.add(row.constituency!);
        val.add(row.mandal!);
+        val.add(row.address!);
+       
+      
        val.add(row.pincode!);
        val.add(row.vName!);
        val.add(row.vNum!);
-      
+        val.add(row.isVerified.toString());
        log("${val.toList()}");
 
 

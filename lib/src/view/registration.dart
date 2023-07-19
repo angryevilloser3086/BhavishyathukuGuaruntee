@@ -18,16 +18,13 @@ class RegistratioScreen extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.amber[50],
         body: SafeArea(
-            child: SingleChildScrollView(
-          child: Padding(
+            child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Consumer<RegistrationProvider>(
                 builder: (context, registrationProvider, child) {
-              // if (registrationProvider.vNumController.text.isEmpty) {
-              //   registrationProvider.vNumController = TextEditingController(
-              //       text: FirebaseAuth.instance.currentUser!.phoneNumber);
-              // }
+             
               return Form(
+                key:registrationProvider.formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -57,7 +54,7 @@ class RegistratioScreen extends StatelessWidget {
               );
             }),
           ),
-        )),
+        ),
       ),
     );
   }
@@ -726,7 +723,19 @@ class RegistratioScreen extends StatelessWidget {
                         .sendList(registrationProvider.sDistrcts)
                         .first
                     : registrationProvider.selectedConstituency,
-                items: registrationProvider
+                items:registrationProvider.sendList(registrationProvider.sDistrcts).isEmpty?['please Select the District'].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Padding(
+                      padding: AppConstants.all_10,
+                      child: Text(value,
+                          style: GoogleFonts.inter(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black)),
+                    ),
+                  );
+                }).toList() : registrationProvider
                     .sendList(registrationProvider.sDistrcts)
                     .map<DropdownMenuItem<String>>((String constituency) {
                   return DropdownMenuItem<String>(
@@ -803,7 +812,7 @@ class RegistratioScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          Strings.of(context).constitution,
+          Strings.of(context).mandal,
           style: GoogleFonts.inter(
               fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
         ),
@@ -819,9 +828,22 @@ class RegistratioScreen extends StatelessWidget {
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
                 value: registrationProvider.sMandals.isEmpty
-                    ? registrationProvider.mandals.first
+                    ? registrationProvider.sendMandalList(registrationProvider.selectedConstituency)
+                        .first
                     : registrationProvider.sMandals,
-                items: registrationProvider.mandals
+                items:registrationProvider.sendMandalList(registrationProvider.selectedConstituency).isEmpty?['please Select the Assembly Constituency'].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Padding(
+                      padding: AppConstants.all_10,
+                      child: Text(value,
+                          style: GoogleFonts.inter(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black)),
+                    ),
+                  );
+                }).toList() :registrationProvider.sendMandalList(registrationProvider.selectedConstituency)
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
