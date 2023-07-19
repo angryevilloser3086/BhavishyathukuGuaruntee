@@ -71,12 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   //Navigator.
                   if(w<450){
                     setState(() {
-                    scrollController.animateTo(MediaQuery.of(context).size.height*0.5, duration: Duration(seconds: 2), curve: Curves.bounceOut);
+                    scrollController.animateTo(MediaQuery.of(context).size.height*0.5, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
                   });
                   }else{
 
                   setState(() {
-                    scrollController.animateTo(MediaQuery.of(context).size.height*1.6, duration: Duration(seconds: 2), curve: Curves.bounceOut);
+                    scrollController.animateTo(MediaQuery.of(context).size.height*1.6, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
                   });
                   }
                 },
@@ -89,17 +89,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: AlignmentDirectional.centerStart,
                   child: InkWell(
                     onTap: (){
-                      if(activePage>=0&&activePage<images.length-1) {
-                        setState(() {
+                      if(activePage>0&&activePage<=images.length-1) {
                         setState(() {
                           activePage--;
                         });
-                      });
-                      }else{
-                        activePage=images.length-1;
+                      }else if(activePage<=0){
+                       // print(activePage);
+                        setState(() {
+                          activePage=images.length-1;
+                        });
                       }
                     },
-                    child: Icon(Icons.arrow_back_ios),
+                    child: const Icon(Icons.arrow_back_ios),
                   ),
                 ),
                 Align(
@@ -116,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       }
                     },
-                    child: Icon(Icons.arrow_forward_ios),
+                    child: const Icon(Icons.arrow_forward_ios),
                   ),
                 )
               ],
