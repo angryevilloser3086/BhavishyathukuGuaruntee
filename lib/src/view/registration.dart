@@ -18,42 +18,44 @@ class RegistratioScreen extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.amber[50],
         body: SafeArea(
-            child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Consumer<RegistrationProvider>(
-                builder: (context, registrationProvider, child) {
-             
-              return Form(
-                key:registrationProvider.formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(Strings.of(context).registration,
-                        style: GoogleFonts.inter(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                        textAlign: TextAlign.right),
-                    AppConstants.h_20,
-                    fNamefield1(context, registrationProvider),
-                    genderSet(context, registrationProvider),
-                    ageField(context, registrationProvider),
-                    selectDistrict(context, registrationProvider),
-                    selectConstituency(context, registrationProvider),
-
-                    selectMandal(context, registrationProvider),
-                    addrfield1(context, registrationProvider),
-                    pinfield1(context, registrationProvider),
-                    // demands(context, registrationProvider),
-                    // vNum(context, registrationProvider),
-                    AppConstants.h_10,
-                    didTDPContact(context, registrationProvider),
-                    verifyNumber(context, registrationProvider),
-                  ],
-                ),
-              );
-            }),
-          ),
+            child: SingleChildScrollView(
+              child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Consumer<RegistrationProvider>(
+                  builder: (context, registrationProvider, child) {
+               
+                return Form(
+                  key:registrationProvider.formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(Strings.of(context).registration,
+                          style: GoogleFonts.inter(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
+                          textAlign: TextAlign.right),
+                      AppConstants.h_20,
+                      fNamefield1(context, registrationProvider),
+                      genderSet(context, registrationProvider),
+                      ageField(context, registrationProvider),
+                      selectDistrict(context, registrationProvider),
+                      selectConstituency(context, registrationProvider),
+            
+                      selectMandal(context, registrationProvider),
+                      addrfield1(context, registrationProvider),
+                      pinfield1(context, registrationProvider),
+                      // demands(context, registrationProvider),
+                      // vNum(context, registrationProvider),
+                      AppConstants.h_10,
+                      didTDPContact(context, registrationProvider),
+                      verifyNumber(context, registrationProvider),
+                    ],
+                  ),
+                );
+              }),
+                      ),
+            ),
         ),
       ),
     );
@@ -399,7 +401,8 @@ class RegistratioScreen extends StatelessWidget {
   }
 
   getOtpBtn(BuildContext context,RegistrationProvider registrationProvider ){
-    print("${registrationProvider.phoneTextController.text.length}");
+    print("build method:S${registrationProvider.showLoaderOTP}");
+   // print("${registrationProvider.phoneTextController.text.length}");
     return InkWell(
             onTap: () {
              if(registrationProvider.phoneTextController.text.length==10){

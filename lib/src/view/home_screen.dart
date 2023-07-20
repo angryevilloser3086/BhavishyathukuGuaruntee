@@ -125,8 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Image.asset("assets/images/header-website.png1_.png"),
            
             SizedBox(
-              height: h*1.8,
-              width: w/1.5,
+              height: h,
+              width: w,
               child:const RegistratioScreen(),
             ),
             //RegistratioScreen()
@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //   child: btnDownload(),
             // ),
             
-            Container(color: Colors.white,
+            Container(color: Colors.amberAccent,
             height: 50,)
           ],
         ),
@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
             number: snapshot.get('phone'),
             vName: snapshot.get('volunteer_name'),
             vNum: snapshot.get('volunteer_number'),
-            isVerified: snapshot.get('isVerified'));
+            isVerified: snapshot.get('isVerified'), date: snapshot.get('date'));
 
         setState(() {
           users.add(user);

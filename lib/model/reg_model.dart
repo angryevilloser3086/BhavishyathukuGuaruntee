@@ -10,6 +10,7 @@ class RegistrationModel {
   String? vNum;
   String? vName;
   String? number;
+  String? date;
   bool isVerified;
 
   RegistrationModel(
@@ -24,6 +25,7 @@ class RegistrationModel {
       this.vNum,
       this.vName,
       required this.number,
+      required this.date,
       required this.isVerified});
   factory RegistrationModel.fromJson(Map<String, dynamic> json) =>
       RegistrationModel(
@@ -38,6 +40,7 @@ class RegistrationModel {
           pincode: json['pincode'],
           vNum: json['volunteer_number'],
           number: json['number'],
+          date: json['date'],
           isVerified: json['isVerified']);
   Map<String, dynamic> toJSON() => {
         'name': name,
@@ -51,6 +54,7 @@ class RegistrationModel {
         'volunteer_number': vNum,
         'volunteer_name':vName,
         "phone": number,
-        "isVerified":isVerified
+        "isVerified":isVerified,
+        "date":date
       };
 }
