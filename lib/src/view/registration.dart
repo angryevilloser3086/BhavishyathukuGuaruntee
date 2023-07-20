@@ -18,8 +18,7 @@ class RegistratioScreen extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.amber[50],
         body: SafeArea(
-            child: SingleChildScrollView(
-              child: Padding(
+            child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Consumer<RegistrationProvider>(
                   builder: (context, registrationProvider, child) {
@@ -56,7 +55,7 @@ class RegistratioScreen extends StatelessWidget {
               }),
                       ),
             ),
-        ),
+        
       ),
     );
   }

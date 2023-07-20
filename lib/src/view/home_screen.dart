@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Image.asset("assets/images/header-website.png1_.png"),
            
             SizedBox(
-              height: h,
+              height: h*1.6,
               width: w,
               child:const RegistratioScreen(),
             ),
