@@ -125,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Image.asset("assets/images/header-website.png1_.png"),
            
             SizedBox(
-              height: h*1.6,
+              height: h*2,
               width: w,
               child:const RegistratioScreen(),
             ),
@@ -142,8 +142,8 @@ class _HomeScreenState extends State<HomeScreen> {
             //   child: btnDownload(),
             // ),
             
-            Container(color: Colors.amberAccent,
-            height: 50,)
+            // Container(color: Colors.amberAccent,
+            // height: 50,)
           ],
         ),
       )),
@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
             number: snapshot.get('phone'),
             vName: snapshot.get('volunteer_name'),
             vNum: snapshot.get('volunteer_number'),
-            isVerified: snapshot.get('isVerified'), date: snapshot.get('date'));
+            isVerified: snapshot.get('isVerified'), date: snapshot.get('date') ?? "");
 
         setState(() {
           users.add(user);
@@ -234,7 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'pincode',
       'volunteer_number',
       'volunteer_name',
-      
+      'date',
       "isVerified"
     ];
     for (var i = 0; i < headers.length; i++) {
@@ -261,6 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
        val.add(row.pincode!);
        val.add(row.vName!);
        val.add(row.vNum!);
+       val.add(row.date!);
         val.add(row.isVerified.toString());
        log("${val.toList()}");
 
