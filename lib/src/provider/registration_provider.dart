@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vregistration/src/view/qr.dart';
 import 'package:vregistration/utils/loading_indicator.dart';
 import '../../model/checkbox.dart';
 import '../../model/reg_model.dart';
@@ -33,6 +34,7 @@ class RegistrationProvider extends ChangeNotifier {
   //TextEditingController vNUM = TextEditingController();
   TextEditingController address = TextEditingController();
   TextEditingController pincode = TextEditingController();
+  TextEditingController uniqueCode = TextEditingController();
   bool showLoader = false;
   String gender = '';
 
@@ -45,7 +47,7 @@ class RegistrationProvider extends ChangeNotifier {
       if (value == 'Alluri Sitharama Raju') {
         return asRaju;
       } else if (value == 'Anakapalli') {
-        print(value);
+        // print(value);
         return anakapalli;
       } else if (value == 'Anantapuramu') {
         return anatapur;
@@ -2934,7 +2936,7 @@ class RegistrationProvider extends ChangeNotifier {
       return "please Select the role";
     } else {
       selectedConstituency = value;
-      sMandals ='';
+      sMandals = '';
     }
     notifyListeners();
   }
@@ -2947,7 +2949,7 @@ class RegistrationProvider extends ChangeNotifier {
       return "please Select the district";
     } else {
       sDistrcts = value;
-      selectedConstituency ='';
+      selectedConstituency = '';
       sMandals = '';
       //sendList(value);
     }
@@ -2962,7 +2964,6 @@ class RegistrationProvider extends ChangeNotifier {
       return "please Select the Mandal";
     } else {
       sMandals = value;
-
     }
     print(sMandals);
     notifyListeners();
@@ -2970,60 +2971,63 @@ class RegistrationProvider extends ChangeNotifier {
 
   verifyPhone(BuildContext context, String phone) async {
     if (formKey.currentState!.validate()) {
-     DialogBuilder(context).showLoadingIndicator("Please wait while we are sending otp");
+      DialogBuilder(context)
+          .showLoadingIndicator("Please wait while we are sending otp");
       print(showLoaderOTP);
       Future.delayed(const Duration(seconds: 1));
       //var credential = PhoneAuthProvider.credential(verificationId: , smsCode: smsCodeController.text);
-      try{
+      try {
         await FirebaseAuth.instance.verifyPhoneNumber(
-          phoneNumber: "+$cc$phone",
-          verificationCompleted: (credential) async {
-            PhoneAuthProvider.credential(
-                verificationId: credential.verificationId!,
-                smsCode: credential.smsCode!);
-                notifyListeners();
-          },
-          verificationFailed: (FirebaseAuthException e) {
-            // print(e);
-            Navigator.of(context,rootNavigator: true).pop();
-            showLoaderOTP = false;
-            AppConstants.showSnackBar(context, "Failed to login$e");
-            notifyListeners();
-          },
-          codeSent: (String verficationID, int? resendToken) async {
-            //getStorage.write("verificationID", verficationID);
-            enableOTPtext = true;
-            Navigator.of(context,rootNavigator: true).pop();
-            showLoaderOTP = false;
-            AppConstants.showSnackBar(context, "OTP Sent to your Mobile number");
-            // print("${resendToken} resendToken");
-            // print("$verficationID codesent");
-            verificatioID = verficationID;
-             notifyListeners();
-            //showLoader = false;
-            // AppConstants.showSnackBar(context, "$verficationID codesent");
-          },
-          codeAutoRetrievalTimeout: (String verificationID) {
-            //print(verificationID);
-            verificatioID = verificationID;
-            // Get.showSnackbar(GetSnackBar(message: verificationID));
-            // Get.offAllNamed(Routes.OTPSCREEN);
-          },
-          timeout: const Duration(seconds: 120));
-          print(showLoaderOTP);
-      notifyListeners();
-      }catch(e){
+            phoneNumber: "+$cc$phone",
+            verificationCompleted: (credential) async {
+              PhoneAuthProvider.credential(
+                  verificationId: credential.verificationId!,
+                  smsCode: credential.smsCode!);
+              notifyListeners();
+            },
+            verificationFailed: (FirebaseAuthException e) {
+              // print(e);
+              Navigator.of(context, rootNavigator: true).pop();
+              showLoaderOTP = false;
+              AppConstants.showSnackBar(context, "Failed to login$e");
+              notifyListeners();
+            },
+            codeSent: (String verficationID, int? resendToken) async {
+              //getStorage.write("verificationID", verficationID);
+              enableOTPtext = true;
+              Navigator.of(context, rootNavigator: true).pop();
+              showLoaderOTP = false;
+              AppConstants.showSnackBar(
+                  context, "OTP Sent to your Mobile number");
+              // print("${resendToken} resendToken");
+              // print("$verficationID codesent");
+              verificatioID = verficationID;
+              notifyListeners();
+              //showLoader = false;
+              // AppConstants.showSnackBar(context, "$verficationID codesent");
+            },
+            codeAutoRetrievalTimeout: (String verificationID) {
+              //print(verificationID);
+              verificatioID = verificationID;
+              // Get.showSnackbar(GetSnackBar(message: verificationID));
+              // Get.offAllNamed(Routes.OTPSCREEN);
+            },
+            timeout: const Duration(seconds: 120));
+        print(showLoaderOTP);
+        notifyListeners();
+      } catch (e) {
         showLoaderOTP = false;
-        Navigator.of(context,rootNavigator: true).pop();
-      AppConstants.showSnackBar(context, e.toString());
-      notifyListeners();
+        Navigator.of(context, rootNavigator: true).pop();
+        AppConstants.showSnackBar(context, e.toString());
+        notifyListeners();
       }
       notifyListeners();
     }
   }
 
   otpVerify(BuildContext context) async {
-   DialogBuilder(context).showLoadingIndicator("Please wait while we verifying the OTP ");
+    DialogBuilder(context)
+        .showLoadingIndicator("Please wait while we verifying the OTP ");
     // print("e.toString()");
     // print(verificatioID);
     try {
@@ -3033,9 +3037,9 @@ class RegistrationProvider extends ChangeNotifier {
           .then((value) async {
         if (value.user != null) {
           showLoader = false;
-          Navigator.of(context,rootNavigator: true).pop();
+          Navigator.of(context, rootNavigator: true).pop();
           AppConstants.showSnackBar(
-              context, "User numer verified Successfully");
+              context, "User number verified Successfully");
           isVerified = true;
           showSubmit = true;
           FirebaseAuth.instance.signOut();
@@ -3045,7 +3049,7 @@ class RegistrationProvider extends ChangeNotifier {
       });
     } catch (e) {
       showLoader = false;
-      Navigator.of(context,rootNavigator: true).pop();
+      Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, e.toString());
       //verifyPhone(context, phoneTextController.text);
       // print(e.toString());
@@ -3094,7 +3098,8 @@ class RegistrationProvider extends ChangeNotifier {
 
   void registerUser(BuildContext context) {
     showLoader = true;
-     DialogBuilder(context).showLoadingIndicator("Please wait while we verifying the OTP ");
+    DialogBuilder(context)
+        .showLoadingIndicator("Please wait while we are updating details ");
     DateTime dt = DateTime.now();
     RegistrationModel rModel = RegistrationModel(
         name: name.text,
@@ -3108,7 +3113,9 @@ class RegistrationProvider extends ChangeNotifier {
         vName: vName.text.isNotEmpty ? vName.text : "",
         number: "$cc${phoneTextController.text}",
         gender: gender,
-        isVerified: isVerified, date: dt.toIso8601String());
+        isVerified: isVerified,
+        date: dt.toIso8601String(),
+        id: uniqueCode.text);
 
     _db
         .collection('users')
@@ -3116,11 +3123,11 @@ class RegistrationProvider extends ChangeNotifier {
         .set(rModel.toJSON())
         .then((value) {
       showLoader = false;
-      Navigator.of(context,rootNavigator: true).pop();
+      Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, "Registration Successfully done");
       AppConstants.moveNextClearAll(context, const HomeScreen());
     }).catchError((err) {
-      Navigator.of(context,rootNavigator: true).pop();
+      Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, "$err");
     });
     notifyListeners();
@@ -3135,6 +3142,20 @@ class RegistrationProvider extends ChangeNotifier {
       sMandals = vRegistration.mandal ?? "";
       gpController = TextEditingController(text: vRegistration.panchayat ?? "");
     }
+  }
+
+  setQRValues(BuildContext context) async {
+    final qrResults = await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => const QRViewExample(), fullscreenDialog: true),
+    );
+    if (qrResults != null) {
+      uniqueCode = TextEditingController(text: qrResults.code);
+      print(uniqueCode.text);
+    }
+
+    notifyListeners();
   }
 
   setSelectedRadio(int? val) {

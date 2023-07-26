@@ -1,6 +1,7 @@
 class RegistrationModel {
   String? name;
   String? age;
+  String? id;
   String? gender;
   String? constituency;
   String? district;
@@ -16,6 +17,7 @@ class RegistrationModel {
   RegistrationModel(
       {required this.name,
       required this.age,
+      required this.id,
       required this.constituency,
       required this.district,
       required this.mandal,
@@ -41,8 +43,9 @@ class RegistrationModel {
           vNum: json['volunteer_number'],
           number: json['number'],
           date: json['date'],
-          isVerified: json['isVerified']);
+          isVerified: json['isVerified'], id: json['id']);
   Map<String, dynamic> toJSON() => {
+        'id':id,
         'name': name,
         'gender': gender,
         'age': age,

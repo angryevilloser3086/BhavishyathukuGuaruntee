@@ -1,31 +1,28 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:vregistration/src/view/details/details_screen.dart';
 import 'package:vregistration/src/view/home_screen.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vregistration/src/view/qr.dart';
 
+import 'firebase_options.dart';
 import 'src/provider/registration_provider.dart';
 import 'utils/app_utils.dart';
 
 bool shouldUseFirestoreEmulator = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-        apiKey: "AIzaSyBMg7coOVDddbu2pQdiOSS9gIcL9g0eXOc",
-        authDomain: "bhavishyathukuguarantee-d3199.firebaseapp.com",
-        projectId: "bhavishyathukuguarantee-d3199",
-        storageBucket: "bhavishyathukuguarantee-d3199.appspot.com",
-        messagingSenderId: "174297607342",
-        appId: "1:174297607342:web:b5badce64bf01ab422513f",
-        measurementId: "G-0XVQ3VP3E9"),
+   await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
-
+ 
   if (shouldUseFirestoreEmulator) {
     FirebaseFirestore.instance.useFirestoreEmulator('localhost', 8080);
   }
@@ -156,10 +153,61 @@ class _MyAppState extends State<MyApp> {
           //   ),
         ),
         darkTheme: ThemeData.dark(),
+        onGenerateRoute: (settings){
+             List<String> pathComponents = settings.name!.split('/');
+            // List<String> pathComponents = settings.name.split('/');
+          if (pathComponents[1] == 'details-screen') {
+            print(pathComponents.toList());
+            return MaterialPageRoute(
+              builder: (context) {
+                return DetailsScreen(id: pathComponents.last);
+              },
+            );
+          }else if(pathComponents[1]=='QRSCREEN'){
+            return MaterialPageRoute(
+              builder: (context) {
+                return const QRViewExample();
+              },
+            );
+          } else {
+            print("else block:${pathComponents.toList()}");
+            return MaterialPageRoute(
+              builder: (context) {
+                return const HomeScreen();
+              },
+            );
+          }
+        
+            // switch (settings.name) {
+            //   case '/':
+            //     return MaterialPageRoute(
+            //     builder: (context) =>const HomeScreen(),
+            //   );
+            //   case '/QRSCREEN':
+            //     return MaterialPageRoute(
+            //     builder: (context) =>const QRViewExample(),
+            //   );
+            //   case '/details-screen':
+            //     return MaterialPageRoute(
+            //     builder: (context) =>const DetailsScreen(),
+            //   );
+            //   //case '/details-screen/':
 
+            //   default:
+            //     return MaterialPageRoute(
+            //     builder: (context) => DetailsScreen(id: pathComponents.last,),
+            //   );
+            // }
+           
+        },
+        
+        routes: {
+          // '/':(context)=>const HomeScreen(),
+          // '/QRSCREEN':(context)=>const QRViewExample()
+        },
         // Define a function to handle named routes in order to support
         // Flutter web url navigation and deep linking.
-        home: const HomeScreen(),
+       // home: const HomeScreen(),
       ),
     );
   }

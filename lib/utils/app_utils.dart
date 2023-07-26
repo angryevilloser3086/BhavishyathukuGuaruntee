@@ -10,6 +10,10 @@ class AppConstants {
   static const appBgLite = Colors.blueGrey;
   static const appFontcolor = Color(0xFFCED3DC);
   static const appHeadcolor = Color(0xFFF2FF00);
+  static const appYellowBG = Color(0xFFFEE806);
+  static const appredColor = Color(0xFFE10707);
+  
+
 
   static const h_5 = SizedBox(height: 5);
   static const h_10 = SizedBox(height: 10);

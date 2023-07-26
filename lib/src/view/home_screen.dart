@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   PageController pageController =
       PageController(viewportFraction: 0.8, initialPage: 0);
-      ScrollController scrollController =ScrollController();
+  ScrollController scrollController = ScrollController();
   int activePage = 0;
   List<String> images = [
     "assets/images/Frame_30_1.png",
@@ -36,11 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.yellowAccent,
       body: SafeArea(
           child: SingleChildScrollView(
-            controller: scrollController,
+        controller: scrollController,
         child: Column(
           children: [
             Container(
@@ -65,83 +66,102 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-           
+
             InkWell(
                 onTap: () {
                   //Navigator.
-                  if(w<450){
-                    setState(() {
-                    scrollController.animateTo(MediaQuery.of(context).size.height*0.5, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
-                  });
-                  }else{
-
-                  setState(() {
-                    scrollController.animateTo(MediaQuery.of(context).size.height*1.6, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
-                  });
+                  Navigator.pushNamed(context, '/QRSCREEN');
+                  //AppConstants.moveNextstl(context,const QRViewExample());
+                  if (w < 450) {
+                    //   setState(() {
+                    //   scrollController.animateTo(MediaQuery.of(context).size.height*0.5, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
+                    // });
+                  } else {
+                    // setState(() {
+                    //   scrollController.animateTo(MediaQuery.of(context).size.height*1.6, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
+                    // });
                   }
                 },
                 child: btn()),
             Stack(
               alignment: AlignmentDirectional.center,
               children: [
-                Image.asset(images[activePage]),
+                SizedBox(
+                  width: double.maxFinite,
+                  child: Image.asset(images[activePage], fit: BoxFit.contain),
+                ),
                 Align(
                   alignment: AlignmentDirectional.centerStart,
-                  child: InkWell(
-                    onTap: (){
-                      if(activePage>0&&activePage<=images.length-1) {
-                        setState(() {
-                          activePage--;
-                        });
-                      }else if(activePage<=0){
-                       // print(activePage);
-                        setState(() {
-                          activePage=images.length-1;
-                        });
-                      }
-                    },
-                    child: const Icon(Icons.arrow_back_ios),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () {
+                        if (activePage > 0 && activePage <= images.length - 1) {
+                          setState(() {
+                            activePage--;
+                          });
+                        } else if (activePage <= 0) {
+                          // print(activePage);
+                          setState(() {
+                            activePage = images.length - 1;
+                          });
+                        }
+                      },
+                      child: const Icon(
+                        Icons.arrow_back_ios,
+                        size: 20,
+                      ),
+                    ),
                   ),
                 ),
                 Align(
                   alignment: AlignmentDirectional.centerEnd,
-                  child: InkWell(
-                    onTap: (){
-                      if(activePage>=0&&activePage<images.length-1) {
-                        setState(() {
-                        activePage++;
-                      });
-                      }else{
-                        setState(() {
-                          activePage=0;
-                        });
-                      }
-                    },
-                    child: const Icon(Icons.arrow_forward_ios),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () {
+                        if (activePage >= 0 && activePage < images.length - 1) {
+                          setState(() {
+                            activePage++;
+                          });
+                        } else {
+                          setState(() {
+                            activePage = 0;
+                          });
+                        }
+                      },
+                      child: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                      ),
+                    ),
                   ),
                 )
               ],
             ),
-            Image.asset("assets/images/header-website.png1_.png"),
-           
             SizedBox(
-              height: h*2,
+                width: w,
+                child: Image.asset(
+                  "assets/images/header-website.png1_.png",
+                  fit: BoxFit.contain,
+                )),
+
+            SizedBox(
+              height: h * 2,
               width: w,
-              child:const RegistratioScreen(),
+              child: const RegistratioScreen(),
             ),
             //RegistratioScreen()
 
+            InkWell(
+              onTap: () {
+                setState(() {
+                  downloadData();
+                });
+              },
+              child: btnDownload(),
+            ),
 
-            
-            // InkWell(
-            //   onTap: (){
-            //       setState(() {
-            //         downloadData();
-            //       });
-            //   },
-            //   child: btnDownload(),
-            // ),
-            
             // Container(color: Colors.amberAccent,
             // height: 50,)
           ],
@@ -168,7 +188,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   btnDownload() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -183,12 +202,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-
   downloadData() {
-      final FirebaseFirestore _db = FirebaseFirestore.instance;
+    final FirebaseFirestore _db = FirebaseFirestore.instance;
     List<RegistrationModel> users = [];
-    print("called");
+
     _db.collection('users').get().then((value) {
       QuerySnapshot data = value;
       for (QueryDocumentSnapshot snapshot in data.docs) {
@@ -204,7 +221,9 @@ class _HomeScreenState extends State<HomeScreen> {
             number: snapshot.get('phone'),
             vName: snapshot.get('volunteer_name'),
             vNum: snapshot.get('volunteer_number'),
-            isVerified: snapshot.get('isVerified'), date: snapshot.get('date') ?? "");
+            isVerified: snapshot.get('isVerified'),
+            date: snapshot.get('date') ?? "",
+            id: snapshot.get("id"));
 
         setState(() {
           users.add(user);
@@ -247,41 +266,38 @@ class _HomeScreenState extends State<HomeScreen> {
     for (var i = 0; i < jsonData.length; i++) {
       RegistrationModel row = jsonData[i];
       //var values = row;
-       List<String> val=[];
-       val.add(row.name!);
-       val.add(row.age!);
-       val.add(row.gender!);
-       val.add(row.number!);
-       val.add(row.district!);
-        val.add(row.constituency!);
-       val.add(row.mandal!);
-        val.add(row.address!);
-       
-      
-       val.add(row.pincode!);
-       val.add(row.vName!);
-       val.add(row.vNum!);
-       val.add(row.date!);
-        val.add(row.isVerified.toString());
-       log("${val.toList()}");
+      List<String> val = [];
+      val.add(row.name!);
+      val.add(row.age!);
+      val.add(row.gender!);
+      val.add(row.number!);
+      val.add(row.district!);
+      val.add(row.constituency!);
+      val.add(row.mandal!);
+      val.add(row.address!);
 
+      val.add(row.pincode!);
+      val.add(row.vName!);
+      val.add(row.vNum!);
+      val.add(row.date!);
+      val.add(row.isVerified.toString());
+      log("${val.toList()}");
 
       for (var j = 0; j < val.length; j++) {
         log("calledhere");
-       setState(() {
+        setState(() {
           sheet
-            .cell(CellIndex.indexByColumnRow(rowIndex: i + 1, columnIndex: j))
-            .value = val[j];
-       });
+              .cell(CellIndex.indexByColumnRow(rowIndex: i + 1, columnIndex: j))
+              .value = val[j];
+        });
       }
     }
-    DateTime dt =DateTime.now();
+    DateTime dt = DateTime.now();
     setState(() {
       var fileBytes = excel.save(fileName: 'details$dt.xlsx');
-      print(fileBytes!.toList());
+      //print(fileBytes!.toList());
     });
-     
-    
+
     // Save the Excel file
     // excel.encode()!.then((Uint8List bytes) {
     //   final excelFile = ExcelFile(bytes);
@@ -289,7 +305,4 @@ class _HomeScreenState extends State<HomeScreen> {
     //   excelFile.save(excelFileName);
     // });
   }
-
-
-
 }

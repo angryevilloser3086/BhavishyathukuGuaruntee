@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "174297607342",
+    "project_id": "bhavishyathukuguarantee-d3199",
+    "storage_bucket": "bhavishyathukuguarantee-d3199.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174297607342:android:973c3fba57d5f4d322513f",
+        "android_client_info": {
+          "package_name": "com.example.vregistration"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "174297607342-kmjp0q8a44pitp7nkpa3e08f5r27qgqn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIrBtPCOzcpxkBaMhlwiv_2Edc3Mq91yQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "174297607342-kmjp0q8a44pitp7nkpa3e08f5r27qgqn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,6 +12,7 @@ class RegistratioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Come Back::Register Page");
     return ChangeNotifierProvider(
       create: (context) => RegistrationProvider(),
       child: Scaffold(
@@ -48,6 +49,7 @@ class RegistratioScreen extends StatelessWidget {
                       // vNum(context, registrationProvider),
                       AppConstants.h_10,
                       didTDPContact(context, registrationProvider),
+                      uniqueID(context,registrationProvider),
                       verifyNumber(context, registrationProvider),
                     ],
                   ),
@@ -314,7 +316,7 @@ class RegistratioScreen extends StatelessWidget {
             );
           }),
         ),
-
+       
         AppConstants.h_5,
           if(!registrationProvider.enableOTPtext)
           getOtpBtn(context, registrationProvider),
@@ -344,30 +346,33 @@ class RegistratioScreen extends StatelessWidget {
         AppConstants.h_10,
         if (registrationProvider.enableOTPtext &&
             !registrationProvider.showSubmit)
-        InkWell(
-            onTap: () {
-              registrationProvider.otpVerify(
-                  context); //AppConstants.moveNextClearAll(context, const HomeScreen());
-            },
-            child: Container(
-                width: MediaQuery.of(context).size.width * 0.15,
-                height: 60,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: const BorderRadius.all(Radius.circular(5))),
-                child: Center(
-                    child: registrationProvider.showLoader
-                        ? const CircularProgressIndicator(
-                            color: Colors.black,
-                          )
-                        : Text(
-                            Strings.of(context).verifyCode.substring(0, 11),
-                            style: GoogleFonts.inter(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500),
-                          )))),
+        Align(
+          alignment: Alignment.center,
+          child: InkWell(
+              onTap: () {
+                registrationProvider.otpVerify(
+                    context); //AppConstants.moveNextClearAll(context, const HomeScreen());
+              },
+              child: Container(
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  height: 60,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: const BorderRadius.all(Radius.circular(5))),
+                  child: Center(
+                      child: registrationProvider.showLoader
+                          ? const CircularProgressIndicator(
+                              color: Colors.black,
+                            )
+                          : Text(
+                              Strings.of(context).verifyCode.substring(0, 11),
+                              style: GoogleFonts.inter(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500),
+                            )))),
+        ),
         
         if (registrationProvider.showSubmit)
           Center(
@@ -378,13 +383,13 @@ class RegistratioScreen extends StatelessWidget {
                     registrationProvider.registerUser(context);
                   },
                   child: Container(
-                      width: MediaQuery.of(context).size.width * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.35,
                       height: 60,
                       decoration: BoxDecoration(
                           color: Colors.transparent,
                           border: Border.all(color: Colors.black),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(35))),
+                              const BorderRadius.all(Radius.circular(15))),
                       child: Center(
                           child: Text(
                         Strings.of(context).submit,
@@ -399,38 +404,44 @@ class RegistratioScreen extends StatelessWidget {
     );
   }
 
+
+   
+
   getOtpBtn(BuildContext context,RegistrationProvider registrationProvider ){
     print("build method:S${registrationProvider.showLoaderOTP}");
    // print("${registrationProvider.phoneTextController.text.length}");
-    return InkWell(
-            onTap: () {
-             if(registrationProvider.phoneTextController.text.length==10){
-               registrationProvider.verifyPhone(context,
-                          registrationProvider.phoneTextController.text);
-             }else{
-              AppConstants.showSnackBar(context, "please enter valid Number");
-             }
-               //AppConstants.moveNextClearAll(context, const HomeScreen());
-            },
-            child: Container(
-                width: MediaQuery.of(context).size.width * 0.15,
-                height: 60,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black),
-                    borderRadius: const BorderRadius.all(Radius.circular(5))),
-                child: Center(
-                    child: registrationProvider.showLoaderOTP
-                        ? const CircularProgressIndicator(
-                            color: Colors.black,
-                          )
-                        : Text(
-                            Strings.of(context).getOtp,
-                            style: GoogleFonts.inter(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500),
-                          ))));
+    return Align(
+      alignment: Alignment.center,
+      child: InkWell(
+              onTap: () {
+               if(registrationProvider.phoneTextController.text.length==10){
+                 registrationProvider.verifyPhone(context,
+                            registrationProvider.phoneTextController.text);
+               }else{
+                AppConstants.showSnackBar(context, "please enter valid Number");
+               }
+                 //AppConstants.moveNextClearAll(context, const HomeScreen());
+              },
+              child: Container(
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: const BorderRadius.all(Radius.circular(5))),
+                  child: Center(
+                      child: registrationProvider.showLoaderOTP
+                          ? const CircularProgressIndicator(
+                              color: Colors.black,
+                            )
+                          : Text(
+                              Strings.of(context).getOtp,
+                              style: GoogleFonts.inter(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500),
+                            )))),
+    );
         
   }
 
@@ -604,7 +615,7 @@ class RegistratioScreen extends StatelessWidget {
                 filled: true,
                 counterStyle: Theme.of(context).textTheme.bodySmall,
                 counterText: "",
-                hintText: "First Name",
+                hintText: "Name",
                 errorStyle: GoogleFonts.inter(
                     fontSize: 10,
                     fontWeight: FontWeight.w400,
@@ -998,4 +1009,51 @@ class RegistratioScreen extends StatelessWidget {
       ],
     );
   }
+
+  uniqueID(BuildContext context, RegistrationProvider registrationProvider) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+         "Scan QR for Unique ID",
+          textAlign: TextAlign.start,
+          style: GoogleFonts.inter(
+              fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
+        ),
+        AppConstants.h_5,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width*0.75,
+              child: TextFormField(
+                controller: registrationProvider.uniqueCode,
+                keyboardType: TextInputType.number,
+                decoration: AppConstants.toAppInputDecoration2(
+                    context, "Scan For Unique ID", ''),
+                style: GoogleFonts.exo2(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
+                ),
+                maxLength: 12,
+                validator: (value) =>
+                    value!.trim().isEmpty ? 'Unique number required' : null,
+              ),
+            ),
+            AppConstants.w_10,
+            InkWell(
+              onTap: () => registrationProvider.setQRValues(context),
+              child: SizedBox(width: 50,height:50,child: Image.asset("assets/images/ic_qr.png")),
+            ),
+            const Spacer()
+          ],
+        ),
+      ],
+    );
+  }
+
+ 
+
 }
