@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:vregistration/src/provider/details_provider.dart';
 import 'package:vregistration/src/view/details/details_screen.dart';
 import 'package:vregistration/src/view/home_screen.dart';
 
@@ -41,7 +42,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => RegistrationProvider())
+        ChangeNotifierProvider(create: (_) => RegistrationProvider()),
+        ChangeNotifierProvider(create: (_) => DetailsProvider()),
       ],
       child: MaterialApp(
         // Providing a restorationScopeId allows the Navigator built by the
@@ -156,7 +158,7 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: (settings){
              List<String> pathComponents = settings.name!.split('/');
             // List<String> pathComponents = settings.name.split('/');
-          if (pathComponents[1] == 'details-screen') {
+          if (pathComponents[1] == 'details-screen' ) {
             print(pathComponents.toList());
             return MaterialPageRoute(
               builder: (context) {
