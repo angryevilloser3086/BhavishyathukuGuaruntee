@@ -3092,6 +3092,9 @@ class RegistrationProvider extends ChangeNotifier {
     } else if (val == 2) {
       gender = "Female";
       selectedGRadio = val;
+    } else{
+      gender = "Others";
+      selectedGRadio = val;
     }
     notifyListeners();
   }

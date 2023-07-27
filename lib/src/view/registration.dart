@@ -72,45 +72,72 @@ class RegistratioScreen extends StatelessWidget {
           style: GoogleFonts.inter(
               fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
         ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.45,
-          child: Column(
+       Row(
+        mainAxisSize: MainAxisSize.max,
             children: [
-              ListTileTheme(
-                minVerticalPadding: 0,
-                horizontalTitleGap: 5,
-                child: RadioListTile<int>(
-                  contentPadding: AppConstants.leftRight_5,
-                  value: 1,
-                  groupValue: registrationProvider.selectedGRadio,
-                  activeColor: Colors.black,
-                  onChanged: (int? val) {
-                    registrationProvider.setGender(val!);
-                  },
-                  title: Text(
-                    Strings.of(context).male,
-                    style: GoogleFonts.inter(color: Colors.black, fontSize: 15,fontWeight: FontWeight.w500),
+              SizedBox(
+                width: 100,
+                child: ListTileTheme(
+                  minLeadingWidth: 0,
+                  minVerticalPadding: 0,
+                  horizontalTitleGap: 5,
+                  child: RadioListTile<int>(
+                    contentPadding: AppConstants.leftRight_5,
+                    value: 1,
+                    groupValue: registrationProvider.selectedGRadio,
+                    activeColor: Colors.black,
+                    onChanged: (int? val) {
+                      registrationProvider.setGender(val!);
+                    },
+                    title: Text(
+                      Strings.of(context).male,
+                      style: GoogleFonts.inter(color: Colors.black, fontSize: 15,fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
               ),
-              ListTileTheme(
-                horizontalTitleGap: 5,
-                child: RadioListTile<int>(
-                  contentPadding: AppConstants.leftRight_5,
-                  value: 2,
-                  groupValue: registrationProvider.selectedGRadio,
-                  activeColor: Colors.black,
-                  onChanged: (int? val) {
-                    registrationProvider.setGender(val!);
-                  },
-                  title: Text(Strings.of(context).female,
-                      style:
-                          GoogleFonts.inter(color: Colors.black, fontSize: 15,fontWeight: FontWeight.w500)),
+              SizedBox(
+                width: 100,
+                child: ListTileTheme(
+                  minLeadingWidth: 0,
+                  horizontalTitleGap: 5,
+                  child: RadioListTile<int>(
+                    contentPadding: AppConstants.leftRight_5,
+                    value: 2,
+                    groupValue: registrationProvider.selectedGRadio,
+                    activeColor: Colors.black,
+                    onChanged: (int? val) {
+                      registrationProvider.setGender(val!);
+                    },
+                    title: Text(Strings.of(context).female,
+                        style:
+                            GoogleFonts.inter(color: Colors.black, fontSize: 15,fontWeight: FontWeight.w500)),
+                  ),
                 ),
               ),
+               SizedBox(
+                width: 100,
+                 child: ListTileTheme(
+                  minLeadingWidth: 0,
+                  horizontalTitleGap: 5,
+                  child: RadioListTile<int>(
+                    contentPadding: AppConstants.leftRight_5,
+                    value: 3,
+                    groupValue: registrationProvider.selectedGRadio,
+                    activeColor: Colors.black,
+                    onChanged: (int? val) {
+                      registrationProvider.setGender(val!);
+                    },
+                    title: Text(Strings.of(context).others,
+                        style:
+                            GoogleFonts.inter(color: Colors.black, fontSize: 15,fontWeight: FontWeight.w500)),
+                  ),
+                             ),
+               ),
+            
             ],
           ),
-        ),
+        
       ],
     );
   }
@@ -130,45 +157,49 @@ class RegistratioScreen extends StatelessWidget {
                 color: Colors.black,
               )),
         ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width * 0.45,
-          child: Column(
+         Row(
             children: [
-              ListTileTheme(
-                minVerticalPadding: 0,
-                horizontalTitleGap: 5,
-                child: RadioListTile<int>(
-                  contentPadding: AppConstants.leftRight_5,
-                  value: 1,
-                  groupValue: registrationProvider.selectedRadio,
-                  activeColor: Colors.black,
-                  onChanged: (int? val) {
-                    registrationProvider.setSelectedRadio(val);
-                  },
-                  title: Text(
-                    Strings.of(context).yes,
-                    style: GoogleFonts.inter(color: Colors.black, fontSize: 14),
+              SizedBox(
+                width: 150,
+                child: ListTileTheme(
+                  minVerticalPadding: 0,
+                  horizontalTitleGap: 5,
+                  child: RadioListTile<int>(
+                    contentPadding: AppConstants.leftRight_5,
+                    value: 1,
+                    groupValue: registrationProvider.selectedRadio,
+                    activeColor: Colors.black,
+                    onChanged: (int? val) {
+                      registrationProvider.setSelectedRadio(val);
+                    },
+                    title: Text(
+                      Strings.of(context).yes,
+                      style: GoogleFonts.inter(color: Colors.black, fontSize: 14),
+                    ),
                   ),
                 ),
               ),
-              ListTileTheme(
-                horizontalTitleGap: 5,
-                child: RadioListTile<int>(
-                  contentPadding: AppConstants.leftRight_5,
-                  value: 2,
-                  groupValue: registrationProvider.selectedRadio,
-                  activeColor: Colors.black,
-                  onChanged: (int? val) {
-                    registrationProvider.setSelectedRadio(val);
-                  },
-                  title: Text(Strings.of(context).no,
-                      style:
-                          GoogleFonts.inter(color: Colors.black, fontSize: 14)),
+              SizedBox(
+                width: 150,
+                child: ListTileTheme(
+                  horizontalTitleGap: 5,
+                  child: RadioListTile<int>(
+                    contentPadding: AppConstants.leftRight_5,
+                    value: 2,
+                    groupValue: registrationProvider.selectedRadio,
+                    activeColor: Colors.black,
+                    onChanged: (int? val) {
+                      registrationProvider.setSelectedRadio(val);
+                    },
+                    title: Text(Strings.of(context).no,
+                        style:
+                            GoogleFonts.inter(color: Colors.black, fontSize: 14)),
+                  ),
                 ),
               ),
             ],
           ),
-        ),
+        
         if (registrationProvider.selectedRadio == 1)
           ifYesMent(context, registrationProvider)
       ],
@@ -965,6 +996,8 @@ class RegistratioScreen extends StatelessWidget {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter the PinCode';
+              }else if(value.trim().length<6){
+                return 'Please enter the valid PinCode';
               }
               return null;
             },
@@ -1038,8 +1071,14 @@ class RegistratioScreen extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                 ),
                 maxLength: 12,
-                validator: (value) =>
-                    value!.trim().isEmpty ? 'Unique number required' : null,
+                validator: (value)
+                    {
+                      if(value!.trim().isEmpty ||value.trim().length<6){
+                        return 'Unique number required'; 
+                      }else{
+                        return  null;
+                      }
+                    }
               ),
             ),
             AppConstants.w_10,

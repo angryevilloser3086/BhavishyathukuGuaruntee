@@ -25,11 +25,11 @@
   "pinCode":"పిన్ కోడ్ / PIN Code",
   "demands":"డిమాండ్లు / Demands",
   "issues":"సమస్యలు / Issues (optional)",
-  "mobileNum":"వాలంటీర్ ఫోన్ నంబర్/ Volunteer Phone Number (required)",
+  "mobileNum":"వాలంటీర్ ఫోన్ నంబర్/ Volunteer Phone Number",
   "gramaPanchayat":"గ్రామ పంచాయతీ/ GRAMAPANCHAYATI",
   "gender":"లింగం / Gender",
-  "mNumberReq":"Phone Number (required)",
-  "verifyCode":"Verify Code (required)",
+  "mNumberReq":"Phone Number ",
+  "verifyCode":"Verify Code",
   "welcomeToMahaShakti":"Welcome to MahaShakti",
   "verification":"VERIFICATION",
   "ssentCode":"Please enter your OTP Number",
@@ -40,5 +40,6 @@
   "no":"NO",
   "male":"Male",
   "female":"Female",
+  "others":"Others",
   "getOtp":"Get OTP"
 }
