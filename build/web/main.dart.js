@@ -96077,7 +96077,7 @@ while(true)switch(s){case 0:p=A.Cj(new A.an_(),!0,null,t.z)
 s=2
 return A.S(A.et(a,!1).jq(p),$async$x6)
 case 2:o=c
-if(o!=null){p=A.kg(J.aV2(o))
+if(o!=null){p=A.kg(B.b.gU(J.aV2(o).split("/")))
 q.ch=p
 A.fs(p.a.a)}q.ai()
 return A.M(null,r)}})

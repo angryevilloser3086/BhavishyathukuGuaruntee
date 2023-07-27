@@ -3151,7 +3151,10 @@ class RegistrationProvider extends ChangeNotifier {
           builder: (context) => const QRViewExample(), fullscreenDialog: true),
     );
     if (qrResults != null) {
-      uniqueCode = TextEditingController(text: qrResults.code);
+      String qrcode =  qrResults.code;
+      List<String>uID = qrcode.split("/");
+     // print("uid:${uID.last}");
+      uniqueCode = TextEditingController(text: uID.last);
       print(uniqueCode.text);
     }
 
