@@ -153,14 +153,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             //RegistratioScreen()
 
-            InkWell(
-              onTap: () {
-                setState(() {
-                  downloadData();
-                });
-              },
-              child: btnDownload(),
-            ),
+            // InkWell(
+            //   onTap: () {
+            //     setState(() {
+            //       downloadData();
+            //     });
+            //   },
+            //   child: btnDownload(),
+            // ),
 
             // Container(color: Colors.amberAccent,
             // height: 50,)
