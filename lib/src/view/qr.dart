@@ -37,7 +37,6 @@ class _QRViewExampleState extends State<QRViewExample> {
           AppConstants.h_60,
           Expanded(
             child: QRView(
-              overlay: QrScannerOverlayShape(),
               key: qrKey,
               onQRViewCreated: _onQRViewCreated,
             ),
