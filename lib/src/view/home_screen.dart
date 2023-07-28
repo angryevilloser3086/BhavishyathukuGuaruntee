@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 )),
 
             SizedBox(
-              height:w<450? h * 1.5:h*1.9,
+              height:h*2,
               width: w,
               child: const RegistratioScreen(),
             ),

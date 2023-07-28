@@ -16,19 +16,23 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [quizQuestions(size), logoCard(context, size)],
-              ),
-              copyRight(size)
-            ],
+          child: Container(
+            height: size.height,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [quizQuestions(size), logoCard(context, size)],
+                ),
+                copyRight(size)
+              ],
+            ),
           ),
         ),
       ),
@@ -117,10 +121,10 @@ class _QuizScreenState extends State<QuizScreen> {
 
   questionnaireInstruction(Size size) {
     return Container(
-      padding: AppConstants.all_20,
+      padding: AppConstants.leftRight_20,
       color: Colors.white,
       width:size.width<450? size.width * 0.55:size.width*0.35,
-      height: size.height * 0.5,
+      height:size.width<450?size.height*0.7: size.height * 0.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

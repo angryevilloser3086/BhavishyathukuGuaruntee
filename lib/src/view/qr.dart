@@ -35,10 +35,8 @@ class _QRViewExampleState extends State<QRViewExample> {
       body: Column(
         children: <Widget>[
           AppConstants.h_60,
-        Container(
-            width: 200,
-            height: 200,
-            padding: AppConstants.all_10,
+        
+            Expanded(
             child: QRView(
               overlay: QrScannerOverlayShape(
                 cutOutSize: 350
@@ -46,7 +44,7 @@ class _QRViewExampleState extends State<QRViewExample> {
               key: qrKey,
               onQRViewCreated: _onQRViewCreated,
             ),
-          ),
+            ),
           Expanded(
             flex: 1,
             child: Center(

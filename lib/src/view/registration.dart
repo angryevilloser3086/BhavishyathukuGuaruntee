@@ -17,7 +17,7 @@ class RegistratioScreen extends StatelessWidget {
       create: (context) => RegistrationProvider(),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: Colors.amber[50],
+        backgroundColor: Colors.amber[200],
         body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -85,6 +85,7 @@ class RegistratioScreen extends StatelessWidget {
                     contentPadding: AppConstants.leftRight_5,
                     value: 1,
                     groupValue: registrationProvider.selectedGRadio,
+
                     activeColor: Colors.black,
                     onChanged: (int? val) {
                       registrationProvider.setGender(val!);
@@ -167,6 +168,8 @@ class RegistratioScreen extends StatelessWidget {
                   child: RadioListTile<int>(
                     contentPadding: AppConstants.leftRight_5,
                     value: 1,
+                    
+                    //overlayColor: MaterialStateProperty.resolveWith(getColor),
                     groupValue: registrationProvider.selectedRadio,
                     activeColor: Colors.black,
                     onChanged: (int? val) {
@@ -220,6 +223,21 @@ class RegistratioScreen extends StatelessWidget {
         vNumberField(context, registrationProvider)
       ],
     );
+  }
+
+
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+      MaterialState.disabled,
+      MaterialState.selected
+    };
+    if (states.any(interactiveStates.contains)) {
+      return Colors.black;
+    }
+    return const Color.fromRGBO(0,0,0,0);
   }
 
   demands(BuildContext context, RegistrationProvider registrationProvider) {
