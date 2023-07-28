@@ -35,16 +35,13 @@ class _QRViewExampleState extends State<QRViewExample> {
       body: Column(
         children: <Widget>[
           AppConstants.h_60,
-        
-            Expanded(
+          Expanded(
             child: QRView(
-              overlay: QrScannerOverlayShape(
-                cutOutSize: 350
-              ),
+              overlay: QrScannerOverlayShape(),
               key: qrKey,
               onQRViewCreated: _onQRViewCreated,
             ),
-            ),
+          ),
           Expanded(
             flex: 1,
             child: Center(
@@ -61,13 +58,13 @@ class _QRViewExampleState extends State<QRViewExample> {
 
   void _onQRViewCreated(QRViewController controller) async {
     this.controller = controller;
-    
+
     log("${await controller.getCameraInfo()}");
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
         // if (result != null) {
-           Navigator.of(context,rootNavigator: true).maybePop(result);
+        Navigator.of(context, rootNavigator: true).maybePop(result);
         // }
 
         // ..pushNamed('/');
