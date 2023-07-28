@@ -22,13 +22,15 @@ class _QuizScreenState extends State<QuizScreen> {
         child: SingleChildScrollView(
           child: Container(
             height: size.height,
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [quizQuestions(size), logoCard(context, size)],
+                  children: [Expanded(child: 
+                  quizQuestions(size)), logoCard(context, size)],
                 ),
                 copyRight(size)
               ],
@@ -95,7 +97,7 @@ class _QuizScreenState extends State<QuizScreen> {
   quizQuestions(Size size) {
     return Container(
         height: size.height * 0.90,
-        width: size.width * 0.65,
+        width: size.width ,
         color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -123,8 +125,8 @@ class _QuizScreenState extends State<QuizScreen> {
     return Container(
       padding: AppConstants.leftRight_20,
       color: Colors.white,
-      width:size.width<450? size.width * 0.55:size.width*0.35,
-      height:size.width<450?size.height*0.7: size.height * 0.5,
+      width: size.width,
+      height:size.width<830?size.height*0.65: size.height * 0.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +136,7 @@ class _QuizScreenState extends State<QuizScreen> {
             style: GoogleFonts.poppins(
                 color: AppConstants.appredColor,
                 fontWeight: FontWeight.w700,
-                fontSize:size.width<450?14:40),
+                fontSize:size.width<830?14:40),
           ),
           Container(
             color: AppConstants.appYellowBG,
@@ -145,12 +147,12 @@ class _QuizScreenState extends State<QuizScreen> {
           Text(
             "This quiz consists of eight multiple-choice questions. Read each question carefully and select the option you believe is the correct answer.",
             style: GoogleFonts.poppins(
-                color: Colors.black, fontWeight: FontWeight.w500, fontSize:size.width<450?12:16),
+                color: Colors.black, fontWeight: FontWeight.w500, fontSize:size.width<830?12:16),
           ),
           Text(
             '''Click on the "Next" button to move to the next question. Once you have completed all the questions, click on the "Submit" button to view your score.''',
             style: GoogleFonts.poppins(
-                color: Colors.black, fontWeight: FontWeight.w500, fontSize: size.width<450?12:16),
+                color: Colors.black, fontWeight: FontWeight.w500, fontSize: size.width<830?12:16),
           ),
 
           AppConstants.h_20,
