@@ -17,7 +17,7 @@ class RegistratioScreen extends StatelessWidget {
       create: (context) => RegistrationProvider(),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: Colors.amber[200],
+        backgroundColor: Colors.yellow[700],
         body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -98,7 +98,7 @@ class RegistratioScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 100,
+                width: 150,
                 child: ListTileTheme(
                   minLeadingWidth: 0,
                   horizontalTitleGap: 5,
@@ -117,7 +117,7 @@ class RegistratioScreen extends StatelessWidget {
                 ),
               ),
                SizedBox(
-                width: 100,
+                width: 120,
                  child: ListTileTheme(
                   minLeadingWidth: 0,
                   horizontalTitleGap: 5,
