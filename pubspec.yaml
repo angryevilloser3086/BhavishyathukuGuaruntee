@@ -24,6 +24,7 @@ dependencies:
   excel: ^2.1.0
   cloud_firestore: ^4.7.1
   qr_code_scanner: ^1.0.1
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:

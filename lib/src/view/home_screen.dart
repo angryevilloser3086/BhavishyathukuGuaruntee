@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/reg_model.dart';
+import 'quiz/quiz_screen.dart';
 import 'registration.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var w = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.yellowAccent,
+      backgroundColor: Colors.white,
       body: SafeArea(
           child: SingleChildScrollView(
         controller: scrollController,
@@ -70,75 +72,44 @@ class _HomeScreenState extends State<HomeScreen> {
             InkWell(
                 onTap: () {
                   //Navigator.
-                  Navigator.pushNamed(context, '/QRSCREEN');
+                  //Navigator.pushNamed(context, '/QRSCREEN');
                   //AppConstants.moveNextstl(context,const QRViewExample());
                   if (w < 450) {
-                    //   setState(() {
-                    //   scrollController.animateTo(MediaQuery.of(context).size.height*0.5, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
-                    // });
+                      setState(() {
+                      scrollController.animateTo(MediaQuery.of(context).size.height*0.5, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
+                    });
                   } else {
-                    // setState(() {
-                    //   scrollController.animateTo(MediaQuery.of(context).size.height*1.6, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
-                    // });
+                    setState(() {
+                      scrollController.animateTo(MediaQuery.of(context).size.height*1.6, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
+                    });
                   }
                 },
                 child: btn()),
-            Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                SizedBox(
-                  width: double.maxFinite,
-                  child: Image.asset(images[activePage], fit: BoxFit.contain),
-                ),
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () {
-                        if (activePage > 0 && activePage <= images.length - 1) {
-                          setState(() {
-                            activePage--;
-                          });
-                        } else if (activePage <= 0) {
-                          // print(activePage);
-                          setState(() {
-                            activePage = images.length - 1;
-                          });
-                        }
-                      },
-                      child: const Icon(
-                        Icons.arrow_back_ios,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () {
-                        if (activePage >= 0 && activePage < images.length - 1) {
-                          setState(() {
-                            activePage++;
-                          });
-                        } else {
-                          setState(() {
-                            activePage = 0;
-                          });
-                        }
-                      },
-                      child: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
+           
+            
+            CarouselSlider(items: [
+              Container(
+                width: w,
+               
+                child: Image.asset(images[0],fit: BoxFit.contain,)),
+              Image.asset(images[1],fit: BoxFit.contain,),
+              Image.asset(images[2],fit: BoxFit.contain,),
+              Image.asset(images[3],fit: BoxFit.contain,),
+              Image.asset(images[4],fit: BoxFit.contain,),
+              Image.asset(images[5],fit: BoxFit.contain,),
+            ], options:  CarouselOptions(
+                height:w<410? 200:h,
+                enlargeCenterPage: true,
+                autoPlay: true,
+                aspectRatio:w,
+                autoPlayCurve: Curves.bounceOut,
+                enableInfiniteScroll: true,
+                autoPlayAnimationDuration:const Duration(milliseconds: 250),
+                //viewportFraction: 0.8,
+              ),),
+            
+            
+            
             SizedBox(
                 width: w,
                 child: Image.asset(
@@ -147,12 +118,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 )),
 
             SizedBox(
-              height: h * 2,
+              height:w<450? h * 1.5:h*1.9,
               width: w,
               child: const RegistratioScreen(),
             ),
             //RegistratioScreen()
-
+            SizedBox(
+              width: w,
+              height: h,
+              child: const QuizScreen())
             // InkWell(
             //   onTap: () {
             //     setState(() {
@@ -295,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
     DateTime dt = DateTime.now();
     setState(() {
       var fileBytes = excel.save(fileName: 'details$dt.xlsx');
-      //print(fileBytes!.toList());
+      log("${fileBytes!.toList()}");
     });
 
     // Save the Excel file

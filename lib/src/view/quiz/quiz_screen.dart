@@ -1,10 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vregistration/utils/app_utils.dart';
 
-class QuizScreen extends StatelessWidget {
+class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
 
+  @override
+  State<QuizScreen> createState() => _QuizScreenState();
+}
+
+class _QuizScreenState extends State<QuizScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -33,11 +40,11 @@ class QuizScreen extends StatelessWidget {
       width: size.width,
       height: size.height * 0.10,
       color: AppConstants.appredColor,
-      child: cpyRytTxt(),
+      child: cpyRytTxt(size),
     );
   }
 
-  cpyRytTxt() {
+  cpyRytTxt(Size size) {
     return Padding(
       padding: AppConstants.leftRight_20,
       child: Row(
@@ -45,23 +52,23 @@ class QuizScreen extends StatelessWidget {
           Text(
             "Copyright © 2023",
             style: GoogleFonts.poppins(
-                fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
+                fontSize:size.width<450?12: 18, fontWeight: FontWeight.w500, color: Colors.white),
           ),
           Spacer(),
           Text(
             "Follow us on:",
             style: GoogleFonts.poppins(
-                fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
+                fontSize:size.width<450?12: 18, fontWeight: FontWeight.w500, color: Colors.white),
           ),
-          socialMediaBtn()
+          socialMediaBtn(size)
         ],
       ),
     );
   }
 
-  socialMediaBtn() {
+  socialMediaBtn(Size size) {
     return Container(
-      height: 35,
+      height:size.width<450?25: 35,
       child: Row(children: [
         AppConstants.w_5,
         InkWell(child: Image.asset("assets/images/ic_fb_box.png")),
@@ -113,7 +120,7 @@ class QuizScreen extends StatelessWidget {
       padding: AppConstants.all_20,
       color: Colors.white,
       width:size.width<450? size.width * 0.55:size.width*0.35,
-      height: size.height * 0.45,
+      height: size.height * 0.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,7 +130,7 @@ class QuizScreen extends StatelessWidget {
             style: GoogleFonts.poppins(
                 color: AppConstants.appredColor,
                 fontWeight: FontWeight.w700,
-                fontSize:14),
+                fontSize:size.width<450?14:40),
           ),
           Container(
             color: AppConstants.appYellowBG,
@@ -134,26 +141,30 @@ class QuizScreen extends StatelessWidget {
           Text(
             "This quiz consists of eight multiple-choice questions. Read each question carefully and select the option you believe is the correct answer.",
             style: GoogleFonts.poppins(
-                color: Colors.black, fontWeight: FontWeight.w500, fontSize:10),
+                color: Colors.black, fontWeight: FontWeight.w500, fontSize:size.width<450?12:16),
           ),
           Text(
             '''Click on the "Next" button to move to the next question. Once you have completed all the questions, click on the "Submit" button to view your score.''',
             style: GoogleFonts.poppins(
-                color: Colors.black, fontWeight: FontWeight.w500, fontSize: 10),
+                color: Colors.black, fontWeight: FontWeight.w500, fontSize: size.width<450?12:16),
           ),
 
-          AppConstants.h_30,
-          startBtn(size)
+          AppConstants.h_20,
+          InkWell(
+            onTap: (){
+              log("message");
+            },
+            child: startBtn(size),
+          )
 
         ],
       ),
     );
   }
 
-
   startBtn(Size size){
     return Container(
-      width: size.width*0.2,
+      width: size.width*0.17,
       height: size.height*0.04,
       decoration:const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(25)),
@@ -161,11 +172,10 @@ class QuizScreen extends StatelessWidget {
       ),
       child: Center(
         child: Text("Start",style: GoogleFonts.poppins(color: AppConstants.appYellowBG,
-        fontSize: 15,fontWeight: FontWeight.w500),),
+        fontSize: size.width<450?15:16,fontWeight: FontWeight.w500),),
       ),
     );
   }
-
 
   logoCard(BuildContext context, Size size) {
     return Container(
