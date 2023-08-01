@@ -41,5 +41,10 @@
   "male":"Male",
   "female":"Female",
   "others":"Others",
-  "getOtp":"Get OTP"
+  "getOtp":"Get OTP",
+  "totalFam":"Total Family Members",
+  "framers":"Total No. of Farmers",
+  "womenAbv":"Women (Above 18)",
+  "students":"Students",
+  "unEmployeed":"UnEmployed Youth"
 }

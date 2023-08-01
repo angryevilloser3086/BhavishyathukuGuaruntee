@@ -11,7 +11,9 @@ class AppConstants {
   static const appFontcolor = Color(0xFFCED3DC);
   static const appHeadcolor = Color(0xFFF2FF00);
   static const appYellowBG = Color(0xFFFEE806);
-  static const appredColor = Color(0xFFE10707);
+  static const appredColor = Color(0xFFE10707);  
+  static const appredQColor = Color(0xFFE31F25);  
+
   
 
 

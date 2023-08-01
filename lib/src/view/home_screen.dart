@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     "assets/images/Desktop - 17.png",
     "assets/images/Desktop - 18.png"
   ];
+
   @override
   void initState() {
     super.initState();
@@ -75,41 +76,64 @@ class _HomeScreenState extends State<HomeScreen> {
                   //Navigator.pushNamed(context, '/QRSCREEN');
                   //AppConstants.moveNextstl(context,const QRViewExample());
                   if (w < 450) {
-                      setState(() {
-                      scrollController.animateTo(MediaQuery.of(context).size.height*0.5, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
+                    setState(() {
+                      scrollController.animateTo(
+                          MediaQuery.of(context).size.height * 0.5,
+                          duration: const Duration(seconds: 2),
+                          curve: Curves.bounceOut);
                     });
                   } else {
                     setState(() {
-                      scrollController.animateTo(MediaQuery.of(context).size.height*1.6, duration: const Duration(seconds: 2), curve: Curves.bounceOut);
+                      scrollController.animateTo(
+                          MediaQuery.of(context).size.height * 1.6,
+                          duration: const Duration(seconds: 2),
+                          curve: Curves.bounceOut);
                     });
                   }
                 },
                 child: btn()),
-           
-            
-            CarouselSlider(items: [
-              Container(
-                width: w,
-               
-                child: Image.asset(images[0],fit: BoxFit.contain,)),
-              Image.asset(images[1],fit: BoxFit.contain,),
-              Image.asset(images[2],fit: BoxFit.contain,),
-              Image.asset(images[3],fit: BoxFit.contain,),
-              Image.asset(images[4],fit: BoxFit.contain,),
-              Image.asset(images[5],fit: BoxFit.contain,),
-            ], options:  CarouselOptions(
-                height:w<410? 200:h,
+
+            CarouselSlider(
+              items: [
+                Container(
+                    width: w,
+                    child: Image.asset(
+                      images[0],
+                      fit: BoxFit.contain,
+                    )),
+                Image.asset(
+                  images[1],
+                  fit: BoxFit.contain,
+                ),
+                Image.asset(
+                  images[2],
+                  fit: BoxFit.contain,
+                ),
+                Image.asset(
+                  images[3],
+                  fit: BoxFit.contain,
+                ),
+                Image.asset(
+                  images[4],
+                  fit: BoxFit.contain,
+                ),
+                Image.asset(
+                  images[5],
+                  fit: BoxFit.contain,
+                ),
+              ],
+              options: CarouselOptions(
+                height: w < 410 ? 200 : h,
                 enlargeCenterPage: true,
                 autoPlay: true,
-                aspectRatio:w,
+                aspectRatio: w,
                 autoPlayCurve: Curves.bounceOut,
                 enableInfiniteScroll: true,
-                autoPlayAnimationDuration:const Duration(milliseconds: 250),
+                autoPlayAnimationDuration: const Duration(milliseconds: 250),
                 //viewportFraction: 0.8,
-              ),),
-            
-            
-            
+              ),
+            ),
+
             SizedBox(
                 width: w,
                 child: Image.asset(
@@ -118,15 +142,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 )),
 
             SizedBox(
-              height:h*2,
+              height: h < 500 ? h * 4 : h * 2.4,
               width: w,
-              child: const RegistratioScreen(),
+              child:  RegistratioScreen(height: h < 500 ? h * 4 : h * 2.4,),
             ),
             //RegistratioScreen()
             SizedBox(
-              width: w,
-              height: h,
-              child: const QuizScreen())
+                width: w,
+                height: h < 450 ? h * 2 : h,
+                child: QuizScreen(
+                  height: h < 450 ? h * 2 : h,
+                )),
             // InkWell(
             //   onTap: () {
             //     setState(() {
@@ -136,8 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //   child: btnDownload(),
             // ),
 
-            // Container(color: Colors.amberAccent,
-            // height: 50,)
+           
           ],
         ),
       )),
@@ -197,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
             vNum: snapshot.get('volunteer_number'),
             isVerified: snapshot.get('isVerified'),
             date: snapshot.get('date') ?? "",
-            id: snapshot.get("id"));
+            id: snapshot.get("id"), scheme: snapshot.get('scheme'));
 
         setState(() {
           users.add(user);

@@ -8,6 +8,7 @@ class RegistrationModel {
   String? mandal;
   String? address;
   String? pincode;
+  List<String> scheme;
   String? vNum;
   String? vName;
   String? number;
@@ -28,7 +29,8 @@ class RegistrationModel {
       this.vName,
       required this.number,
       required this.date,
-      required this.isVerified});
+      required this.isVerified,
+      required this.scheme});
   factory RegistrationModel.fromJson(Map<String, dynamic> json) =>
       RegistrationModel(
           name: json['name'],
@@ -43,7 +45,8 @@ class RegistrationModel {
           vNum: json['volunteer_number'],
           number: json['number'],
           date: json['date'],
-          isVerified: json['isVerified'], id: json['id']);
+          isVerified: json['isVerified'], id: json['id'],
+          scheme: json['scheme']);
   Map<String, dynamic> toJSON() => {
         'id':id,
         'name': name,
@@ -58,6 +61,7 @@ class RegistrationModel {
         'volunteer_name':vName,
         "phone": number,
         "isVerified":isVerified,
-        "date":date
+        "date":date,
+        'scheme':scheme
       };
 }

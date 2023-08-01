@@ -41,7 +41,36 @@ class RegistrationProvider extends ChangeNotifier {
   String cc = "91";
   String sDistrcts = '';
   String sMandals = '';
+  int famMembers=0;
+  int farmers = 0;
+  int womenAbv= 0;
+  int unEMployedYouth = 0;
+  int students = 0;
   bool showLoaderOTP = false;
+
+  List<int> famMem=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+
+  setFamMembers(int value){
+    famMembers = value;
+    notifyListeners();
+  }
+  setFarmers(int value){
+    farmers = value;
+    notifyListeners();
+  }
+  setunEMployed(int value){
+    unEMployedYouth = value;
+    notifyListeners();
+  }
+  setStudents(int value){
+    students = value;
+    notifyListeners();
+  }
+  setNoOFWomen(int value){
+    womenAbv = value;
+    notifyListeners();
+  }
+
   List<String> sendList(String value) {
     if (value.isNotEmpty && value != 'Select the district') {
       if (value == 'Alluri Sitharama Raju') {
@@ -2973,7 +3002,7 @@ class RegistrationProvider extends ChangeNotifier {
     if (formKey.currentState!.validate()) {
       DialogBuilder(context)
           .showLoadingIndicator("Please wait while we are sending otp");
-      print(showLoaderOTP);
+     // print(showLoaderOTP);
       Future.delayed(const Duration(seconds: 1));
       //var credential = PhoneAuthProvider.credential(verificationId: , smsCode: smsCodeController.text);
       try {
@@ -3057,6 +3086,25 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<String> setSchemes(){
+    List<String> schemes=[];
+    schemes.add("Deepam");
+    if(unEMployedYouth>0){
+      schemes.add("YuvaGalam Nidhi");
+    }
+    if(farmers>0){
+      schemes.add("Annadatha");
+    }
+    if(womenAbv>0){
+      schemes.add("Maha Shakti");
+    }
+    if(students>0){
+      schemes.add("Thalliki Vandanam");
+    }
+
+    return schemes;
+  }
+
   showCCPicker(BuildContext context) {
     showCountryPicker(
       context: context,
@@ -3101,6 +3149,7 @@ class RegistrationProvider extends ChangeNotifier {
 
   void registerUser(BuildContext context) {
     showLoader = true;
+    List<String>schems=setSchemes();
     DialogBuilder(context)
         .showLoadingIndicator("Please wait while we are updating details ");
     DateTime dt = DateTime.now();
@@ -3118,7 +3167,7 @@ class RegistrationProvider extends ChangeNotifier {
         gender: gender,
         isVerified: isVerified,
         date: dt.toIso8601String(),
-        id: uniqueCode.text);
+        id: uniqueCode.text, scheme: schems);
 
     _db
         .collection('users')

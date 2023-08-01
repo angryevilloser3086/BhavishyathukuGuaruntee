@@ -76,8 +76,8 @@ class _MyAppState extends State<MyApp> {
         // preferred ThemeMode (light, dark, or system default) from the
         // SettingsController to display the correct theme.
         theme: ThemeData(
-          primaryColor: AppConstants.appBgColor,
-          unselectedWidgetColor: Colors.white,
+          primaryColor: Colors.black,
+          unselectedWidgetColor: Colors.black,
           //textButtonTheme: TextButtonThemeData(style: flatButtonStyle),
           disabledColor: Colors.black,
           
