@@ -21,6 +21,7 @@ class RegistrationProvider extends ChangeNotifier {
   String selectedConstituency = '';
   bool showSubmit = false;
   int selectedRadio = 0;
+  int selectedURadio = 0;
   int selectedGRadio = 0;
   bool isVerified = false;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -3171,7 +3172,7 @@ class RegistrationProvider extends ChangeNotifier {
         gender: gender,
         isVerified: isVerified,
         date: dt.toIso8601String(),
-        id: uniqueCode.text,
+        id: uniqueCode.text.isNotEmpty?uniqueCode.text:"",
         scheme: schems,
         totalFam: famMembers,
         totalFarmers: farmers,
@@ -3225,6 +3226,12 @@ class RegistrationProvider extends ChangeNotifier {
 
   setSelectedRadio(int? val) {
     selectedRadio = val!;
+    // print("${val}selected");
+
+    notifyListeners();
+  }
+  setSelectedUniqueRadio(int? val) {
+    selectedURadio = val!;
     // print("${val}selected");
 
     notifyListeners();

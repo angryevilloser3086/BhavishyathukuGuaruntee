@@ -46,5 +46,6 @@
   "framers":"Total No. of Farmers",
   "womenAbv":"Women (Above 18)",
   "students":"Students",
-  "unEmployeed":"UnEmployed Youth"
+  "unEmployeed":"UnEmployed Youth",
+  "registerForSelf":"Are you Registering for Self ?"
 }

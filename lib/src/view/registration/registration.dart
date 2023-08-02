@@ -65,7 +65,8 @@ class RegistratioScreen extends StatelessWidget {
 
                     AppConstants.h_10,
                     didTDPContact(context, registrationProvider),
-                    uniqueID(context, registrationProvider),
+                    regisertForSelf(context, registrationProvider),
+
                     verifyNumber(context, registrationProvider),
                   ],
                 ),
@@ -115,7 +116,7 @@ class RegistratioScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 150,
+              width: 120,
               child: ListTileTheme(
                 minLeadingWidth: 0,
                 horizontalTitleGap: 5,
@@ -136,7 +137,7 @@ class RegistratioScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 120,
+              width: 100,
               child: ListTileTheme(
                 minLeadingWidth: 0,
                 horizontalTitleGap: 5,
@@ -223,6 +224,71 @@ class RegistratioScreen extends StatelessWidget {
         ),
         if (registrationProvider.selectedRadio == 1)
           ifYesMent(context, registrationProvider)
+      ],
+    );
+  }
+
+  regisertForSelf(
+      BuildContext context, RegistrationProvider registrationProvider) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(Strings.of(context).registerForSelf,
+              style: GoogleFonts.inter(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              )),
+        ),
+        Row(
+          children: [
+            SizedBox(
+              width: 150,
+              child: ListTileTheme(
+                minVerticalPadding: 0,
+                horizontalTitleGap: 5,
+                child: RadioListTile<int>(
+                  contentPadding: AppConstants.leftRight_5,
+                  value: 1,
+
+                  //overlayColor: MaterialStateProperty.resolveWith(getColor),
+                  groupValue: registrationProvider.selectedURadio,
+                  activeColor: Colors.black,
+                  onChanged: (int? val) {
+                    registrationProvider.setSelectedUniqueRadio(val);
+                  },
+                  title: Text(
+                    Strings.of(context).yes,
+                    style: GoogleFonts.inter(color: Colors.black, fontSize: 14),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 150,
+              child: ListTileTheme(
+                horizontalTitleGap: 5,
+                child: RadioListTile<int>(
+                  contentPadding: AppConstants.leftRight_5,
+                  value: 2,
+                  groupValue: registrationProvider.selectedURadio,
+                  activeColor: Colors.black,
+                  onChanged: (int? val) {
+                    registrationProvider.setSelectedUniqueRadio(val);
+                  },
+                  title: Text(Strings.of(context).no,
+                      style:
+                          GoogleFonts.inter(color: Colors.black, fontSize: 14)),
+                ),
+              ),
+            ),
+          ],
+        ),
+        if (registrationProvider.selectedURadio == 2)
+          uniqueID(context, registrationProvider),
       ],
     );
   }
@@ -1086,7 +1152,8 @@ class RegistratioScreen extends StatelessWidget {
                     ),
                   );
                 }).toList(),
-                onChanged: (value) => registrationProvider.setNoOFWomen(value!)),
+                onChanged: (value) =>
+                    registrationProvider.setNoOFWomen(value!)),
           ),
         ),
       ],
@@ -1178,7 +1245,8 @@ class RegistratioScreen extends StatelessWidget {
                     ),
                   );
                 }).toList(),
-                onChanged: (value) => registrationProvider.setunEMployed(value!)),
+                onChanged: (value) =>
+                    registrationProvider.setunEMployed(value!)),
           ),
         ),
       ],
@@ -1359,9 +1427,25 @@ class RegistratioScreen extends StatelessWidget {
             InkWell(
               onTap: () => registrationProvider.setQRValues(context),
               child: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: Image.asset("assets/images/ic_qr.png")),
+                  width:MediaQuery.of(context).size.width<510? 50:100,
+                  height: MediaQuery.of(context).size.width<510? 120:100,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: Image.asset("assets/images/ic_qr.png")),
+                      Text(
+                        "Click Here to Scan!!",
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      AppConstants.h_10
+                    ],
+                  )),
             ),
             const Spacer()
           ],
