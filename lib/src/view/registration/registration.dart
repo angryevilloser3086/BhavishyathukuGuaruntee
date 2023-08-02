@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../utils/app_localization.dart';
 import '../../utils/app_utils.dart';
-import '../provider/registration_provider.dart';
+import '../../provider/registration_provider.dart';
 
 class RegistratioScreen extends StatelessWidget {
   const RegistratioScreen({super.key, required this.height});

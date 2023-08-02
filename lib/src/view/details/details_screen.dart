@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:vregistration/src/provider/details_provider.dart';
-import 'package:vregistration/utils/app_utils.dart';
+import 'package:vregistration/src/utils/app_utils.dart';
 
 class DetailsScreen extends StatefulWidget {
   final String? id;

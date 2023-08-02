@@ -6,12 +6,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:vregistration/src/view/qr.dart';
-import 'package:vregistration/utils/loading_indicator.dart';
-import '../../model/checkbox.dart';
-import '../../model/reg_model.dart';
-import '../../model/v_reg_model.dart';
-import '../../utils/app_utils.dart';
+import 'package:vregistration/src/view/registration/qr.dart';
+import 'package:vregistration/src/utils/loading_indicator.dart';
+import '../model/checkbox.dart';
+import '../model/reg_model.dart';
+import '../model/v_reg_model.dart';
+import '../utils/app_utils.dart';
 
 import '../view/home_screen.dart';
 
@@ -41,32 +41,36 @@ class RegistrationProvider extends ChangeNotifier {
   String cc = "91";
   String sDistrcts = '';
   String sMandals = '';
-  int famMembers=0;
+  int famMembers = 0;
   int farmers = 0;
-  int womenAbv= 0;
+  int womenAbv = 0;
   int unEMployedYouth = 0;
   int students = 0;
   bool showLoaderOTP = false;
 
-  List<int> famMem=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+  List<int> famMem = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
-  setFamMembers(int value){
+  setFamMembers(int value) {
     famMembers = value;
     notifyListeners();
   }
-  setFarmers(int value){
+
+  setFarmers(int value) {
     farmers = value;
     notifyListeners();
   }
-  setunEMployed(int value){
+
+  setunEMployed(int value) {
     unEMployedYouth = value;
     notifyListeners();
   }
-  setStudents(int value){
+
+  setStudents(int value) {
     students = value;
     notifyListeners();
   }
-  setNoOFWomen(int value){
+
+  setNoOFWomen(int value) {
     womenAbv = value;
     notifyListeners();
   }
@@ -3002,7 +3006,7 @@ class RegistrationProvider extends ChangeNotifier {
     if (formKey.currentState!.validate()) {
       DialogBuilder(context)
           .showLoadingIndicator("Please wait while we are sending otp");
-     // print(showLoaderOTP);
+      // print(showLoaderOTP);
       Future.delayed(const Duration(seconds: 1));
       //var credential = PhoneAuthProvider.credential(verificationId: , smsCode: smsCodeController.text);
       try {
@@ -3086,19 +3090,19 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<String> setSchemes(){
-    List<String> schemes=[];
+  List<String> setSchemes() {
+    List<String> schemes = [];
     schemes.add("Deepam");
-    if(unEMployedYouth>0){
+    if (unEMployedYouth > 0) {
       schemes.add("YuvaGalam Nidhi");
     }
-    if(farmers>0){
+    if (farmers > 0) {
       schemes.add("Annadatha");
     }
-    if(womenAbv>0){
+    if (womenAbv > 0) {
       schemes.add("Maha Shakti");
     }
-    if(students>0){
+    if (students > 0) {
       schemes.add("Thalliki Vandanam");
     }
 
@@ -3140,7 +3144,7 @@ class RegistrationProvider extends ChangeNotifier {
     } else if (val == 2) {
       gender = "Female";
       selectedGRadio = val;
-    } else{
+    } else {
       gender = "Others";
       selectedGRadio = val;
     }
@@ -3149,7 +3153,7 @@ class RegistrationProvider extends ChangeNotifier {
 
   void registerUser(BuildContext context) {
     showLoader = true;
-    List<String>schems=setSchemes();
+    List<String> schems = setSchemes();
     DialogBuilder(context)
         .showLoadingIndicator("Please wait while we are updating details ");
     DateTime dt = DateTime.now();
@@ -3167,7 +3171,13 @@ class RegistrationProvider extends ChangeNotifier {
         gender: gender,
         isVerified: isVerified,
         date: dt.toIso8601String(),
-        id: uniqueCode.text, scheme: schems);
+        id: uniqueCode.text,
+        scheme: schems,
+        totalFam: famMembers,
+        totalFarmers: farmers,
+        totalStudents: students,
+        totalUnEmployedYouth: unEMployedYouth,
+        totalWomen: womenAbv);
 
     _db
         .collection('users')
@@ -3203,9 +3213,9 @@ class RegistrationProvider extends ChangeNotifier {
           builder: (context) => const QRViewExample(), fullscreenDialog: true),
     );
     if (qrResults != null) {
-      String qrcode =  qrResults.code;
-      List<String>uID = qrcode.split("/");
-     // print("uid:${uID.last}");
+      String qrcode = qrResults.code;
+      List<String> uID = qrcode.split("/");
+      // print("uid:${uID.last}");
       uniqueCode = TextEditingController(text: uID.last);
       print(uniqueCode.text);
     }

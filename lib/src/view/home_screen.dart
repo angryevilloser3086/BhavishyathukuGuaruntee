@@ -5,9 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/reg_model.dart';
+import '../model/reg_model.dart';
 import 'quiz/quiz_screen.dart';
-import 'registration.dart';
+import 'registration/registration.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
               options: CarouselOptions(
-                height: w < 410 ? 200 : h,
+                height: w < 450 ? 200 : h,
                 enlargeCenterPage: true,
                 autoPlay: true,
                 aspectRatio: w,
@@ -222,7 +222,12 @@ class _HomeScreenState extends State<HomeScreen> {
             vNum: snapshot.get('volunteer_number'),
             isVerified: snapshot.get('isVerified'),
             date: snapshot.get('date') ?? "",
-            id: snapshot.get("id"), scheme: snapshot.get('scheme'));
+            id: snapshot.get("id"), scheme: snapshot.get('scheme'),
+            totalFam: snapshot.get('total_fam'),
+            totalFarmers: snapshot.get('total_farmers'),
+            totalStudents: snapshot.get('total_students'),
+            totalUnEmployedYouth: snapshot.get('total_unempyouth'),
+            totalWomen: snapshot.get('total_women'));
 
         setState(() {
           users.add(user);

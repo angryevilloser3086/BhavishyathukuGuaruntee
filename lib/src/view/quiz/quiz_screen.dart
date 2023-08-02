@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/src/view/quiz/questions.dart';
-import '/utils/app_utils.dart';
+import '../../utils/app_utils.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key, required this.height});

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../utils/app_utils.dart';
+// import '../../../utils/app_utils.dart';
 
 class Result extends StatelessWidget {
   final int resultScore;
@@ -45,10 +45,11 @@ class Result extends StatelessWidget {
           ), //Text
           Text(
             'Score ' '$resultScore',
-            style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold,color: Colors.black),
+            style: GoogleFonts.poppins(
+                fontSize: 36, fontWeight: FontWeight.bold, color: Colors.black),
             textAlign: TextAlign.center,
           ), //Text
-          
+
           // FlatButton is deprecated and should not be used
           // Use TextButton instead
 

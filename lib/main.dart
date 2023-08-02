@@ -9,11 +9,11 @@ import 'package:vregistration/src/view/details/details_screen.dart';
 import 'package:vregistration/src/view/home_screen.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:vregistration/src/view/qr.dart';
+import 'package:vregistration/src/view/registration/qr.dart';
 
 import 'firebase_options.dart';
 import 'src/provider/registration_provider.dart';
-import 'utils/app_utils.dart';
+import 'src/utils/app_utils.dart';
 
 bool shouldUseFirestoreEmulator = false;
 void main() async {

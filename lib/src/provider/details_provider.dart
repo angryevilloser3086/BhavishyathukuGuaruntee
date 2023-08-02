@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:vregistration/model/reg_model.dart';
+import 'package:vregistration/src/model/reg_model.dart';
 
 class DetailsProvider extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -43,7 +43,12 @@ class DetailsProvider extends ChangeNotifier {
             number: data.docs.first.get('phone'),
             date: data.docs.first.get('date'),
             isVerified: data.docs.first.get('isVerified'),
-            scheme: data.docs.first.get('scheme'));
+            scheme: data.docs.first.get('scheme'),
+            totalFam: data.docs.first.get('total_fam'),
+            totalFarmers: data.docs.first.get('total_farmers'),
+            totalStudents: data.docs.first.get('total_students'),
+            totalUnEmployedYouth: data.docs.first.get('total_unempyouth'),
+            totalWomen: data.docs.first.get('total_women'));
         log("${userDetails!.toJSON()}");
         notifyListeners();
       }
