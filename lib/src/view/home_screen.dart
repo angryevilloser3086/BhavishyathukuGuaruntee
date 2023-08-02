@@ -142,9 +142,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 )),
 
             SizedBox(
-              height: h < 500 ? h * 4 : h * 2.4,
+              height: h < 500 ? h * 4.5 : h * 2.8,
               width: w,
-              child:  RegistratioScreen(height: h < 500 ? h * 4 : h * 2.4,),
+              child:  RegistratioScreen(height: h < 500 ? h * 4.5 : h * 2.8,),
             ),
             //RegistratioScreen()
             SizedBox(

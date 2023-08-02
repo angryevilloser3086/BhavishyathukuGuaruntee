@@ -65,8 +65,11 @@ class RegistratioScreen extends StatelessWidget {
 
                     AppConstants.h_10,
                     didTDPContact(context, registrationProvider),
+                    if(registrationProvider.selectedRadio==2)
                     regisertForSelf(context, registrationProvider),
-
+                    if (registrationProvider.selectedURadio == 2 ||
+                        registrationProvider.selectedRadio == 1)
+                      uniqueID(context, registrationProvider),
                     verifyNumber(context, registrationProvider),
                   ],
                 ),
@@ -287,8 +290,6 @@ class RegistratioScreen extends StatelessWidget {
             ),
           ],
         ),
-        if (registrationProvider.selectedURadio == 2)
-          uniqueID(context, registrationProvider),
       ],
     );
   }
@@ -1427,8 +1428,8 @@ class RegistratioScreen extends StatelessWidget {
             InkWell(
               onTap: () => registrationProvider.setQRValues(context),
               child: SizedBox(
-                  width:MediaQuery.of(context).size.width<510? 50:100,
-                  height: MediaQuery.of(context).size.width<510? 120:100,
+                  width: MediaQuery.of(context).size.width < 510 ? 50 : 100,
+                  height: MediaQuery.of(context).size.width < 510 ? 120 : 100,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
