@@ -172,7 +172,7 @@ class _MyAppState extends State<MyApp> {
               },
             );
           } else {
-            print("else block:${pathComponents.toList()}");
+            //print("else block:${pathComponents.toList()}");
             return MaterialPageRoute(
               builder: (context) {
                 return const HomeScreen();

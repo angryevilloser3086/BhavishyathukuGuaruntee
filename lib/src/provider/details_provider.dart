@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:vregistration/src/model/reg_model.dart';
+import 'package:vregistration/src/utils/app_utils.dart';
+import 'package:vregistration/src/view/home_screen.dart';
 
 class DetailsProvider extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -13,7 +15,7 @@ class DetailsProvider extends ChangeNotifier {
     userDetails = registrationModel;
   }
 
-  getDetails(String id) {
+  getDetails(BuildContext context,String id) {
     print("called this method:$id");
     _db.collection('users').where("id", isEqualTo: id).get().then((value) {
       QuerySnapshot data = value;
@@ -53,6 +55,7 @@ class DetailsProvider extends ChangeNotifier {
         notifyListeners();
       }
     }).catchError((err) {
+      AppConstants.moveNextClearAll(context, HomeScreen());
       throw Exception(err);
     });
   }

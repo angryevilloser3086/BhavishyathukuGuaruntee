@@ -13,6 +13,9 @@ class AppConstants {
   static const appYellowBG = Color(0xFFFEE806);
   static const appredColor = Color(0xFFE10707);  
   static const appredQColor = Color(0xFFE31F25);  
+  static const appPurpleColor = Color(0xFF641258);  
+  static const appPurplelit2Color = Color(0x60641258);  
+  static const appPurplelit1Color = Color(0x40641258);  
 
   
 

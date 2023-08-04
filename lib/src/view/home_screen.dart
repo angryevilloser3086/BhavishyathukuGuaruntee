@@ -4,6 +4,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
+import 'package:vregistration/src/utils/app_utils.dart';
+import 'package:vregistration/src/view/registration/testimonial.dart';
 
 import '../model/reg_model.dart';
 import 'quiz/quiz_screen.dart';
@@ -69,23 +71,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            AppConstants.h_5,
 
-            InkWell(
+             InkWell(
                 onTap: () {
-                  //Navigator.
-                  //Navigator.pushNamed(context, '/QRSCREEN');
-                  //AppConstants.moveNextstl(context,const QRViewExample());
                   if (w < 450) {
                     setState(() {
                       scrollController.animateTo(
-                          MediaQuery.of(context).size.height * 0.5,
+                          MediaQuery.of(context).size.height * 1.5,
                           duration: const Duration(seconds: 2),
                           curve: Curves.bounceOut);
                     });
                   } else {
                     setState(() {
                       scrollController.animateTo(
-                          MediaQuery.of(context).size.height * 1.6,
+                          MediaQuery.of(context).size.height * 2.5,
                           duration: const Duration(seconds: 2),
                           curve: Curves.bounceOut);
                     });
@@ -93,7 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: btn()),
 
-            CarouselSlider(
+
+           CarouselSlider(
               items: [
                 Container(
                     width: w,
@@ -123,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
               options: CarouselOptions(
-                height: w < 450 ? 200 : h,
+                height: w < 750 ? 200 : h,
                 enlargeCenterPage: true,
                 autoPlay: true,
                 aspectRatio: w,
@@ -134,6 +135,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
+            // const SizedBox.expand(child: TestimonialVideo(),),
+            SizedBox(
+              width: w,
+              height: h,
+              child: TestimonialVideo(
+                height:  h,
+              ),
+            ),
             SizedBox(
                 width: w,
                 child: Image.asset(
@@ -144,9 +153,11 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: h < 500 ? h * 4.5 : h * 2.8,
               width: w,
-              child:  RegistratioScreen(height: h < 500 ? h * 4.5 : h * 2.8,),
+              child: RegistratioScreen(
+                height: h < 500 ? h * 4.5 : h * 2.8,
+              ),
             ),
-            //RegistratioScreen()
+
             SizedBox(
                 width: w,
                 height: h < 450 ? h * 2 : h,
@@ -161,8 +172,6 @@ class _HomeScreenState extends State<HomeScreen> {
             //   },
             //   child: btnDownload(),
             // ),
-
-           
           ],
         ),
       )),
@@ -174,17 +183,14 @@ class _HomeScreenState extends State<HomeScreen> {
   // }
 
   btn() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
+    return Container(
         width: 150,
         height: 50,
         decoration: const BoxDecoration(
             color: Colors.red,
             borderRadius: BorderRadius.all(Radius.circular(30))),
         child: const Center(child: Text("Register")),
-      ),
-    );
+      );
   }
 
   btnDownload() {
@@ -222,7 +228,8 @@ class _HomeScreenState extends State<HomeScreen> {
             vNum: snapshot.get('volunteer_number'),
             isVerified: snapshot.get('isVerified'),
             date: snapshot.get('date') ?? "",
-            id: snapshot.get("id"), scheme: snapshot.get('scheme'),
+            id: snapshot.get("id"),
+            scheme: snapshot.get('scheme'),
             totalFam: snapshot.get('total_fam'),
             totalFarmers: snapshot.get('total_farmers'),
             totalStudents: snapshot.get('total_students'),

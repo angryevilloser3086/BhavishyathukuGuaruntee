@@ -67,9 +67,9 @@ class RegistratioScreen extends StatelessWidget {
                     didTDPContact(context, registrationProvider),
                     if(registrationProvider.selectedRadio==2)
                     regisertForSelf(context, registrationProvider),
-                    if (registrationProvider.selectedURadio == 2 ||
-                        registrationProvider.selectedRadio == 1)
-                      uniqueID(context, registrationProvider),
+                    // if (registrationProvider.selectedURadio == 2 ||
+                    //     registrationProvider.selectedRadio == 1)
+                    //   uniqueID(context, registrationProvider),
                     verifyNumber(context, registrationProvider),
                   ],
                 ),

@@ -39,7 +39,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   builder: (context, value, child) {
                     if ((widget.id!.isNotEmpty || widget.id != null) &&
                         value.userDetails == null) {
-                      value.getDetails(widget.id!);
+                      value.getDetails(context,widget.id!);
                     }
                     return Padding(
                       padding: AppConstants.all_20,
