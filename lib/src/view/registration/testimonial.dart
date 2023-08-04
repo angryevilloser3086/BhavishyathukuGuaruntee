@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vregistration/src/utils/app_utils.dart';
-String longVideo ="assets/images/Bhavishyathu Guarantee Special Song __ Maha Shakti Song __ TDP new songs _ Nara Lokesh Official.mp4";
+String longVideo ="assets/images/bg_official_video.mp4";
 
 
 class TestimonialVideo extends StatefulWidget {

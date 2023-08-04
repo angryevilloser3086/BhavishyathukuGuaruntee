@@ -3,11 +3,11 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.json": "5b1b21063ee3d93c15f376597c9eddda",
-"assets/AssetManifest.smcbin": "f5764fc58552cf44aa72b9fc4bea5305",
+const RESOURCES = {"assets/AssetManifest.json": "16bdc1135c1a73ab07951100824c3d5e",
+"assets/AssetManifest.smcbin": "092d9aebfa697c65f7e671314853c0f3",
 "assets/assets/images/2.0x/flutter_logo.png": "4efb9624185aff46ca4bf5ab96496736",
 "assets/assets/images/3.0x/flutter_logo.png": "b8ead818b15b6518ac627b53376b42f2",
-"assets/assets/images/Bhavishyathu%2520Guarantee%2520Special%2520Song%2520__%2520Maha%2520Shakti%2520Song%2520__%2520TDP%2520new%2520songs%2520_%2520Nara%2520Lokesh%2520Official.mp4": "52544fe5053ec0e579de5e9dfc0cf98a",
+"assets/assets/images/bg_official_video.mp4": "52544fe5053ec0e579de5e9dfc0cf98a",
 "assets/assets/images/Desktop%2520-%252014.png": "a9e5c645bb38ef71851447b43dfeb7d2",
 "assets/assets/images/Desktop%2520-%252015.png": "8b401050d64fea0800c7a808c2299c95",
 "assets/assets/images/Desktop%2520-%252016.png": "50b4890fec7661f8aa34d74712acf3ee",
@@ -42,9 +42,9 @@ const RESOURCES = {"assets/AssetManifest.json": "5b1b21063ee3d93c15f376597c9eddd
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
-"index.html": "45e1ea498b090b11dfc7e1c378be8de1",
-"/": "45e1ea498b090b11dfc7e1c378be8de1",
-"main.dart.js": "8bd58f99e9968fdba792428c1be360e0",
+"index.html": "8f29eb163181f0ad8e9147b50b9b1fe4",
+"/": "8f29eb163181f0ad8e9147b50b9b1fe4",
+"main.dart.js": "8824ba42a7ce252ec7926597c79dba28",
 "manifest.json": "913dde8659ffe0a2a621fad905b34524",
 "version.json": "898f7869a1d22cc7f5be1a8266a020bd"};
 // The application shell files that are downloaded before a service worker can
