@@ -6,8 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:vregistration/src/view/registration/qr.dart';
-import 'package:vregistration/src/utils/loading_indicator.dart';
+import '../../src/network/api_request.dart';
+import '../../src/view/registration/qr.dart';
+import '../../src/utils/loading_indicator.dart';
 import '../model/checkbox.dart';
 import '../model/reg_model.dart';
 import '../model/v_reg_model.dart';
@@ -23,6 +24,7 @@ class RegistrationProvider extends ChangeNotifier {
   int selectedRadio = 0;
   int selectedURadio = 0;
   int selectedGRadio = 0;
+  ApiRequest apiRequest = ApiRequest();
   bool isVerified = false;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   TextEditingController name = TextEditingController();
@@ -3006,48 +3008,12 @@ class RegistrationProvider extends ChangeNotifier {
   verifyPhone(BuildContext context, String phone) async {
     if (formKey.currentState!.validate()) {
       DialogBuilder(context)
-          .showLoadingIndicator("Please wait while we are sending otp");
+          .showLoadingIndicator("Please wait while we are sending UID to Registered Number");
       // print(showLoaderOTP);
       Future.delayed(const Duration(seconds: 1));
       //var credential = PhoneAuthProvider.credential(verificationId: , smsCode: smsCodeController.text);
       try {
-        await FirebaseAuth.instance.verifyPhoneNumber(
-            phoneNumber: "+$cc$phone",
-            verificationCompleted: (credential) async {
-              PhoneAuthProvider.credential(
-                  verificationId: credential.verificationId!,
-                  smsCode: credential.smsCode!);
-              notifyListeners();
-            },
-            verificationFailed: (FirebaseAuthException e) {
-              // print(e);
-              Navigator.of(context, rootNavigator: true).pop();
-              showLoaderOTP = false;
-              AppConstants.showSnackBar(context, "Failed to login$e");
-              notifyListeners();
-            },
-            codeSent: (String verficationID, int? resendToken) async {
-              //getStorage.write("verificationID", verficationID);
-              enableOTPtext = true;
-              Navigator.of(context, rootNavigator: true).pop();
-              showLoaderOTP = false;
-              AppConstants.showSnackBar(
-                  context, "OTP Sent to your Mobile number");
-              // print("${resendToken} resendToken");
-              // print("$verficationID codesent");
-              verificatioID = verficationID;
-              notifyListeners();
-              //showLoader = false;
-              // AppConstants.showSnackBar(context, "$verficationID codesent");
-            },
-            codeAutoRetrievalTimeout: (String verificationID) {
-              //print(verificationID);
-              verificatioID = verificationID;
-              // Get.showSnackbar(GetSnackBar(message: verificationID));
-              // Get.offAllNamed(Routes.OTPSCREEN);
-            },
-            timeout: const Duration(seconds: 120));
-        print(showLoaderOTP);
+        
         notifyListeners();
       } catch (e) {
         showLoaderOTP = false;

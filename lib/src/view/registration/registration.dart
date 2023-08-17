@@ -537,7 +537,7 @@ class RegistratioScreen extends StatelessWidget {
   }
 
   getOtpBtn(BuildContext context, RegistrationProvider registrationProvider) {
-    print("build method:S${registrationProvider.showLoaderOTP}");
+   // print("build method:S${registrationProvider.showLoaderOTP}");
     // print("${registrationProvider.phoneTextController.text.length}");
     return Align(
       alignment: Alignment.center,
@@ -833,6 +833,7 @@ class RegistratioScreen extends StatelessWidget {
             //controller: addNewPeople.fnameController,
           ),
         ),
+      
       ],
     );
   }

@@ -15,7 +15,6 @@ class TestimonialVideo extends StatefulWidget {
 }
 
 class _TestimonialVideoState extends State<TestimonialVideo> {
-  late VideoPlayerController _controller;
   
   late CustomVideoPlayerController _customVideoPlayerController;
   late CustomVideoPlayerWebController _customVideoPlayerWebController;

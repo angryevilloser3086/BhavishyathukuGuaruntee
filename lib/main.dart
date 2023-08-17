@@ -98,11 +98,11 @@ class _MyAppState extends State<MyApp> {
               headlineLarge: GoogleFonts.inter(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white),
+                  color: Colors.black),
               headlineMedium: GoogleFonts.inter(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white),
+                  color: Colors.black),
               headlineSmall: GoogleFonts.inter(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
