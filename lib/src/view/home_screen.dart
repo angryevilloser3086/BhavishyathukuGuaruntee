@@ -75,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
              InkWell(
                 onTap: () {
+                  
                   if (w < 450) {
                     setState(() {
                       scrollController.animateTo(

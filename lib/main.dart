@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:vregistration/src/provider/details_provider.dart';
-import 'package:vregistration/src/view/details/details_screen.dart';
-import 'package:vregistration/src/view/home_screen.dart';
-
+import '../../src/view/home_screen.dart';
+import '../../src/provider/details_provider.dart';
+import '../../src/view/details/details_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:vregistration/src/view/registration/qr.dart';
 
 import 'firebase_options.dart';
 import 'src/provider/registration_provider.dart';
@@ -80,8 +78,7 @@ class _MyAppState extends State<MyApp> {
           unselectedWidgetColor: Colors.black,
           //textButtonTheme: TextButtonThemeData(style: flatButtonStyle),
           disabledColor: Colors.black,
-          
-         
+
           textTheme: GoogleFonts.interTextTheme().copyWith(
               displayLarge: GoogleFonts.inter(
                   fontSize: 20,
@@ -165,12 +162,6 @@ class _MyAppState extends State<MyApp> {
                 return DetailsScreen(id: pathComponents.last);
               },
             );
-          } else if (pathComponents[1] == 'QRSCREEN') {
-            return MaterialPageRoute(
-              builder: (context) {
-                return const QRViewExample();
-              },
-            );
           } else {
             //print("else block:${pathComponents.toList()}");
             return MaterialPageRoute(
@@ -179,36 +170,7 @@ class _MyAppState extends State<MyApp> {
               },
             );
           }
-
-          // switch (settings.name) {
-          //   case '/':
-          //     return MaterialPageRoute(
-          //     builder: (context) =>const HomeScreen(),
-          //   );
-          //   case '/QRSCREEN':
-          //     return MaterialPageRoute(
-          //     builder: (context) =>const QRViewExample(),
-          //   );
-          //   case '/details-screen':
-          //     return MaterialPageRoute(
-          //     builder: (context) =>const DetailsScreen(),
-          //   );
-          //   //case '/details-screen/':
-
-          //   default:
-          //     return MaterialPageRoute(
-          //     builder: (context) => DetailsScreen(id: pathComponents.last,),
-          //   );
-          // }
         },
-
-        routes: {
-          // '/':(context)=>const HomeScreen(),
-          // '/QRSCREEN':(context)=>const QRViewExample()
-        },
-        // Define a function to handle named routes in order to support
-        // Flutter web url navigation and deep linking.
-        // home: const HomeScreen(),
       ),
     );
   }

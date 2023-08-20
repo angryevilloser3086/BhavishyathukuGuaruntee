@@ -20,17 +20,6 @@ class DetailsProvider extends ChangeNotifier {
     _db.collection('users').where("id", isEqualTo: id).get().then((value) {
       QuerySnapshot data = value;
       log("enter firestore db: ${data.docs.first.get("id")}");
-      log("enter firestore db: ${data.docs.first.get("name")}");
-      log("enter firestore db: ${data.docs.first.get("age")}");
-      log("enter firestore db: ${data.docs.first.get("constituency")}");
-      log("enter firestore db: ${data.docs.first.get("district")}");
-      log("enter firestore db: ${data.docs.first.get("mandal")}");
-      log("enter firestore db: ${data.docs.first.get("address")}");
-      log("enter firestore db: ${data.docs.first.get("gender")}");
-      log("enter firestore db: ${data.docs.first.get("pincode")}");
-      log("enter firestore db: ${data.docs.first.get("date")}");
-      log("enter firestore db: ${data.docs.first.get("phone")}");
-      log("enter firestore db: ${data.docs.first.get("isVerified")}");
       if (data.size != 0) {
         userDetails = RegistrationModel(
             name: data.docs.first.get('name'),
@@ -55,8 +44,9 @@ class DetailsProvider extends ChangeNotifier {
         notifyListeners();
       }
     }).catchError((err) {
-      AppConstants.moveNextClearAll(context, HomeScreen());
+      AppConstants.moveNextClearAll(context, const HomeScreen());
       throw Exception(err);
     });
   }
+
 }

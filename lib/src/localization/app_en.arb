@@ -1,5 +1,5 @@
 {
-  "appTitle": "vregistration",
+  "appTitle": "Bhavishyathuku Guarantee",
   "@appTitle": {
     "description": "The title of the application"
   },
@@ -41,11 +41,11 @@
   "male":"Male",
   "female":"Female",
   "others":"Others",
-  "getOtp":"Get OTP",
+  "getOtp":"Get UID",
   "totalFam":"Total Family Members",
   "framers":"Total No. of Farmers",
   "womenAbv":"Women (Above 18)",
   "students":"Students",
-  "unEmployeed":"UnEmployed Youth",
+  "unEmployeed":"Unemployed Youth",
   "registerForSelf":"Are you Registering for self ?"
 }

@@ -41,7 +41,8 @@ class LoadingIndicator extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 4),
         child: Text(
           Strings.of(context).appTitle,
-          style: Theme.of(context).textTheme.headline1,
+          style: GoogleFonts.inter(
+              fontSize: 20, fontWeight: FontWeight.w700, color: Colors.black),
           textAlign: TextAlign.center,
         ));
   }

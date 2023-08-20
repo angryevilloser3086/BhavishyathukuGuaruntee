@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:collection';
+import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
@@ -13,12 +15,10 @@ import '../model/checkbox.dart';
 import '../model/reg_model.dart';
 import '../model/v_reg_model.dart';
 import '../utils/app_utils.dart';
-
-import '../view/home_screen.dart';
+import '../view/details/pdf_screen.dart';
 
 class RegistrationProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
-
   String selectedConstituency = '';
   bool showSubmit = false;
   int selectedRadio = 0;
@@ -2956,6 +2956,7 @@ class RegistrationProvider extends ChangeNotifier {
   HashMap<String, CheckBox> optionSelected = HashMap();
 
   String verificatioID = '';
+  RegistrationModel? userDetails;
 
   bool enableOTPtext = false;
 
@@ -2993,7 +2994,7 @@ class RegistrationProvider extends ChangeNotifier {
   }
 
   setMandals(String value) {
-    print(value);
+    // print(value);
     //formKey.currentState!.validate();
     if (value == "Select Mandal") {
       sMandals = '';
@@ -3001,19 +3002,39 @@ class RegistrationProvider extends ChangeNotifier {
     } else {
       sMandals = value;
     }
-    print(sMandals);
+    // print(sMandals);
     notifyListeners();
   }
 
   verifyPhone(BuildContext context, String phone) async {
     if (formKey.currentState!.validate()) {
-      DialogBuilder(context)
-          .showLoadingIndicator("Please wait while we are sending UID to Registered Number");
-      // print(showLoaderOTP);
-      Future.delayed(const Duration(seconds: 1));
-      //var credential = PhoneAuthProvider.credential(verificationId: , smsCode: smsCodeController.text);
+      DialogBuilder(context).showLoadingIndicator(
+          "Please wait while we are sending UID to Registered Number");
+
       try {
+        showLoaderOTP = true;
+        String id = randomIdGenerator();
+        checkID(context, id);
+        if (uniqueCode.text.isNotEmpty) {
         
+   
+          apiRequest.sendUID(phone, id).then((value) {
+            enableOTPtext = true;
+            Navigator.of(context, rootNavigator: true).pop();
+            showLoaderOTP = false;
+            AppConstants.showSnackBar(context, value);
+            notifyListeners();
+          }).catchError((err) {
+            print("entered api Call");
+            Navigator.of(context, rootNavigator: true).pop();
+            showLoaderOTP = false;
+             enableOTPtext = false;
+             print(err.toString());
+             log("$err");
+            AppConstants.showSnackBar(context, "$err");
+            notifyListeners();
+          });
+        }
         notifyListeners();
       } catch (e) {
         showLoaderOTP = false;
@@ -3025,28 +3046,62 @@ class RegistrationProvider extends ChangeNotifier {
     }
   }
 
+  void checkID(BuildContext context, String id) {
+    bool idPresent = getDetails(context, id);
+    if (idPresent) {
+      id = randomIdGenerator();
+      checkID(context, id);
+    } else {
+      uniqueCode = TextEditingController(text: id);
+      
+    }
+    notifyListeners();
+  }
+
+  bool  getDetails(BuildContext context, String id) {
+    print("called this method:$id");
+    bool checked=false;
+    _db.collection('users').where("id", isEqualTo: id).get().then((value) {
+      QuerySnapshot data = value;
+      log("enter firestore db: ${data.docs.first.get("id")}");
+      checked = false;
+      notifyListeners();
+    }).catchError((err) {
+      checked =true;
+      notifyListeners();
+      // uniqueCode = TextEditingController(text: id);
+      // notifyListeners();
+    });
+    return checked;
+  }
+
+  randomIdGenerator() {
+    String first4alphabets = '';
+    for (int i = 0; i < 8; i++) {
+      first4alphabets += math.Random.secure().nextInt(10).toString();
+    }
+    log(first4alphabets);
+    return first4alphabets;
+  }
+
   otpVerify(BuildContext context) async {
     DialogBuilder(context)
         .showLoadingIndicator("Please wait while we verifying the OTP ");
     // print("e.toString()");
     // print(verificatioID);
     try {
-      await FirebaseAuth.instance
-          .signInWithCredential(PhoneAuthProvider.credential(
-              verificationId: verificatioID, smsCode: otpTextController.text))
-          .then((value) async {
-        if (value.user != null) {
+      if (otpTextController.text.isNotEmpty) {
+        if (uniqueCode.text == otpTextController.text) {
+          showLoader = false;
+          showSubmit= true;
+          Navigator.of(context, rootNavigator: true).pop();
+          AppConstants.showSnackBar(context, "Verifed Successfully");
+        } else {
           showLoader = false;
           Navigator.of(context, rootNavigator: true).pop();
-          AppConstants.showSnackBar(
-              context, "User number verified Successfully");
-          isVerified = true;
-          showSubmit = true;
-          FirebaseAuth.instance.signOut();
-
-          // AppConstants.moveNextClearAll(context, const ProfileScreen());
+          AppConstants.showSnackBar(context, "Please Enter valid UID");
         }
-      });
+      }
     } catch (e) {
       showLoader = false;
       Navigator.of(context, rootNavigator: true).pop();
@@ -3099,6 +3154,35 @@ class RegistrationProvider extends ChangeNotifier {
     );
   }
 
+
+  sendToPdf(BuildContext context){
+    List<String> schems = setSchemes();
+     DateTime dt = DateTime.now();
+     RegistrationModel rModel = RegistrationModel(
+        name: name.text,
+        age: age.text,
+        constituency: selectedConstituency,
+        district: sDistrcts,
+        mandal: sMandals,
+        address: address.text,
+        pincode: pincode.text,
+        vNum: vNumController.text.isNotEmpty ? vNumController.text : "",
+        vName: vName.text.isNotEmpty ? vName.text : "",
+        number: "$cc${phoneTextController.text}",
+        gender: gender,
+        isVerified: isVerified,
+        date: dt.toIso8601String(),
+        id: uniqueCode.text.isNotEmpty ? uniqueCode.text : "",
+        scheme: schems,
+        totalFam: famMembers,
+        totalFarmers: farmers,
+        totalStudents: students,
+        totalUnEmployedYouth: unEMployedYouth,
+        totalWomen: womenAbv);
+
+    AppConstants.moveNextstl(context, MyPDF(rModel: rModel));
+  }
+
   setCC(String c) {
     cc = c;
     notifyListeners();
@@ -3138,7 +3222,7 @@ class RegistrationProvider extends ChangeNotifier {
         gender: gender,
         isVerified: isVerified,
         date: dt.toIso8601String(),
-        id: uniqueCode.text.isNotEmpty?uniqueCode.text:"",
+        id: uniqueCode.text.isNotEmpty ? uniqueCode.text : "",
         scheme: schems,
         totalFam: famMembers,
         totalFarmers: farmers,
@@ -3154,7 +3238,7 @@ class RegistrationProvider extends ChangeNotifier {
       showLoader = false;
       Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, "Registration Successfully done");
-      AppConstants.moveNextClearAll(context, const HomeScreen());
+      AppConstants.moveNextClearAll(context, MyPDF(rModel: rModel,));
     }).catchError((err) {
       Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, "$err");
@@ -3196,6 +3280,7 @@ class RegistrationProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
   setSelectedUniqueRadio(int? val) {
     selectedURadio = val!;
     // print("${val}selected");

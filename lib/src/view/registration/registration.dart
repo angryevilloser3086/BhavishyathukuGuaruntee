@@ -65,8 +65,8 @@ class RegistratioScreen extends StatelessWidget {
 
                     AppConstants.h_10,
                     didTDPContact(context, registrationProvider),
-                    if(registrationProvider.selectedRadio==2)
-                    regisertForSelf(context, registrationProvider),
+                    if (registrationProvider.selectedRadio == 2)
+                      regisertForSelf(context, registrationProvider),
                     // if (registrationProvider.selectedURadio == 2 ||
                     //     registrationProvider.selectedRadio == 1)
                     //   uniqueID(context, registrationProvider),
@@ -456,8 +456,9 @@ class RegistratioScreen extends StatelessWidget {
         if (registrationProvider.enableOTPtext &&
             !registrationProvider.showSubmit)
           TextFormField(
+            
             controller: registrationProvider.otpTextController,
-            keyboardType: TextInputType.emailAddress,
+            keyboardType: TextInputType.number,
             decoration:
                 AppConstants.toAppInputDecoration2(context, "Enter OTP", ''),
             style: GoogleFonts.exo2(
@@ -471,7 +472,7 @@ class RegistratioScreen extends StatelessWidget {
             //   registrationProvider.verifyPhone(
             //       context, registrationProvider.otpTextController.text);
             // },
-            maxLength: 6,
+            maxLength: 8,
             validator: (value) =>
                 value!.trim().isEmpty ? 'phone number required' : null,
           ),
@@ -537,15 +538,16 @@ class RegistratioScreen extends StatelessWidget {
   }
 
   getOtpBtn(BuildContext context, RegistrationProvider registrationProvider) {
-   // print("build method:S${registrationProvider.showLoaderOTP}");
+    // print("build method:S${registrationProvider.showLoaderOTP}");
     // print("${registrationProvider.phoneTextController.text.length}");
     return Align(
       alignment: Alignment.center,
       child: InkWell(
           onTap: () {
             if (registrationProvider.phoneTextController.text.length == 10) {
-              registrationProvider.verifyPhone(
-                  context, registrationProvider.phoneTextController.text);
+              registrationProvider.sendToPdf(context);
+              // registrationProvider.verifyPhone(
+              //     context, registrationProvider.phoneTextController.text);
             } else {
               AppConstants.showSnackBar(context, "please enter valid Number");
             }
@@ -833,7 +835,6 @@ class RegistratioScreen extends StatelessWidget {
             //controller: addNewPeople.fnameController,
           ),
         ),
-      
       ],
     );
   }

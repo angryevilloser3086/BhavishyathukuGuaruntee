@@ -18,20 +18,20 @@ class _QuizScreenState extends State<QuizScreen> {
       "question":
           "How much financial assistance is going to be provided for children's education through the 'Thalli ki Vandhanam' in the ‘Bhavishyathu ki Guarantee' announced by TDP?",
       "options": [
-        {"text": "Rs.5,000", "score": "0"},
-        {"text": "Rs.7,000", "score": ""},
-        {"text": "Rs.15,000", "score": ""},
-        {"text": "Rs.10,000", "score": ""}
+        {"text": "Rs.5,000  per child", "score": "0"},
+        {"text": "Rs.7,000 per child", "score": "0"},
+        {"text": "Rs.15,000 per child", "score": "1"},
+        {"text": "Rs.10,000 per child", "score": "0"}
       ]
     },
     {
       "question":
           "How much allowance is going to be given to the unemployed youth through the 'Yuvagalam Nidhi' in the 'Bhavishyathu ki Guarantee' announced by the TDP?",
       "options": [
-        {"text": "Rs.1,000", "score": "0"},
-        {"text": "Rs.2,000", "score": ""},
-        {"text": "Rs.3,000", "score": ""},
-        {"text": "Rs.1500", "score": ""}
+        {"text": "Rs.1,000 per month", "score": "1"},
+        {"text": "Rs.2,000 per month", "score": "0"},
+        {"text": "Rs.3,000 per month", "score": "0"},
+        {"text": "Rs.1500 per month", "score": "0"}
       ]
     },
     {
@@ -39,9 +39,9 @@ class _QuizScreenState extends State<QuizScreen> {
           "What is the name of the special scheme announced for BCs as a part of 'Bhavishyathu ki Guarantee' announced by TDP?",
       "options": [
         {"text": "BC's Assurance Act", "score": "0"},
-        {"text": "Protection of BCs Act", "score": ""},
-        {"text": "For BCs", "score": ""},
-        {"text": "Assistance to BCs", "score": ""}
+        {"text": "Protection of BCs Act (A new law for the protection of BCs)", "score": "1"},
+        {"text": "For BCs", "score": "0"},
+        {"text": "Assistance to BCs", "score": "0"}
       ]
     },
     {
@@ -49,9 +49,9 @@ class _QuizScreenState extends State<QuizScreen> {
           "How many jobs did TDP promise to create in five years through 'Yuvagalam' in 'Bhavishyathu ki Guarantee' ?",
       "options": [
         {"text": "5 lakh jobs", "score": "0"},
-        {"text": "7 lakh jobs", "score": ""},
-        {"text": "15 lakh jobs", "score": ""},
-        {"text": "20 lakh jobs", "score": ""}
+        {"text": "7 lakh jobs", "score": "0"},
+        {"text": "15 lakh jobs", "score": "0"},
+        {"text": "20 lakh jobs", "score": "1"}
       ]
     },
     {
@@ -59,9 +59,9 @@ class _QuizScreenState extends State<QuizScreen> {
           "How much financial assistance is going to be given to the farmers every year through the ‘Annadhatha’ scheme in the 'Bhavishyathu ki Guarantee' announced by the TDP?",
       "options": [
         {"text": "Rs.10,000", "score": "0"},
-        {"text": "Rs.7,000", "score": ""},
-        {"text": "Rs.3,000", "score": ""},
-        {"text": "Rs.20,000", "score": ""}
+        {"text": "Rs.7,000", "score": "0"},
+        {"text": "Rs.3,000", "score": "0"},
+        {"text": "Rs.20,000", "score": "1"}
       ]
     },
     {
@@ -69,9 +69,9 @@ class _QuizScreenState extends State<QuizScreen> {
           "How many gas cylinders are going to be given free per year through the 'Deepam' scheme of 'Bhavishyathu ki Guarantee'' announced by TDP?",
       "options": [
         {"text": "2", "score": "0"},
-        {"text": "1", "score": ""},
-        {"text": "0", "score": ""},
-        {"text": "3", "score": ""}
+        {"text": "1", "score": "0"},
+        {"text": "0", "score": "0"},
+        {"text": "3", "score": "1"}
       ]
     },
     {
@@ -79,9 +79,9 @@ class _QuizScreenState extends State<QuizScreen> {
           "How much financial assistance is going to be given to women per month through the 'Aada-Bidda Nidhi' scheme in the 'Bhavishyathu ki Guarantee'' announced by TDP?",
       "options": [
         {"text": " Rs.1,000", "score": "0"},
-        {"text": "Rs.800", "score": ""},
-        {"text": "Rs.15,00", "score": ""},
-        {"text": "Rs.900", "score": ""}
+        {"text": "Rs.800", "score": "0"},
+        {"text": "Rs.1,500", "score": "1"},
+        {"text": "Rs.900", "score": "0"}
       ]
     },
     {
@@ -89,9 +89,9 @@ class _QuizScreenState extends State<QuizScreen> {
           "What is the name of the scheme to provide drinking water to every house in the Bhavishyathu ki Guarantee'announced by TDP?",
       "options": [
         {"text": "Drinking water scheme", "score": "0"},
-        {"text": "Water for the every Household", "score": ""},
-        {"text": "Water for every Village", "score": ""},
-        {"text": "Our house.. our water", "score": ""}
+        {"text": "Drinking Water for every Household", "score": "1"},
+        {"text": "Water for every Village", "score": "0"},
+        {"text": "Our house.. our water", "score": "0"}
       ]
     }
   ];

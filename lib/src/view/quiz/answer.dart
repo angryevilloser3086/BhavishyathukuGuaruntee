@@ -16,7 +16,7 @@ class Answer extends StatelessWidget {
     return InkWell(
       onTap: () {
         selectHandler(value);
-        print("Cliked Button");
+       // print("Cliked Button");
       },
       child: Padding(
         padding: AppConstants.all_5,
