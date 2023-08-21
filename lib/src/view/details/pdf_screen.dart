@@ -9,7 +9,7 @@ import '../../utils/app_utils.dart';
 class MyPDF extends StatelessWidget {
   const MyPDF({super.key, required this.rModel});
   final RegistrationModel rModel;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -198,7 +198,7 @@ class MyPDF extends StatelessWidget {
                             padding: const pw.EdgeInsets.only(
                                 left: 5.0, right: 5, top: 0, bottom: 5),
                             child: pw.Stack(children: [
-                               pw.Positioned(
+                              pw.Positioned(
                                 left: 590,
                                 child: pw.Column(children: [
                                   pw.SizedBox(height: 20),
@@ -219,21 +219,144 @@ class MyPDF extends StatelessWidget {
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${rModel.totalStudents}"),
+                                    child:
+                                        detailText("${rModel.totalStudents}"),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${rModel.totalUnEmployedYouth}"),
+                                    child: detailText(
+                                        "${rModel.totalUnEmployedYouth}"),
                                   ),
                                   pw.SizedBox(height: 10),
                                 ]),
                               ),
-                             
                               pw.Positioned(
-                                left: 400,
+                                left: 500,
+                                bottom: 40,
+                                child: pw.Column(children: [
+                                  pw.SizedBox(height: 50),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: pw.Row(
+                                        mainAxisAlignment:
+                                            pw.MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          pw.SizedBox(width: 10),
+                                          detailText2("${rModel.totalWomen}"),
+                                          pw.SizedBox(width: 10),
+                                          detailText2("="),
+                                          pw.SizedBox(width: 10),
+                                          detailText2(
+                                              "${rModel.totalWomen * 18000}"),
+                                          pw.SizedBox(width: 10),
+                                        ]),
+                                  ),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: pw.Row(
+                                        mainAxisAlignment:
+                                            pw.MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          pw.SizedBox(width: 10),
+                                          detailText2(
+                                              "${rModel.totalStudents}"),
+                                          pw.SizedBox(width: 10),
+                                          detailText2("="),
+                                          pw.SizedBox(width: 10),
+                                          detailText2(
+                                              "${rModel.totalStudents * 15000}"),
+                                          pw.SizedBox(width: 10),
+                                        ]),
+                                  ),
+                                  pw.SizedBox(height: 20),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: pw.Row(
+                                        mainAxisAlignment:
+                                            pw.MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          pw.SizedBox(width: 10),
+                                          detailText2("${rModel.totalFarmers}"),
+                                          pw.SizedBox(width: 10),
+                                          detailText2("="),
+                                          pw.SizedBox(width: 10),
+                                          detailText2(
+                                              "${rModel.totalFarmers * 20000}"),
+                                          pw.SizedBox(width: 10),
+                                        ]),
+                                  ),
+                                  pw.SizedBox(height: 20),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: pw.Row(
+                                        mainAxisAlignment:
+                                            pw.MainAxisAlignment.center,
+                                        children: [
+                                          pw.SizedBox(width: 10),
+                                          detailText2(
+                                              "${rModel.totalUnEmployedYouth}"),
+                                          pw.SizedBox(width: 10),
+                                          detailText2("="),
+                                          pw.SizedBox(width: 10),
+                                          detailText2(
+                                              "${rModel.totalUnEmployedYouth * 36000}"),
+                                          pw.SizedBox(width: 10),
+                                        ]),
+                                  ),
+                                  pw.SizedBox(height: 10),
+                                ]),
+                              ),
+
+                              pw.Positioned(
+                                left: 600,
+                                bottom: 30,
+                                child: pw.Column(children: [
+                                  pw.SizedBox(height: 30),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: pw.Row(
+                                        mainAxisAlignment:
+                                            pw.MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          pw.SizedBox(width: 10),
+                                          detailText2(
+                                              "${rModel.totalWomen * 18000 + rModel.totalFarmers * 20000 + rModel.totalStudents * 15000 + rModel.totalUnEmployedYouth * 36000}"),
+                                          pw.SizedBox(width: 10),
+                                        ]),
+                                  ),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: pw.Row(
+                                        mainAxisAlignment:
+                                            pw.MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          pw.SizedBox(width: 10),
+                                          detailText2(
+                                              "${(rModel.totalWomen * 18000 + rModel.totalFarmers * 20000 + rModel.totalStudents * 15000 + rModel.totalUnEmployedYouth * 36000) * 5}"),
+                                          pw.SizedBox(width: 10),
+                                        ]),
+                                  ),
+                                ]),
+                              ),
+
+                              //id
+                              pw.Positioned(
+                                left: 300,
                                 top: 5,
-                                child: detailText("${rModel.id!.isEmpty?12345678:rModel.id}"),
+                                child: pw.Container(
+                                    height: 20,
+                                    
+                                    color: PdfColors.amberAccent,
+                                    child: pw.Row(children: [
+                                      pw.Text("UNIQUE CODE:",
+                                          style: pw.TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: pw.FontWeight.bold,
+                                              color: PdfColors.black)),
+                                      detailText(
+                                          "${rModel.id!.isEmpty ? 12345678 : rModel.id}")
+                                    ])),
                               ),
                               pw.Positioned(
                                 left: 350,
@@ -259,15 +382,15 @@ class MyPDF extends StatelessWidget {
                               pw.Positioned(
                                 left: 100,
                                 child: pw.Column(children: [
-                                  pw.SizedBox(height: 20),
+                                  pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText("${rModel.name}"),
                                   ),
-                                  pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${rModel.totalFam}"),
+                                    child:
+                                        detailText("${rModel.fatherNamefield}"),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
@@ -277,12 +400,20 @@ class MyPDF extends StatelessWidget {
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${rModel.district}"),
+                                    child: detailText("${rModel.address}"),
                                   ),
                                   pw.SizedBox(height: 10),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: detailText("${rModel.district}"),
+                                  ),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: detailText("#######"),
+                                  ),
                                 ]),
                               ),
-                             
+
                               pw.Align(
                                   alignment: pw.Alignment.topCenter,
                                   child: pw.Container(
@@ -312,6 +443,22 @@ class MyPDF extends StatelessWidget {
           pw.SizedBox(width: 1),
           pw.SizedBox(
               width: 150,
+              child: pw.Align(
+                  alignment: pw.Alignment.centerLeft,
+                  child: pw.Text(value,
+                      style: const pw.TextStyle(
+                          fontSize: 10, color: PdfColors.black))))
+        ]);
+  }
+
+  detailText2(String value) {
+    return pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.start,
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.SizedBox(width: 1),
+          pw.SizedBox(
+              width: 50,
               child: pw.Align(
                   alignment: pw.Alignment.centerLeft,
                   child: pw.Text(value,

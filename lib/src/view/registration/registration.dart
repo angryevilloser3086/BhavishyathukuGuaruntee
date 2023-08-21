@@ -39,6 +39,7 @@ class RegistratioScreen extends StatelessWidget {
                     AppConstants.h_20,
                     fNamefield1(context, registrationProvider),
                     AppConstants.h_5,
+                    fatherNamefield(context,registrationProvider),AppConstants.h_5,
                     genderSet(context, registrationProvider), AppConstants.h_5,
                     ageField(context, registrationProvider), AppConstants.h_5,
                     selectDistrict(context, registrationProvider),
@@ -545,9 +546,9 @@ class RegistratioScreen extends StatelessWidget {
       child: InkWell(
           onTap: () {
             if (registrationProvider.phoneTextController.text.length == 10) {
-              registrationProvider.sendToPdf(context);
-              // registrationProvider.verifyPhone(
-              //     context, registrationProvider.phoneTextController.text);
+             // registrationProvider.sendToPdf(context);
+              registrationProvider.verifyPhone(
+                  context, registrationProvider.phoneTextController.text);
             } else {
               AppConstants.showSnackBar(context, "please enter valid Number");
             }
@@ -640,6 +641,75 @@ class RegistratioScreen extends StatelessWidget {
       ],
     );
   }
+
+  fatherNamefield(BuildContext context, RegistrationProvider registrationProvider) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          Strings.of(context).father,
+          style: GoogleFonts.inter(
+              fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
+        ),
+        SizedBox(
+          height: 75,
+          width: MediaQuery.of(context).size.width,
+          child: TextFormField(
+            controller: registrationProvider.fatherNamefield,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            textCapitalization: TextCapitalization.sentences,
+            autofocus: true,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter the Father/ husband Name';
+              }
+              return null;
+            },
+            onEditingComplete: () {
+              FocusScope.of(context).nextFocus();
+              //addNewPeople.formKey.currentState!.validate();
+            },
+            textAlign: TextAlign.justify,
+            style: GoogleFonts.inter(
+                fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
+            decoration: InputDecoration(
+                // contentPadding: AppConstants.all_5,
+                fillColor: Colors.white,
+                filled: true,
+                counterStyle: Theme.of(context).textTheme.bodySmall,
+                counterText: "",
+                hintText: "Father/ husband Name",
+                errorStyle: GoogleFonts.inter(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.red),
+                hintStyle: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w200,
+                    color: Colors.black),
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: AppConstants.appBgLite),
+                    borderRadius: AppConstants.boxRadius8),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: AppConstants.appBgLite),
+                    borderRadius: AppConstants.boxRadius8),
+                border: const OutlineInputBorder(
+                    borderSide: BorderSide(color: AppConstants.appBgLite),
+                    borderRadius: AppConstants.boxRadius8)),
+
+            keyboardType: TextInputType.name,
+            maxLength: 50,
+            inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
+            //controller: addNewPeople.fnameController,
+          ),
+        ),
+      ],
+    );
+  }
+
+ 
+
 
   vNumberField(
       BuildContext context, RegistrationProvider registrationProvider) {

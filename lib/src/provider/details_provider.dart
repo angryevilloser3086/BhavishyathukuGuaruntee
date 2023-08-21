@@ -39,7 +39,7 @@ class DetailsProvider extends ChangeNotifier {
             totalFarmers: data.docs.first.get('total_farmers'),
             totalStudents: data.docs.first.get('total_students'),
             totalUnEmployedYouth: data.docs.first.get('total_unempyouth'),
-            totalWomen: data.docs.first.get('total_women'));
+            totalWomen: data.docs.first.get('total_women'), fatherNamefield: data.docs.first.get('fatherName'));
         log("${userDetails!.toJSON()}");
         notifyListeners();
       }

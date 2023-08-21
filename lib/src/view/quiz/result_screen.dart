@@ -1,9 +1,8 @@
-// ignore_for_file: avoid_print
+
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// import '../../../utils/app_utils.dart';
 
 class Result extends StatelessWidget {
   final int resultScore;
@@ -12,25 +11,6 @@ class Result extends StatelessWidget {
   const Result(this.resultScore, this.resetHandler, {Key? key})
       : super(key: key);
 
-//Remark Logic
-  String get resultPhrase {
-    String resultText;
-    if (resultScore >= 41) {
-      resultText = 'You are awesome!';
-      print(resultScore);
-    } else if (resultScore >= 31) {
-      resultText = 'Pretty likeable!';
-      print(resultScore);
-    } else if (resultScore >= 21) {
-      resultText = 'You need to work more!';
-    } else if (resultScore >= 1) {
-      resultText = 'You need to work hard!';
-    } else {
-      resultText = 'This is a poor score!';
-      print(resultScore);
-    }
-    return resultText;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +18,9 @@ class Result extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            resultPhrase,
-            style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+         const Text(
+            "Thanks for taking the Quiz",
+            style:  TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ), //Text
           Text(

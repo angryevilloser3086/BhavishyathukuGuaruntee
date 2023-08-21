@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
            CarouselSlider(
               items: [
-                Container(
+                SizedBox(
                     width: w,
                     child: Image.asset(
                       images[0],
@@ -235,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
             totalFarmers: snapshot.get('total_farmers'),
             totalStudents: snapshot.get('total_students'),
             totalUnEmployedYouth: snapshot.get('total_unempyouth'),
-            totalWomen: snapshot.get('total_women'));
+            totalWomen: snapshot.get('total_women'), fatherNamefield: snapshot.get('fatherName'));
 
         setState(() {
           users.add(user);

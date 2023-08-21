@@ -11,7 +11,6 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-  // HashMap<String, List<String>> questions = HashMap();
 
   final questions = const [
     {
@@ -39,7 +38,10 @@ class _QuizScreenState extends State<QuizScreen> {
           "What is the name of the special scheme announced for BCs as a part of 'Bhavishyathu ki Guarantee' announced by TDP?",
       "options": [
         {"text": "BC's Assurance Act", "score": "0"},
-        {"text": "Protection of BCs Act (A new law for the protection of BCs)", "score": "1"},
+        {
+          "text": "Protection of BCs Act (A new law for the protection of BCs)",
+          "score": "1"
+        },
         {"text": "For BCs", "score": "0"},
         {"text": "Assistance to BCs", "score": "0"}
       ]
@@ -96,43 +98,72 @@ class _QuizScreenState extends State<QuizScreen> {
     }
   ];
   bool showQuestions = false;
-
+  bool changeQuestion = false;
   var _questionIndex = -1;
   var _totalScore = 0;
 
   void resetQuiz(bool val) {
+    print("objectreset$changeQuestion");
     if (true) {
       setState(() {
         _questionIndex = -1;
         showQuestions = true;
+        changeQuestion =true;
         _totalScore = 0;
       });
     }
   }
 
   void _answerQuestion(int score) {
-    setState(() {
-      _totalScore += score;
-    });
+    if (score != null) {
+      setState(() {
+        changeQuestion = true;
+
+        _totalScore += score;
+      });
+    } else {
+      setState(() {
+        changeQuestion = false;
+      });
+    }
   }
 
   nxtFun() {
+    print("object0$changeQuestion$_questionIndex");
+    if(changeQuestion){
     if (_questionIndex < questions.length) {
-      // ignore: avoid_print
+      
+      print("object$changeQuestion");
       setState(() {
         _questionIndex = _questionIndex + 1;
+        changeQuestion =false;
       });
     } else if (_questionIndex == questions.length) {
       // ignore: avoid_print
+      print("object$changeQuestion");
       setState(() {
         _questionIndex = -1;
+        changeQuestion =true;
         showQuestions = false;
       });
       AppConstants.showSnackBar(context, "Thanks For taking the Quiz!!");
     } else {
       setState(() {
+        print("object2$changeQuestion");
         _questionIndex = -1;
       });
+    }
+    }else{
+      if(_questionIndex==8){
+        
+          setState(() {
+            _questionIndex=-1;
+            showQuestions=false;
+          });
+         AppConstants.showSnackBar(context, "Thanks For taking the Quiz!!");
+      }else {
+        AppConstants.showSnackBar(context, "Please select the answer");
+      }
     }
   }
 
@@ -324,7 +355,7 @@ class _QuizScreenState extends State<QuizScreen> {
       padding: AppConstants.leftRight_20,
       color: Colors.white,
       width: size.width,
-      height: size.height > 450 ? size.height * 0.59 : size.height * 0.45,
+      height: size.height > 446 ? size.height * 0.55 : size.height * 0.42,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -360,9 +391,9 @@ class _QuizScreenState extends State<QuizScreen> {
           InkWell(
             onTap: () {
               setState(() {
-              //  print(questions.length);
+                //  print(questions.length);
                 _questionIndex = 0;
-              //  print(_questionIndex);
+                //  print(_questionIndex);
                 showQuestions = true;
               });
             },

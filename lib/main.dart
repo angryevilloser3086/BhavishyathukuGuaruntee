@@ -156,7 +156,7 @@ class _MyAppState extends State<MyApp> {
           List<String> pathComponents = settings.name!.split('/');
           // List<String> pathComponents = settings.name.split('/');
           if (pathComponents[1] == 'details-screen') {
-            print(pathComponents.toList());
+           // print(pathComponents.toList());
             return MaterialPageRoute(
               builder: (context) {
                 return DetailsScreen(id: pathComponents.last);

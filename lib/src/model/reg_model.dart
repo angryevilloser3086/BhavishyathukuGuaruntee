@@ -2,6 +2,7 @@ class RegistrationModel {
   String? name;
   String? age;
   String? id;
+  String? fatherNamefield;
   String? gender;
   String? constituency;
   String? district;
@@ -24,6 +25,7 @@ class RegistrationModel {
       {required this.name,
       required this.age,
       required this.id,
+      required this.fatherNamefield,
       required this.constituency,
       required this.district,
       required this.mandal,
@@ -61,7 +63,7 @@ class RegistrationModel {
           totalFam: json['total_fam'],
           totalFarmers: json['total_farmers'],
           totalStudents: json['total_students'],
-          totalUnEmployedYouth: json['total_unempyouth'], totalWomen: json['total_women']);
+          totalUnEmployedYouth: json['total_unempyouth'], totalWomen: json['total_women'], fatherNamefield: json['fatherName']);
   Map<String, dynamic> toJSON() => {
         'id': id,
         'name': name,
@@ -83,6 +85,6 @@ class RegistrationModel {
         'total_students':totalStudents,
         'total_unempyouth':totalUnEmployedYouth,
         'total_women':totalWomen,
-
+        'fatherName':fatherNamefield
       };
 }
