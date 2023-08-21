@@ -1,17 +1,42 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import '../../model/reg_model.dart';
 import '../../utils/app_utils.dart';
 
-class MyPDF extends StatelessWidget {
+class MyPDF extends StatefulWidget {
   const MyPDF({super.key, required this.rModel});
   final RegistrationModel rModel;
 
   @override
+  State<MyPDF> createState() => _MyPDFState();
+}
+
+class _MyPDFState extends State<MyPDF> {
+  Uint8List? pdfvalue;
+
+  @override
+  void initState() {
+   
+    init();
+    super.initState();
+  }
+
+  init()  async{
+    final value = await makePDF(context);
+    setState(() {
+      pdfvalue = value;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -21,14 +46,28 @@ class MyPDF extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
+                if(pdfvalue!=null)
+                InkWell(
+                  onTap: () async => downloadFile(pdfvalue!),
+                  child: startBtn(size, "Donwload"),
+                ),
+                AppConstants.h_10,
+                if(pdfvalue!=null)
                 SizedBox(
                   // width: 1970,
                   width: 595,
                   height: 842,
                   child: PdfPreview(
+                      allowPrinting: false,
+                      allowSharing: false,
+                      canDebug: false,
+                      canChangeOrientation: false,
                       canChangePageFormat: false,
-                      build: (_) => makePDF(context)),
-                )
+                      build: (_) => pdfvalue!),
+                ),
+                if(pdfvalue==null)CircularProgressIndicator(),
+                
+                
 
                 // Image.asset("assets/images/ic_background.png"),
               ],
@@ -39,9 +78,32 @@ class MyPDF extends StatelessWidget {
     );
   }
 
+  downloadFile(Uint8List files) async{
+    await Printing.sharePdf(bytes: files, filename: '${widget.rModel.number}');
+  }
+
+  startBtn(Size size, String title) {
+    return Container(
+      width: size.width * 0.17,
+      height: size.height * 0.04,
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(25)),
+          color: AppConstants.appredColor),
+      child: Center(
+        child: Text(
+          title,
+          style: GoogleFonts.poppins(
+              color: AppConstants.appYellowBG,
+              fontSize: size.width < 450 ? 15 : 16,
+              fontWeight: FontWeight.w500),
+        ),
+      ),
+    );
+  }
+
   Future<Uint8List> makePDF(BuildContext context) async {
     final pdf = pw.Document();
-    print(rModel.toJSON());
+    print(widget.rModel.toJSON());
     pdf.addPage(await createPageOne());
     pdf.addPage(await createPageTwo());
     return pdf.save();
@@ -204,29 +266,32 @@ class MyPDF extends StatelessWidget {
                                   pw.SizedBox(height: 20),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${rModel.totalFam}"),
-                                  ),
-                                  pw.SizedBox(height: 10),
-                                  pw.Positioned(
-                                    left: 80,
-                                    child: detailText("${rModel.totalFarmers}"),
-                                  ),
-                                  pw.SizedBox(height: 10),
-                                  pw.Positioned(
-                                    left: 80,
-                                    child: detailText("${rModel.totalWomen}"),
-                                  ),
-                                  pw.SizedBox(height: 10),
-                                  pw.Positioned(
-                                    left: 80,
                                     child:
-                                        detailText("${rModel.totalStudents}"),
+                                        detailText("${widget.rModel.totalFam}"),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${rModel.totalUnEmployedYouth}"),
+                                        "${widget.rModel.totalFarmers}"),
+                                  ),
+                                  pw.SizedBox(height: 10),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: detailText(
+                                        "${widget.rModel.totalWomen}"),
+                                  ),
+                                  pw.SizedBox(height: 10),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: detailText(
+                                        "${widget.rModel.totalStudents}"),
+                                  ),
+                                  pw.SizedBox(height: 10),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: detailText(
+                                        "${widget.rModel.totalUnEmployedYouth}"),
                                   ),
                                   pw.SizedBox(height: 10),
                                 ]),
@@ -242,13 +307,14 @@ class MyPDF extends StatelessWidget {
                                         mainAxisAlignment:
                                             pw.MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          pw.SizedBox(width: 10),
-                                          detailText2("${rModel.totalWomen}"),
+                                          pw.SizedBox(width: 30),
+                                          detailText2(
+                                              "${widget.rModel.totalWomen}"),
                                           pw.SizedBox(width: 10),
                                           detailText2("="),
                                           pw.SizedBox(width: 10),
                                           detailText2(
-                                              "${rModel.totalWomen * 18000}"),
+                                              "${widget.rModel.totalWomen * 18000}"),
                                           pw.SizedBox(width: 10),
                                         ]),
                                   ),
@@ -260,12 +326,12 @@ class MyPDF extends StatelessWidget {
                                         children: [
                                           pw.SizedBox(width: 10),
                                           detailText2(
-                                              "${rModel.totalStudents}"),
+                                              "${widget.rModel.totalStudents}"),
                                           pw.SizedBox(width: 10),
                                           detailText2("="),
                                           pw.SizedBox(width: 10),
                                           detailText2(
-                                              "${rModel.totalStudents * 15000}"),
+                                              "${widget.rModel.totalStudents * 15000}"),
                                           pw.SizedBox(width: 10),
                                         ]),
                                   ),
@@ -277,12 +343,13 @@ class MyPDF extends StatelessWidget {
                                             pw.MainAxisAlignment.spaceEvenly,
                                         children: [
                                           pw.SizedBox(width: 10),
-                                          detailText2("${rModel.totalFarmers}"),
+                                          detailText2(
+                                              "${widget.rModel.totalFarmers}"),
                                           pw.SizedBox(width: 10),
                                           detailText2("="),
                                           pw.SizedBox(width: 10),
                                           detailText2(
-                                              "${rModel.totalFarmers * 20000}"),
+                                              "${widget.rModel.totalFarmers * 20000}"),
                                           pw.SizedBox(width: 10),
                                         ]),
                                   ),
@@ -295,12 +362,12 @@ class MyPDF extends StatelessWidget {
                                         children: [
                                           pw.SizedBox(width: 10),
                                           detailText2(
-                                              "${rModel.totalUnEmployedYouth}"),
+                                              "${widget.rModel.totalUnEmployedYouth}"),
                                           pw.SizedBox(width: 10),
                                           detailText2("="),
                                           pw.SizedBox(width: 10),
                                           detailText2(
-                                              "${rModel.totalUnEmployedYouth * 36000}"),
+                                              "${widget.rModel.totalUnEmployedYouth * 36000}"),
                                           pw.SizedBox(width: 10),
                                         ]),
                                   ),
@@ -321,7 +388,7 @@ class MyPDF extends StatelessWidget {
                                         children: [
                                           pw.SizedBox(width: 10),
                                           detailText2(
-                                              "${rModel.totalWomen * 18000 + rModel.totalFarmers * 20000 + rModel.totalStudents * 15000 + rModel.totalUnEmployedYouth * 36000}"),
+                                              "${widget.rModel.totalWomen * 18000 + widget.rModel.totalFarmers * 20000 + widget.rModel.totalStudents * 15000 + widget.rModel.totalUnEmployedYouth * 36000}"),
                                           pw.SizedBox(width: 10),
                                         ]),
                                   ),
@@ -333,7 +400,7 @@ class MyPDF extends StatelessWidget {
                                         children: [
                                           pw.SizedBox(width: 10),
                                           detailText2(
-                                              "${(rModel.totalWomen * 18000 + rModel.totalFarmers * 20000 + rModel.totalStudents * 15000 + rModel.totalUnEmployedYouth * 36000) * 5}"),
+                                              "${(widget.rModel.totalWomen * 18000 + widget.rModel.totalFarmers * 20000 + widget.rModel.totalStudents * 15000 + widget.rModel.totalUnEmployedYouth * 36000) * 5}"),
                                           pw.SizedBox(width: 10),
                                         ]),
                                   ),
@@ -346,16 +413,18 @@ class MyPDF extends StatelessWidget {
                                 top: 5,
                                 child: pw.Container(
                                     height: 20,
-                                    
-                                    color: PdfColors.amberAccent,
+                                    color: PdfColor.fromHex("FFD011"),
                                     child: pw.Row(children: [
                                       pw.Text("UNIQUE CODE:",
                                           style: pw.TextStyle(
                                               fontSize: 14,
                                               fontWeight: pw.FontWeight.bold,
                                               color: PdfColors.black)),
-                                      detailText(
-                                          "${rModel.id!.isEmpty ? 12345678 : rModel.id}")
+                                      pw.Text("${widget.rModel.id!.isEmpty ? 12345678 : widget.rModel.id}",
+                                          style: pw.TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: pw.FontWeight.bold,
+                                              color: PdfColors.black)),
                                     ])),
                               ),
                               pw.Positioned(
@@ -364,17 +433,20 @@ class MyPDF extends StatelessWidget {
                                   pw.SizedBox(height: 55),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${rModel.pincode}"),
+                                    child:
+                                        detailText("${widget.rModel.pincode}"),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${rModel.constituency}"),
+                                    child: detailText(
+                                        "${widget.rModel.constituency}"),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${rModel.number}"),
+                                    child:
+                                        detailText("${widget.rModel.number}"),
                                   ),
                                   pw.SizedBox(height: 10),
                                 ]),
@@ -382,35 +454,39 @@ class MyPDF extends StatelessWidget {
                               pw.Positioned(
                                 left: 100,
                                 child: pw.Column(children: [
-                                  pw.SizedBox(height: 10),
+                                  pw.SizedBox(height: 20),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${rModel.name}"),
+                                    child: detailText("${widget.rModel.name}"),
                                   ),
+                                  pw.SizedBox(height: 5),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: detailText(
+                                        "${widget.rModel.fatherNamefield}"),
+                                  ),
+                                  pw.SizedBox(height: 5),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: detailText("${widget.rModel.age}"),
+                                  ),
+                                  pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
                                     child:
-                                        detailText("${rModel.fatherNamefield}"),
+                                        detailText("${widget.rModel.address}"),
                                   ),
-                                  pw.SizedBox(height: 10),
+                                  pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${rModel.age}"),
-                                  ),
-                                  pw.SizedBox(height: 10),
-                                  pw.Positioned(
-                                    left: 80,
-                                    child: detailText("${rModel.address}"),
-                                  ),
-                                  pw.SizedBox(height: 10),
-                                  pw.Positioned(
-                                    left: 80,
-                                    child: detailText("${rModel.district}"),
+                                    child:
+                                        detailText("${widget.rModel.district}"),
                                   ),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText("#######"),
                                   ),
+                                  pw.SizedBox(height: 20),
                                 ]),
                               ),
 
@@ -467,3 +543,6 @@ class MyPDF extends StatelessWidget {
         ]);
   }
 }
+
+
+//eb08146..96e771f
