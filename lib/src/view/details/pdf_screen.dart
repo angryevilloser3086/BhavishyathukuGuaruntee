@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,7 +64,7 @@ class _MyPDFState extends State<MyPDF> {
                       canChangePageFormat: false,
                       build: (_) => pdfvalue!),
                 ),
-                if(pdfvalue==null)CircularProgressIndicator(),
+                if(pdfvalue==null)const CircularProgressIndicator(),
                 
                 
 
@@ -311,7 +310,7 @@ class _MyPDFState extends State<MyPDF> {
                                           detailText2(
                                               "${widget.rModel.totalWomen}"),
                                           pw.SizedBox(width: 10),
-                                          detailText2("="),
+                                          detailText2(""),
                                           pw.SizedBox(width: 10),
                                           detailText2(
                                               "${widget.rModel.totalWomen * 18000}"),
@@ -328,7 +327,7 @@ class _MyPDFState extends State<MyPDF> {
                                           detailText2(
                                               "${widget.rModel.totalStudents}"),
                                           pw.SizedBox(width: 10),
-                                          detailText2("="),
+                                          detailText2(""),
                                           pw.SizedBox(width: 10),
                                           detailText2(
                                               "${widget.rModel.totalStudents * 15000}"),
@@ -346,7 +345,7 @@ class _MyPDFState extends State<MyPDF> {
                                           detailText2(
                                               "${widget.rModel.totalFarmers}"),
                                           pw.SizedBox(width: 10),
-                                          detailText2("="),
+                                          detailText2(""),
                                           pw.SizedBox(width: 10),
                                           detailText2(
                                               "${widget.rModel.totalFarmers * 20000}"),
@@ -364,7 +363,7 @@ class _MyPDFState extends State<MyPDF> {
                                           detailText2(
                                               "${widget.rModel.totalUnEmployedYouth}"),
                                           pw.SizedBox(width: 10),
-                                          detailText2("="),
+                                          detailText2(""),
                                           pw.SizedBox(width: 10),
                                           detailText2(
                                               "${widget.rModel.totalUnEmployedYouth * 36000}"),
@@ -409,7 +408,7 @@ class _MyPDFState extends State<MyPDF> {
 
                               //id
                               pw.Positioned(
-                                left: 300,
+                                left: 290,
                                 top: 5,
                                 child: pw.Container(
                                     height: 20,
@@ -422,7 +421,7 @@ class _MyPDFState extends State<MyPDF> {
                                               color: PdfColors.black)),
                                       pw.Text("${widget.rModel.id!.isEmpty ? 12345678 : widget.rModel.id}",
                                           style: pw.TextStyle(
-                                              fontSize: 14,
+                                              fontSize: 12,
                                               fontWeight: pw.FontWeight.bold,
                                               color: PdfColors.black)),
                                     ])),

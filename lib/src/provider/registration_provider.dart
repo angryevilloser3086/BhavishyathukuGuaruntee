@@ -3007,86 +3007,79 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
-   verifyPhone(BuildContext context, String phone) async {
-    //showLoader = true;
-    //var credential = PhoneAuthProvider.credential(verificationId: , smsCode: smsCodeController.text);
-    await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: "+$cc$phone",
-        verificationCompleted: (credential) async {
-          PhoneAuthProvider.credential(
-              verificationId: credential.verificationId!,
-              smsCode: credential.smsCode!);
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          print(e);
-          AppConstants.showSnackBar(context, "Failed to verify$e");
-        },
-        codeSent: (String verficationID, int? resendToken) async {
-          //getStorage.write("verificationID", verficationID);
-          enableOTPtext = true;
-          print("${resendToken} resendToken");
-          print("$verficationID codesent");
-          verificatioID = verficationID;
-          notifyListeners();
-          //showLoader = false;
-          // AppConstants.showSnackBar(context, "$verficationID codesent");
-        },
-        codeAutoRetrievalTimeout: (String verificationID) {
-          print(verificationID);
-          verificatioID = verificationID;
-          // Get.showSnackbar(GetSnackBar(message: verificationID));
-          // Get.offAllNamed(Routes.OTPSCREEN);
-        },
-        timeout: const Duration(seconds: 120));
-    notifyListeners();
-  }
-
-
-  // verifyPhone(BuildContext context, String phone) async {
-  //   if (formKey.currentState!.validate()) {
-  //     DialogBuilder(context).showLoadingIndicator(
-  //         "Please wait while we are sending UID to Registered Number");
-
-  //     try {
-  //       showLoaderOTP = true;
-  //       String id = randomIdGenerator();
-  //       checkID(context, id);
-  //       if (uniqueCode.text.isNotEmpty) {
-        
-   
-  //         apiRequest.sendUID(phone, id).then((value) {
-  //           enableOTPtext = true;
-  //           Navigator.of(context, rootNavigator: true).pop();
-  //           showLoaderOTP = false;
-  //           AppConstants.showSnackBar(context, value);
-  //           notifyListeners();
-  //         }).catchError((err) {
-  //           if (kDebugMode) {
-  //             print("entered api Call");
-  //           }
-  //           Navigator.of(context, rootNavigator: true).pop();
-  //           showLoaderOTP = false;
-  //            enableOTPtext = false;
-  //            print(err.toString());
-  //            log("$err");
-  //           AppConstants.showSnackBar(context, "$err");
-  //           notifyListeners();
-  //         });
-  //       }
-  //       notifyListeners();
-  //     } catch (e) {
-  //       showLoaderOTP = false;
-  //       Navigator.of(context, rootNavigator: true).pop();
-  //       AppConstants.showSnackBar(context, e.toString());
-  //       notifyListeners();
-  //     }
-  //     notifyListeners();
-  //   }
+  //  verifyPhone(BuildContext context, String phone) async {
+  //   //showLoader = true;
+  //   //var credential = PhoneAuthProvider.credential(verificationId: , smsCode: smsCodeController.text);
+  //   await FirebaseAuth.instance.verifyPhoneNumber(
+  //       phoneNumber: "+$cc$phone",
+  //       verificationCompleted: (credential) async {
+  //         PhoneAuthProvider.credential(
+  //             verificationId: credential.verificationId!,
+  //             smsCode: credential.smsCode!);
+  //       },
+  //       verificationFailed: (FirebaseAuthException e) {
+  //         print(e);
+  //         AppConstants.showSnackBar(context, "Failed to verify$e");
+  //       },
+  //       codeSent: (String verficationID, int? resendToken) async {
+  //         //getStorage.write("verificationID", verficationID);
+  //         enableOTPtext = true;
+  //         print("${resendToken} resendToken");
+  //         print("$verficationID codesent");
+  //         verificatioID = verficationID;
+  //         notifyListeners();
+  //         //showLoader = false;
+  //         // AppConstants.showSnackBar(context, "$verficationID codesent");
+  //       },
+  //       codeAutoRetrievalTimeout: (String verificationID) {
+  //         print(verificationID);
+  //         verificatioID = verificationID;
+  //         // Get.showSnackbar(GetSnackBar(message: verificationID));
+  //         // Get.offAllNamed(Routes.OTPSCREEN);
+  //       },
+  //       timeout: const Duration(seconds: 120));
+  //   notifyListeners();
   // }
 
+  verifyPhone(BuildContext context, String phone) async {
+    if (formKey.currentState!.validate()) {
+      DialogBuilder(context).showLoadingIndicator(
+          "Please wait while we are sending UID to Registered Number");
 
+      try {
+        showLoaderOTP = true;
+        String id = randomIdGenerator();
+        checkID(context, id);
+        if (uniqueCode.text.isNotEmpty) {
+          apiRequest.sendUID(phone, id).then((value) {
+            enableOTPtext = true;
+            Navigator.of(context, rootNavigator: true).pop();
+            showLoaderOTP = false;
+            AppConstants.showSnackBar(context, value);
+            notifyListeners();
+          }).catchError((err) {
+            if (kDebugMode) {
+              print("entered api Call");
+            }
+            Navigator.of(context, rootNavigator: true).pop();
+            showLoaderOTP = false;
+            enableOTPtext = false;
+            print(err.toString());
+            log("$err");
+            AppConstants.showSnackBar(context, "$err");
+            notifyListeners();
+          });
+        }
+        notifyListeners();
+      } catch (e) {
+        showLoaderOTP = false;
+        Navigator.of(context, rootNavigator: true).pop();
+        AppConstants.showSnackBar(context, e.toString());
+        notifyListeners();
+      }
+      notifyListeners();
+    }
+  }
 
   void checkID(BuildContext context, String id) {
     bool idPresent = getDetails(context, id);
@@ -3095,21 +3088,20 @@ class RegistrationProvider extends ChangeNotifier {
       checkID(context, id);
     } else {
       uniqueCode = TextEditingController(text: id);
-      
     }
     notifyListeners();
   }
 
-  bool  getDetails(BuildContext context, String id) {
+  bool getDetails(BuildContext context, String id) {
     print("called this method:$id");
-    bool checked=false;
+    bool checked = false;
     _db.collection('users').where("id", isEqualTo: id).get().then((value) {
       QuerySnapshot data = value;
       log("enter firestore db: ${data.docs.first.get("id")}");
       checked = false;
       notifyListeners();
     }).catchError((err) {
-      checked =true;
+      checked = true;
       notifyListeners();
       // uniqueCode = TextEditingController(text: id);
       // notifyListeners();
@@ -3126,63 +3118,61 @@ class RegistrationProvider extends ChangeNotifier {
     return first4alphabets;
   }
 
-  // otpVerify(BuildContext context) async {
-  //   DialogBuilder(context)
-  //       .showLoadingIndicator("Please wait while we verifying the OTP ");
-  //   // print("e.toString()");
-  //   // print(verificatioID);
-  //   try {
-  //     if (otpTextController.text.isNotEmpty) {
-  //       if (uniqueCode.text == otpTextController.text) {
-  //         showLoader = false;
-  //         showSubmit= true;
-  //         Navigator.of(context, rootNavigator: true).pop();
-  //         AppConstants.showSnackBar(context, "Verifed Successfully");
-  //       } else {
-  //         showLoader = false;
-  //         Navigator.of(context, rootNavigator: true).pop();
-  //         AppConstants.showSnackBar(context, "Please Enter valid UID");
-  //       }
-  //     }
-  //   } catch (e) {
-  //     showLoader = false;
-  //     Navigator.of(context, rootNavigator: true).pop();
-  //     AppConstants.showSnackBar(context, e.toString());
-  //     //verifyPhone(context, phoneTextController.text);
-  //     // print(e.toString());
-  //   }
-  //   notifyListeners();
-  // }
-
- otpVerify(BuildContext context) async {
-    showLoader = true;
-    print("e.toString()");
+  otpVerify(BuildContext context) async {
+    DialogBuilder(context)
+        .showLoadingIndicator("Please wait while we verifying the OTP ");
+    // print("e.toString()");
+    // print(verificatioID);
     try {
-      await FirebaseAuth.instance
-          .signInWithCredential(PhoneAuthProvider.credential(
-              verificationId: verificatioID, smsCode: otpTextController.text))
-          .then((value) async {
-        if (value.user != null) {
+      if (otpTextController.text.isNotEmpty) {
+        if (uniqueCode.text == otpTextController.text) {
           showLoader = false;
-          AppConstants.showSnackBar(
-              context, "User numer verified Successfully");
           showSubmit = true;
-          FirebaseAuth.instance.signOut();
-
-          // AppConstants.moveNextClearAll(context, const ProfileScreen());
+          Navigator.of(context, rootNavigator: true).pop();
+          AppConstants.showSnackBar(context, "Verifed Successfully");
+        } else {
+          showLoader = false;
+          Navigator.of(context, rootNavigator: true).pop();
+          AppConstants.showSnackBar(context, "Please Enter valid UID");
         }
-      });
+      }
     } catch (e) {
       showLoader = false;
+      Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, e.toString());
-      verifyPhone(context, phoneTextController.text);
-      print(e.toString());
+      //verifyPhone(context, phoneTextController.text);
+      // print(e.toString());
     }
     notifyListeners();
   }
 
- 
- 
+//  otpVerify(BuildContext context) async {
+//     showLoader = true;
+//     print("e.toString()");
+//     try {
+//       await FirebaseAuth.instance
+//           .signInWithCredential(PhoneAuthProvider.credential(
+//               verificationId: verificatioID, smsCode: otpTextController.text))
+//           .then((value) async {
+//         if (value.user != null) {
+//           showLoader = false;
+//           AppConstants.showSnackBar(
+//               context, "User numer verified Successfully");
+//           showSubmit = true;
+//           FirebaseAuth.instance.signOut();
+
+//           // AppConstants.moveNextClearAll(context, const ProfileScreen());
+//         }
+//       });
+//     } catch (e) {
+//       showLoader = false;
+//       AppConstants.showSnackBar(context, e.toString());
+//       verifyPhone(context, phoneTextController.text);
+//       print(e.toString());
+//     }
+//     notifyListeners();
+//   }
+
   List<String> setSchemes() {
     List<String> schemes = [];
     schemes.add("Deepam");
@@ -3225,11 +3215,10 @@ class RegistrationProvider extends ChangeNotifier {
     );
   }
 
-
-  sendToPdf(BuildContext context){
+  sendToPdf(BuildContext context) {
     List<String> schems = setSchemes();
-     DateTime dt = DateTime.now();
-     RegistrationModel rModel = RegistrationModel(
+    DateTime dt = DateTime.now();
+    RegistrationModel rModel = RegistrationModel(
         name: name.text,
         age: age.text,
         constituency: selectedConstituency,
@@ -3249,7 +3238,8 @@ class RegistrationProvider extends ChangeNotifier {
         totalFarmers: farmers,
         totalStudents: students,
         totalUnEmployedYouth: unEMployedYouth,
-        totalWomen: womenAbv, fatherNamefield: fatherNamefield.text);
+        totalWomen: womenAbv,
+        fatherNamefield: fatherNamefield.text);
 
     AppConstants.moveNextstl(context, MyPDF(rModel: rModel));
   }
@@ -3299,7 +3289,8 @@ class RegistrationProvider extends ChangeNotifier {
         totalFarmers: farmers,
         totalStudents: students,
         totalUnEmployedYouth: unEMployedYouth,
-        totalWomen: womenAbv, fatherNamefield: fatherNamefield.text);
+        totalWomen: womenAbv,
+        fatherNamefield: fatherNamefield.text);
 
     _db
         .collection('users')
@@ -3309,7 +3300,11 @@ class RegistrationProvider extends ChangeNotifier {
       showLoader = false;
       Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, "Registration Successfully done");
-      AppConstants.moveNextClearAll(context, MyPDF(rModel: rModel,));
+      AppConstants.moveNextClearAll(
+          context,
+          MyPDF(
+            rModel: rModel,
+          ));
     }).catchError((err) {
       Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, "$err");

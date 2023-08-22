@@ -8,17 +8,20 @@ class ApiRequest {
   static const String message1 =
       "మీ భవిష్యత్తుకు గ్యారెంటీ యూఐడీ నెంబరు నమోదు కోసం";
   static const String baseURL =
-      'http://sms.mobi-marketing.biz/api/mt/SendSMS?user=Showtime&password=abcd@4321D&senderid=APHOPE&channel=Trans&DCS=8&flashsms=0';
+      'https://sms.mobi-marketing.biz/api/mt/SendSMS?user=Showtime&password=abcd@4321D&senderid=APHOPE&channel=Trans&DCS=8&flashsms=0';
   Client client = Client();
   var headers = {
-    "Content-Type": "text/plain",
+    "Content-Type": "text/xml, application/xml",
   };
 
   Future<String> sendUID(String number, String uID) async {
     try {
       
-      var res = await client
-          .get(Uri.parse("$baseURL&number=91$number&text=%E0%B0%A7%E0%B0%A8%E0%B1%8D%E0%B0%AF%E0%B0%B5%E0%B0%BE%E0%B0%A6%E0%B0%BE%E0%B0%B2%E0%B1%81%20%E0%B0%87%E0%B0%A6%E0%B0%BF%20%E0%B0%AE%E0%B1%80%20%E0%B0%AD%E0%B0%B5%E0%B0%BF%E0%B0%B7%E0%B1%8D%E0%B0%AF%E0%B0%A4%E0%B1%8D%E0%B0%A4%E0%B1%81%E0%B0%95%E0%B1%81%20%E0%B0%97%E0%B1%8D%E0%B0%AF%E0%B0%BE%E0%B0%B0%E0%B1%86%E0%B0%82%E0%B0%9F%E0%B1%80%20%E0%B0%B0%E0%B0%BF%E0%B0%9C%E0%B0%BF%E0%B0%B8%E0%B1%8D%E0%B0%9F%E0%B1%8D%E0%B0%B0%E0%B1%87%E0%B0%B7%E0%B0%A8%E0%B1%8D%20%E0%B0%B8%E0%B0%B0%E0%B1%8D%E0%B0%9F%E0%B0%BF%E0%B0%AB%E0%B0%BF%E0%B0%95%E0%B1%87%E0%B0%9F%E0%B1%8D%20$uID&route=1##"),headers: headers);
+      // var res = await client
+      //     .get(Uri.parse("$baseURL&number=91$number&text=%E0%B0%A7%E0%B0%A8%E0%B1%8D%E0%B0%AF%E0%B0%B5%E0%B0%BE%E0%B0%A6%E0%B0%BE%E0%B0%B2%E0%B1%81%20%E0%B0%87%E0%B0%A6%E0%B0%BF%20%E0%B0%AE%E0%B1%80%20%E0%B0%AD%E0%B0%B5%E0%B0%BF%E0%B0%B7%E0%B1%8D%E0%B0%AF%E0%B0%A4%E0%B1%8D%E0%B0%A4%E0%B1%81%E0%B0%95%E0%B1%81%20%E0%B0%97%E0%B1%8D%E0%B0%AF%E0%B0%BE%E0%B0%B0%E0%B1%86%E0%B0%82%E0%B0%9F%E0%B1%80%20%E0%B0%B0%E0%B0%BF%E0%B0%9C%E0%B0%BF%E0%B0%B8%E0%B1%8D%E0%B0%9F%E0%B1%8D%E0%B0%B0%E0%B1%87%E0%B0%B7%E0%B0%A8%E0%B1%8D%20%E0%B0%B8%E0%B0%B0%E0%B1%8D%E0%B0%9F%E0%B0%BF%E0%B0%AB%E0%B0%BF%E0%B0%95%E0%B1%87%E0%B0%9F%E0%B1%8D%20$uID&route=1##"),headers: headers);
+      
+      var res = await client.get(Uri.parse("https://crossorigin.me/https://sms.mobi-marketing.biz/api/mt/SendSMS?user=Showtime&password=abcd@4321D&senderid=APHOPE&channel=Trans&DCS=8&flashsms=0&number=91XXXXXXXXXX&text=%E0%B0%A7%E0%B0%A8%E0%B1%8D%E0%B0%AF%E0%B0%B5%E0%B0%BE%E0%B0%A6%E0%B0%BE%E0%B0%B2%E0%B1%81%20%E0%B0%87%E0%B0%A6%E0%B0%BF%20%E0%B0%AE%E0%B1%80%20%E0%B0%AD%E0%B0%B5%E0%B0%BF%E0%B0%B7%E0%B1%8D%E0%B0%AF%E0%B0%A4%E0%B1%8D%E0%B0%A4%E0%B1%81%E0%B0%95%E0%B1%81%20%E0%B0%97%E0%B1%8D%E0%B0%AF%E0%B0%BE%E0%B0%B0%E0%B1%86%E0%B0%82%E0%B0%9F%E0%B1%80%20%E0%B0%B0%E0%B0%BF%E0%B0%9C%E0%B0%BF%E0%B0%B8%E0%B1%8D%E0%B0%9F%E0%B1%8D%E0%B0%B0%E0%B1%87%E0%B0%B7%E0%B0%A8%E0%B1%8D%20%E0%B0%B8%E0%B0%B0%E0%B1%8D%E0%B0%9F%E0%B0%BF%E0%B0%AB%E0%B0%BF%E0%B0%95%E0%B1%87%E0%B0%9F%E0%B1%8D%2035184190&route=1#%23"));
+      
       var body = jsonDecode(utf8.decode(res.bodyBytes));
       AppResponse appResponse = AppResponse.fromJson(body);
       if (res.statusCode == 200) {

@@ -546,9 +546,9 @@ class RegistratioScreen extends StatelessWidget {
       child: InkWell(
           onTap: () {
             if (registrationProvider.phoneTextController.text.length == 10) {
-              registrationProvider.sendToPdf(context);
-              // registrationProvider.verifyPhone(
-              //     context, registrationProvider.phoneTextController.text);
+              //registrationProvider.sendToPdf(context);
+              registrationProvider.verifyPhone(
+                  context, registrationProvider.phoneTextController.text);
             } else {
               AppConstants.showSnackBar(context, "please enter valid Number");
             }
