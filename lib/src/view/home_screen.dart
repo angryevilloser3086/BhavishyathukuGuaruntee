@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:vregistration/src/utils/app_utils.dart';
 import 'package:vregistration/src/view/registration/testimonial.dart';
@@ -76,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
              InkWell(
                 onTap: () {
-                  AppConstants.moveNextstl(context, RegistratioScreen(height: h < 500 ? h * 4.5 : h * 2.8, ));
+                  AppConstants.moveNextstl(context,const RegistratioScreen());
                   // if (w < 450) {
                   //   setState(() {
                   //     scrollController.animateTo(

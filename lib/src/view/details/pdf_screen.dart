@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:vregistration/src/view/registration/registration.dart';
 import '../../model/reg_model.dart';
 import '../../utils/app_utils.dart';
 
@@ -21,12 +21,11 @@ class _MyPDFState extends State<MyPDF> {
 
   @override
   void initState() {
-   
     init();
     super.initState();
   }
 
-  init()  async{
+  init() async {
     final value = await makePDF(context);
     setState(() {
       pdfvalue = value;
@@ -45,28 +44,26 @@ class _MyPDFState extends State<MyPDF> {
           child: Center(
             child: Column(
               children: [
-                if(pdfvalue!=null)
-                InkWell(
-                  onTap: () async => downloadFile(pdfvalue!),
-                  child: startBtn(size, "Donwload"),
-                ),
+                if (pdfvalue != null)
+                  InkWell(
+                    onTap: () async => downloadFile(pdfvalue!),
+                    child: startBtn(size, "Donwload"),
+                  ),
                 AppConstants.h_10,
-                if(pdfvalue!=null)
-                SizedBox(
-                  // width: 1970,
-                  width: 595,
-                  height: 842,
-                  child: PdfPreview(
-                      allowPrinting: false,
-                      allowSharing: false,
-                      canDebug: false,
-                      canChangeOrientation: false,
-                      canChangePageFormat: false,
-                      build: (_) => pdfvalue!),
-                ),
-                if(pdfvalue==null)const CircularProgressIndicator(),
-                
-                
+                if (pdfvalue != null)
+                  SizedBox(
+                    // width: 1970,
+                    width: 595,
+                    height: 842,
+                    child: PdfPreview(
+                        allowPrinting: false,
+                        allowSharing: false,
+                        canDebug: false,
+                        canChangeOrientation: false,
+                        canChangePageFormat: false,
+                        build: (_) => pdfvalue!),
+                  ),
+                if (pdfvalue == null) const CircularProgressIndicator(),
 
                 // Image.asset("assets/images/ic_background.png"),
               ],
@@ -77,8 +74,12 @@ class _MyPDFState extends State<MyPDF> {
     );
   }
 
-  downloadFile(Uint8List files) async{
-    await Printing.sharePdf(bytes: files, filename: '${widget.rModel.number}');
+  downloadFile(Uint8List files) async {
+    Printing.sharePdf(bytes: files, filename: '${widget.rModel.number}')
+        .then((value) {
+      AppConstants.showSnackBar(context, "Certificate downloaded Successfully");
+      AppConstants.moveNextClearAll(context, const RegistratioScreen());
+    });
   }
 
   startBtn(Size size, String title) {
@@ -419,7 +420,8 @@ class _MyPDFState extends State<MyPDF> {
                                               fontSize: 14,
                                               fontWeight: pw.FontWeight.bold,
                                               color: PdfColors.black)),
-                                      pw.Text("${widget.rModel.id!.isEmpty ? 12345678 : widget.rModel.id}",
+                                      pw.Text(
+                                          "${widget.rModel.id!.isEmpty ? 12345678 : widget.rModel.id}",
                                           style: pw.TextStyle(
                                               fontSize: 12,
                                               fontWeight: pw.FontWeight.bold,

@@ -110,9 +110,21 @@ class RegistrationProvider extends ChangeNotifier {
           width: 272,
           padding: AppConstants.all_10,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                "Please enter the person details below :",
+                style: GoogleFonts.inter(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black),
+              ),
+              AppConstants.h_5,
               TextField(
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black),
                 cursorColor: Colors.grey,
                 decoration: InputDecoration(
                     fillColor: Colors.white,
@@ -138,7 +150,10 @@ class RegistrationProvider extends ChangeNotifier {
               ),
               AppConstants.h_5,
               TextField(
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black),
                 cursorColor: Colors.grey,
                 decoration: InputDecoration(
                     fillColor: Colors.white,
@@ -155,11 +170,9 @@ class RegistrationProvider extends ChangeNotifier {
                     focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
                         borderRadius: AppConstants.boxRadius8)),
-                keyboardType: TextInputType.text,
-                maxLength: 50,
-                inputFormatters: [
-                  FilteringTextInputFormatter.singleLineFormatter
-                ],
+                keyboardType: TextInputType.number,
+                maxLength: 3,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 controller: ageControllers[fields.length],
               ),
             ],
@@ -3160,8 +3173,7 @@ class RegistrationProvider extends ChangeNotifier {
   verifyPhone(BuildContext context, String phone) async {
     // print(phone);
     if (formKey.currentState!.validate()) {
-      DialogBuilder(context).showLoadingIndicator(
-          "Please wait while loading!");
+      DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
       showLoaderOTP = true;
       String id = randomIdGenerator();
       checkID(context, id);
@@ -3199,8 +3211,8 @@ class RegistrationProvider extends ChangeNotifier {
   }
 
   sendSMS(BuildContext context, String phone, String id) {
-     DialogBuilder(context).showLoadingIndicator(
-          "Please wait while we are sending UID to Registered Number");
+    DialogBuilder(context).showLoadingIndicator(
+        "Please wait while we are sending UID to Registered Number");
     apiRequest.sendUID(phone, id).then((value) {
       enableOTPtext = true;
       print("200 ok block");
@@ -3226,13 +3238,17 @@ class RegistrationProvider extends ChangeNotifier {
             backgroundColor: AppConstants.appYellowBG,
             title: Text(
               title,
-              style: GoogleFonts.poppins(color: Colors.black,fontSize: 12,
-              fontWeight: FontWeight.w700),
+              style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700),
             ),
             content: Text(
               msg,
-              style: GoogleFonts.poppins(color: Colors.black,fontSize: 10,
-              fontWeight: FontWeight.w500),
+              style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500),
             ),
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10))),

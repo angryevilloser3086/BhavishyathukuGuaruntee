@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:vregistration/src/view/home_screen.dart';
 import 'package:vregistration/src/view/welcomescreen.dart';

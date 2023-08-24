@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,9 +8,8 @@ import '../../utils/app_utils.dart';
 import '../../provider/registration_provider.dart';
 
 class RegistratioScreen extends StatelessWidget {
-  const RegistratioScreen({super.key, required this.height});
-  final double height;
-
+  const RegistratioScreen({super.key});
+ 
   @override
   Widget build(BuildContext context) {
     //print("Come Back::Register Page");
