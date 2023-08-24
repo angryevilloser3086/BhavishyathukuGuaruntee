@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,16 +14,16 @@ class RegistratioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Come Back::Register Page");
+    //print("Come Back::Register Page");
     return ChangeNotifierProvider(
       create: (context) => RegistrationProvider(),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.yellow[700],
         body: SafeArea(
-          child: Container(
-            height: height,
-            padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
+          child: Padding(
+            padding: AppConstants.all_10,
             child: Consumer<RegistrationProvider>(
                 builder: (context, registrationProvider, child) {
               return Form(
@@ -30,6 +31,12 @@ class RegistratioScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Image.asset(
+                          "assets/images/header-website.png1_.png",
+                          fit: BoxFit.contain,
+                        )),
                     Text(Strings.of(context).registration,
                         style: GoogleFonts.inter(
                             fontSize: 20,
@@ -39,9 +46,12 @@ class RegistratioScreen extends StatelessWidget {
                     AppConstants.h_20,
                     fNamefield1(context, registrationProvider),
                     AppConstants.h_5,
-                    fatherNamefield(context,registrationProvider),AppConstants.h_5,
-                    genderSet(context, registrationProvider), AppConstants.h_5,
-                    ageField(context, registrationProvider), AppConstants.h_5,
+                    fatherNamefield(context, registrationProvider),
+                    AppConstants.h_5,
+                    genderSet(context, registrationProvider),
+                    AppConstants.h_5,
+                    ageField(context, registrationProvider),
+                    AppConstants.h_5,
                     selectDistrict(context, registrationProvider),
                     AppConstants.h_5,
                     selectConstituency(context, registrationProvider),
@@ -49,8 +59,10 @@ class RegistratioScreen extends StatelessWidget {
 
                     selectMandal(context, registrationProvider),
                     AppConstants.h_5,
-                    addrfield1(context, registrationProvider), AppConstants.h_5,
-                    pinfield1(context, registrationProvider), AppConstants.h_5,
+                    addrfield1(context, registrationProvider),
+                    AppConstants.h_5,
+                    pinfield1(context, registrationProvider),
+                    AppConstants.h_5,
                     // demands(context, registrationProvider),
                     // vNum(context, registrationProvider),
                     selectTotFam(context, registrationProvider),
@@ -77,7 +89,7 @@ class RegistratioScreen extends StatelessWidget {
               );
             }),
           ),
-        ),
+        )),
       ),
     );
   }
@@ -457,7 +469,6 @@ class RegistratioScreen extends StatelessWidget {
         if (registrationProvider.enableOTPtext &&
             !registrationProvider.showSubmit)
           TextFormField(
-            
             controller: registrationProvider.otpTextController,
             keyboardType: TextInputType.number,
             decoration:
@@ -547,8 +558,8 @@ class RegistratioScreen extends StatelessWidget {
           onTap: () {
             if (registrationProvider.phoneTextController.text.length == 10) {
               //registrationProvider.sendToPdf(context);
-              registrationProvider.verifyPhone(
-                  context, registrationProvider.phoneTextController.text);
+              registrationProvider.verifyPhone(context,
+                  "${registrationProvider.cc}${registrationProvider.phoneTextController.text}");
             } else {
               AppConstants.showSnackBar(context, "please enter valid Number");
             }
@@ -642,7 +653,8 @@ class RegistratioScreen extends StatelessWidget {
     );
   }
 
-  fatherNamefield(BuildContext context, RegistrationProvider registrationProvider) {
+  fatherNamefield(
+      BuildContext context, RegistrationProvider registrationProvider) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -708,9 +720,6 @@ class RegistratioScreen extends StatelessWidget {
     );
   }
 
- 
-
-
   vNumberField(
       BuildContext context, RegistrationProvider registrationProvider) {
     return Column(
@@ -749,7 +758,7 @@ class RegistratioScreen extends StatelessWidget {
                 filled: true,
                 counterStyle: Theme.of(context).textTheme.bodySmall,
                 counterText: "",
-                hintText: "Number",
+                hintText: "Volunteer number",
                 errorStyle: GoogleFonts.inter(
                     fontSize: 10,
                     fontWeight: FontWeight.w400,
@@ -768,7 +777,7 @@ class RegistratioScreen extends StatelessWidget {
                     borderSide: BorderSide(color: AppConstants.appBgLite),
                     borderRadius: AppConstants.boxRadius8)),
 
-            keyboardType: TextInputType.name,
+            keyboardType: TextInputType.number,
             maxLength: 10,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             //controller: addNewPeople.fnameController,
@@ -815,7 +824,7 @@ class RegistratioScreen extends StatelessWidget {
                 filled: true,
                 counterStyle: Theme.of(context).textTheme.bodySmall,
                 counterText: "",
-                hintText: "Name",
+                hintText: "Volunteer name",
                 errorStyle: GoogleFonts.inter(
                     fontSize: 10,
                     fontWeight: FontWeight.w400,
@@ -835,7 +844,7 @@ class RegistratioScreen extends StatelessWidget {
                     borderRadius: AppConstants.boxRadius8)),
 
             keyboardType: TextInputType.name,
-            maxLength: 25,
+            maxLength: 100,
             inputFormatters: [FilteringTextInputFormatter.singleLineFormatter],
             //controller: addNewPeople.fnameController,
           ),
@@ -1179,9 +1188,12 @@ class RegistratioScreen extends StatelessWidget {
                     ),
                   );
                 }).toList(),
-                onChanged: (value) => registrationProvider.setFarmers(value!)),
+                onChanged: (value) =>
+                    registrationProvider.setFarmers(context, value!)),
           ),
         ),
+        if (registrationProvider.farmers > 0)
+          ...registrationProvider.farmersFields
       ],
     );
   }
@@ -1226,9 +1238,11 @@ class RegistratioScreen extends StatelessWidget {
                   );
                 }).toList(),
                 onChanged: (value) =>
-                    registrationProvider.setNoOFWomen(value!)),
+                    registrationProvider.setNoOFWomen(context, value!)),
           ),
         ),
+        if (registrationProvider.womenAbv > 0)
+          ...registrationProvider.womenFields
       ],
     );
   }
@@ -1272,9 +1286,12 @@ class RegistratioScreen extends StatelessWidget {
                     ),
                   );
                 }).toList(),
-                onChanged: (value) => registrationProvider.setStudents(value!)),
+                onChanged: (value) =>
+                    registrationProvider.setStudents(context, value!)),
           ),
         ),
+        if (registrationProvider.students > 0)
+          ...registrationProvider.studentFields
       ],
     );
   }
@@ -1319,9 +1336,11 @@ class RegistratioScreen extends StatelessWidget {
                   );
                 }).toList(),
                 onChanged: (value) =>
-                    registrationProvider.setunEMployed(value!)),
+                    registrationProvider.setunEMployed(context, value!)),
           ),
         ),
+        if (registrationProvider.unEMployedYouth > 0)
+          ...registrationProvider.uEmpYouthFields
       ],
     );
   }

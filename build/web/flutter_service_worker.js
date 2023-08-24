@@ -3,13 +3,8 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.json": "c52a041a7943f27ef01b61a6efcbe36c",
-"assets/AssetManifest.smcbin": "91b1cdc3005bc3d56de8dadbb277f093",
-"assets/assets/fonts/Anek_Telugu/AnekTelugu-VariableFont_wdth,wght.ttf": "822ffa582b1ed7b4d2c95870ab38864f",
-"assets/assets/fonts/NATS.ttf": "3c6bdf986a1070cfa95d00e1fc9466a0",
-"assets/assets/fonts/Noto_Serif_Telugu/static/NotoSerifTelugu-Medium.ttf": "74ebaf1228a4011bbe8b16764ee41684",
-"assets/assets/fonts/Poppins/Poppins-Black.ttf": "14d00dab1f6802e787183ecab5cce85e",
-"assets/assets/fonts/Tiro_Telugu/TiroTelugu-Regular.ttf": "59ea58f6393df9e4f4d588a786475fa2",
+const RESOURCES = {"assets/AssetManifest.json": "8e4aa53d887bbcd0de1e38f4e3c2c973",
+"assets/AssetManifest.smcbin": "92257888e52ec60aa90faf52ed16d04d",
 "assets/assets/images/Annadatha.png": "71b4a34b87d36b442083dfa82db675bd",
 "assets/assets/images/BC.png": "2620b202347bec5843a0683ece696653",
 "assets/assets/images/BG-Logo-small%25201.png": "975177f0bc2a170d109795d99812ab35",
@@ -52,16 +47,19 @@ const RESOURCES = {"assets/AssetManifest.json": "c52a041a7943f27ef01b61a6efcbe36
 "canvaskit/skwasm.js": "1df4d741f441fa1a4d10530ced463ef8",
 "canvaskit/skwasm.wasm": "6711032e17bf49924b2b001cef0d3ea3",
 "canvaskit/skwasm.worker.js": "19659053a277272607529ef87acf9d8a",
+"favicon.ico": "864dce19d4b9e396e4d7cfad2de215a4",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "flutter.js": "6b515e434cea20006b3ef1726d2c8894",
-"icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
-"icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
-"icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
-"icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
-"index.html": "1bd4ef91b8ac48c363b5a9f4b73281f6",
-"/": "1bd4ef91b8ac48c363b5a9f4b73281f6",
-"main.dart.js": "0a3deda829778a14e841fe6b69c90278",
-"manifest.json": "913dde8659ffe0a2a621fad905b34524",
+"icons/apple-touch-icon.png": "063d35ee650dfab852ef55dba170af23",
+"icons/favicon.ico": "864dce19d4b9e396e4d7cfad2de215a4",
+"icons/icon-192-maskable.png": "16f2385afa683133ed9ca952eea71643",
+"icons/icon-192.png": "88bee33470024aea0c63b5cb0bb64dae",
+"icons/icon-512-maskable.png": "28e361daaaac75e247b90a8e706e4382",
+"icons/icon-512.png": "dd5d681ccf4499f1bd7c4bb1ec35e334",
+"index.html": "9fd8e7ba0166989276e8aa386c6627f3",
+"/": "9fd8e7ba0166989276e8aa386c6627f3",
+"main.dart.js": "b38a0f7bac423e2d63f8af710c0dfdab",
+"manifest.json": "a4bd2ab8d3cc4c2d15dd7313f742e762",
 "version.json": "898f7869a1d22cc7f5be1a8266a020bd"};
 // The application shell files that are downloaded before a service worker can
 // start.

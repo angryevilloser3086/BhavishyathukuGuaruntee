@@ -47,8 +47,3 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
-    - assets/fonts/Poppins/Poppins-Black.ttf
-    - assets/fonts/Noto_Serif_Telugu/static/NotoSerifTelugu-Medium.ttf
-    - assets/fonts/Anek_Telugu/AnekTelugu-VariableFont_wdth,wght.ttf
-    - assets/fonts/NATS.ttf
-    - assets/fonts/Tiro_Telugu/TiroTelugu-Regular.ttf

@@ -3,12 +3,13 @@
 import 'dart:collection';
 import 'dart:developer';
 import 'dart:math' as math;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:vregistration/src/utils/shared_pref.dart';
 import '../../src/network/api_request.dart';
 import '../../src/view/registration/qr.dart';
 import '../../src/utils/loading_indicator.dart';
@@ -41,7 +42,7 @@ class RegistrationProvider extends ChangeNotifier {
   TextEditingController uniqueCode = TextEditingController();
   bool showLoader = false;
   String gender = '';
-
+  SharedPref sharedPref = SharedPref();
   String cc = "91";
   String sDistrcts = '';
   String sMandals = '';
@@ -52,6 +53,20 @@ class RegistrationProvider extends ChangeNotifier {
   int students = 0;
   bool showLoaderOTP = false;
 
+  List<TextEditingController> farmersController = [];
+  List<TextEditingController> farmersAgeController = [];
+  List<Widget> farmersFields = [];
+
+  List<TextEditingController> womenController = [];
+  List<TextEditingController> womenAgeController = [];
+  List<Widget> womenFields = [];
+  List<TextEditingController> studentsController = [];
+  List<TextEditingController> studentsAgeController = [];
+  List<Widget> studentFields = [];
+  List<TextEditingController> uEmpYouthController = [];
+  List<TextEditingController> uEmpYouthAgeController = [];
+  List<Widget> uEmpYouthFields = [];
+
   List<int> famMem = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
   setFamMembers(int value) {
@@ -59,23 +74,121 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  setFarmers(int value) {
+  setVDetails() async {
+    String name = await sharedPref.read("vname");
+    String number = await sharedPref.read("vnum");
+    vName = TextEditingController(text: name);
+    vNumController = TextEditingController(text: number);
+    notifyListeners();
+  }
+
+  setFarmers(BuildContext context, int value) {
     farmers = value;
+    updatePersonDetails(context, farmers, farmersController,
+        farmersAgeController, farmersFields);
     notifyListeners();
   }
 
-  setunEMployed(int value) {
+  updatePersonDetails(
+      BuildContext context,
+      int length,
+      List<TextEditingController> controllers,
+      List<TextEditingController> ageControllers,
+      List<Widget> fields) {
+    print(length);
+    controllers.clear();
+    ageControllers.clear();
+    fields.clear();
+    for (int i = 0; i < length; i++) {
+      print("int$i");
+
+      controllers.add(TextEditingController());
+      ageControllers.add(TextEditingController());
+      fields.add(
+        Container(
+          alignment: Alignment.centerRight,
+          width: 272,
+          padding: AppConstants.all_10,
+          child: Column(
+            children: [
+              TextField(
+                style: Theme.of(context).textTheme.bodyMedium,
+                cursorColor: Colors.grey,
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: "Enter Name...",
+                    counterText: "",
+                    hintStyle: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey),
+                    enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: AppConstants.boxRadius8),
+                    focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: AppConstants.boxRadius8)),
+                keyboardType: TextInputType.text,
+                maxLength: 50,
+                inputFormatters: [
+                  FilteringTextInputFormatter.singleLineFormatter
+                ],
+                controller: controllers[fields.length],
+              ),
+              AppConstants.h_5,
+              TextField(
+                style: Theme.of(context).textTheme.bodyMedium,
+                cursorColor: Colors.grey,
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: "Enter Age...",
+                    counterText: "",
+                    hintStyle: GoogleFonts.inter(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey),
+                    enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: AppConstants.boxRadius8),
+                    focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: AppConstants.boxRadius8)),
+                keyboardType: TextInputType.text,
+                maxLength: 50,
+                inputFormatters: [
+                  FilteringTextInputFormatter.singleLineFormatter
+                ],
+                controller: ageControllers[fields.length],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+  }
+
+  setunEMployed(BuildContext context, int value) {
     unEMployedYouth = value;
+    updatePersonDetails(context, unEMployedYouth, uEmpYouthController,
+        uEmpYouthAgeController, uEmpYouthFields);
     notifyListeners();
   }
 
-  setStudents(int value) {
+  setStudents(BuildContext context, int value) {
     students = value;
+    updatePersonDetails(context, students, studentsController,
+        studentsAgeController, studentFields);
+
     notifyListeners();
   }
 
-  setNoOFWomen(int value) {
+  setNoOFWomen(BuildContext context, int value) {
     womenAbv = value;
+    updatePersonDetails(
+        context, womenAbv, womenController, womenAgeController, womenFields);
+
     notifyListeners();
   }
 
@@ -112,6 +225,8 @@ class RegistrationProvider extends ChangeNotifier {
         return kurnool;
       } else if (value == 'Nandyal') {
         return nandyal;
+      } else if (value == 'Nellore') {
+        return nellore;
       } else if (value == 'NTR') {
         return ntr;
       } else if (value == 'Palnadu') {
@@ -3007,6 +3122,7 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool isNumVerified = false;
   //  verifyPhone(BuildContext context, String phone) async {
   //   //showLoader = true;
   //   //var credential = PhoneAuthProvider.credential(verificationId: , smsCode: smsCodeController.text);
@@ -3042,43 +3158,86 @@ class RegistrationProvider extends ChangeNotifier {
   // }
 
   verifyPhone(BuildContext context, String phone) async {
+    // print(phone);
     if (formKey.currentState!.validate()) {
       DialogBuilder(context).showLoadingIndicator(
-          "Please wait while we are sending UID to Registered Number");
-
-      try {
-        showLoaderOTP = true;
-        String id = randomIdGenerator();
-        checkID(context, id);
-        if (uniqueCode.text.isNotEmpty) {
-          apiRequest.sendUID(phone, id).then((value) {
-            enableOTPtext = true;
-            Navigator.of(context, rootNavigator: true).pop();
-            showLoaderOTP = false;
-            AppConstants.showSnackBar(context, value);
-            notifyListeners();
-          }).catchError((err) {
-            if (kDebugMode) {
-              print("entered api Call");
-            }
-            Navigator.of(context, rootNavigator: true).pop();
-            showLoaderOTP = false;
-            enableOTPtext = false;
-            print(err.toString());
-            log("$err");
-            AppConstants.showSnackBar(context, "$err");
-            notifyListeners();
-          });
-        }
-        notifyListeners();
-      } catch (e) {
-        showLoaderOTP = false;
-        Navigator.of(context, rootNavigator: true).pop();
-        AppConstants.showSnackBar(context, e.toString());
-        notifyListeners();
+          "Please wait while loading!");
+      showLoaderOTP = true;
+      String id = randomIdGenerator();
+      checkID(context, id);
+      if (uniqueCode.text.isNotEmpty) {
+        checkNumber(context, phone, id);
+        // if (!isNumVerified) {
+        //   sendSMS(context, phone, id);
+        // }
       }
       notifyListeners();
     }
+  }
+
+  checkNumber(BuildContext context, String phone, String id) {
+    _db
+        .collection('users')
+        .where("phone", isEqualTo: phone)
+        .get()
+        .then((value) {
+      print("db block");
+      Navigator.of(context, rootNavigator: true).pop();
+      print(value.docs.first.get("id"));
+      showAlert(context, "Error",
+          "User is already registered \n with this uinque Id: ${value.docs.first.get("id")} ");
+
+      enableOTPtext = false;
+      isNumVerified = true;
+      showLoaderOTP = false;
+      notifyListeners();
+    }).catchError((err) {
+      print("dbError block");
+      sendSMS(context, phone, id);
+      notifyListeners();
+    });
+  }
+
+  sendSMS(BuildContext context, String phone, String id) {
+     DialogBuilder(context).showLoadingIndicator(
+          "Please wait while we are sending UID to Registered Number");
+    apiRequest.sendUID(phone, id).then((value) {
+      enableOTPtext = true;
+      print("200 ok block");
+      Navigator.of(context, rootNavigator: true).pop();
+      showLoaderOTP = false;
+      AppConstants.showSnackBar(context, value);
+      notifyListeners();
+    }).catchError((err) {
+      print("send block");
+      showLoaderOTP = false;
+      enableOTPtext = false;
+      Navigator.of(context, rootNavigator: true).pop();
+      AppConstants.showSnackBar(context, "$err");
+      notifyListeners();
+    });
+  }
+
+  showAlert(BuildContext context, String title, String msg) {
+    return showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            backgroundColor: AppConstants.appYellowBG,
+            title: Text(
+              title,
+              style: GoogleFonts.poppins(color: Colors.black,fontSize: 12,
+              fontWeight: FontWeight.w700),
+            ),
+            content: Text(
+              msg,
+              style: GoogleFonts.poppins(color: Colors.black,fontSize: 10,
+              fontWeight: FontWeight.w500),
+            ),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+          );
+        });
   }
 
   void checkID(BuildContext context, String id) {
@@ -3343,7 +3502,9 @@ class RegistrationProvider extends ChangeNotifier {
   setSelectedRadio(int? val) {
     selectedRadio = val!;
     // print("${val}selected");
-
+    if (val == 1) {
+      setVDetails();
+    }
     notifyListeners();
   }
 

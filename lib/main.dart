@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:vregistration/src/provider/welcome_details.dart';
+import 'package:vregistration/src/view/splash.dart';
 import '../../src/view/home_screen.dart';
 import '../../src/provider/details_provider.dart';
-import '../../src/view/details/details_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'firebase_options.dart';
@@ -35,11 +37,17 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => RegistrationProvider()),
         ChangeNotifierProvider(create: (_) => DetailsProvider()),
+        ChangeNotifierProvider(create: (_) => WelcomeDetailsProvider()),
       ],
       child: MaterialApp(
         // Providing a restorationScopeId allows the Navigator built by the
@@ -144,6 +152,7 @@ class _MyAppState extends State<MyApp> {
               primary: Colors.blueGrey,
               secondary: Colors.white,
               surface: Colors.white),
+
           // outlinedButtonTheme: OutlinedButtonThemeData(
           //     style: OutlinedButton.styleFrom(
           //       shape: const RoundedRectangleBorder(),
@@ -153,23 +162,15 @@ class _MyAppState extends State<MyApp> {
         ),
         darkTheme: ThemeData.dark(),
         onGenerateRoute: (settings) {
-          List<String> pathComponents = settings.name!.split('/');
-          // List<String> pathComponents = settings.name.split('/');
-          if (pathComponents[1] == 'details-screen') {
-           // print(pathComponents.toList());
-            return MaterialPageRoute(
-              builder: (context) {
-                return DetailsScreen(id: pathComponents.last);
-              },
-            );
-          } else {
-            //print("else block:${pathComponents.toList()}");
-            return MaterialPageRoute(
-              builder: (context) {
+          return MaterialPageRoute(
+            builder: (context) {
+              if (kIsWeb) {
                 return const HomeScreen();
-              },
-            );
-          }
+              } else {
+                return const SplashScreen();
+              }
+            },
+          );
         },
       ),
     );

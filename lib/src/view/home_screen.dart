@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:vregistration/src/utils/app_utils.dart';
 import 'package:vregistration/src/view/registration/testimonial.dart';
@@ -75,22 +76,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
              InkWell(
                 onTap: () {
-                  
-                  if (w < 450) {
-                    setState(() {
-                      scrollController.animateTo(
-                          MediaQuery.of(context).size.height * 1.5,
-                          duration: const Duration(seconds: 2),
-                          curve: Curves.bounceOut);
-                    });
-                  } else {
-                    setState(() {
-                      scrollController.animateTo(
-                          MediaQuery.of(context).size.height * 2.5,
-                          duration: const Duration(seconds: 2),
-                          curve: Curves.bounceOut);
-                    });
-                  }
+                  AppConstants.moveNextstl(context, RegistratioScreen(height: h < 500 ? h * 4.5 : h * 2.8, ));
+                  // if (w < 450) {
+                  //   setState(() {
+                  //     scrollController.animateTo(
+                  //         MediaQuery.of(context).size.height * 1.5,
+                  //         duration: const Duration(seconds: 2),
+                  //         curve: Curves.bounceOut);
+                  //   });
+                  // } else {
+                  //   setState(() {
+                  //     scrollController.animateTo(
+                  //         MediaQuery.of(context).size.height * 2.5,
+                  //         duration: const Duration(seconds: 2),
+                  //         curve: Curves.bounceOut);
+                  //   });
+                  // }
                 },
                 child: btn()),
 
@@ -150,14 +151,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   "assets/images/header-website.png1_.png",
                   fit: BoxFit.contain,
                 )),
-
-            SizedBox(
-              height: h < 500 ? h * 4.5 : h * 2.8,
-              width: w,
-              child: RegistratioScreen(
-                height: h < 500 ? h * 4.5 : h * 2.8,
-              ),
-            ),
+            // if(kIsWeb)
+            // SizedBox(
+            //   height: h < 500 ? h * 4.5 : h * 2.8,
+            //   width: w,
+            //   child: RegistratioScreen(
+            //     height: h < 500 ? h * 4.5 : h * 2.8,
+            //   ),
+            // ),
 
             SizedBox(
                 width: w,
