@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,8 +58,9 @@ class _MyPDFState extends State<MyPDF> {
                     width: 595,
                     height: 842,
                     child: PdfPreview(
+                        pdfFileName: "${widget.rModel.number}",
                         allowPrinting: false,
-                        allowSharing: false,
+                        allowSharing: true,
                         canDebug: false,
                         canChangeOrientation: false,
                         canChangePageFormat: false,
@@ -112,9 +115,12 @@ class _MyPDFState extends State<MyPDF> {
   createPageOne() async {
     final ByteData bytes = await rootBundle.load('assets/images/ic_bg_1.png');
     final Uint8List byteList = bytes.buffer.asUint8List();
-    final ByteData headerbB =
-        await rootBundle.load('assets/images/ic_pdf_header.png');
-    final Uint8List hByteList = headerbB.buffer.asUint8List();
+    final ByteData header2 =
+        await rootBundle.load('assets/images/ic_headline.png');
+    final Uint8List header2List = header2.buffer.asUint8List();
+    // final ByteData headerbB =
+    //     await rootBundle.load('assets/images/ic_pdf_header.png');
+    // final Uint8List hByteList = headerbB.buffer.asUint8List();
     final ByteData mahashakti =
         await rootBundle.load('assets/images/mahashakti.png');
     final Uint8List mahashaktiList = mahashakti.buffer.asUint8List();
@@ -143,15 +149,42 @@ class _MyPDFState extends State<MyPDF> {
                   child: pw.Container(
                       child: pw.Column(children: [
                     pw.SizedBox(height: 10),
-                    pw.Align(
-                      alignment: pw.Alignment.topCenter,
-                      child: pw.Padding(
-                        padding: const pw.EdgeInsets.only(
-                            left: 35.0, right: 35, top: 25),
-                        child: pw.Image(pw.MemoryImage(hByteList)),
+                    pw.Stack(children: [
+                      pw.Align(
+                        alignment: pw.Alignment.topCenter,
+                        child: pw.Padding(
+                          padding: const pw.EdgeInsets.only(
+                              left: 35.0, right: 35, top: 25),
+                          child: pw.Image(pw.MemoryImage(header2List)),
+                        ),
                       ),
-                    ),
-
+                      pw.Positioned(
+                        left: 320,
+                        top: 90,
+                        child: pw.Row(
+                            mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
+                            children: [
+                              pw.SizedBox(width: 10),
+                              pw.Row(
+                                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      pw.CrossAxisAlignment.start,
+                                  children: [
+                                    pw.SizedBox(width: 1),
+                                    pw.SizedBox(
+                                        width: 50,
+                                        child: pw.Align(
+                                            alignment: pw.Alignment.centerLeft,
+                                            child: pw.Text(
+                                                "${(widget.rModel.totalWomen * 18000 + widget.rModel.totalFarmers * 20000 + widget.rModel.totalStudents * 15000 + widget.rModel.totalUnEmployedYouth * 36000) * 5}",
+                                                style: const pw.TextStyle(
+                                                    fontSize: 10,
+                                                    color: PdfColors.black))))
+                                  ]),
+                              pw.SizedBox(width: 10),
+                            ]),
+                      ),
+                    ]),
                     pw.Row(children: [
                       pw.SizedBox(width: 30),
                       pw.Align(
@@ -194,7 +227,7 @@ class _MyPDFState extends State<MyPDF> {
                               pw.SizedBox(width: 10),
                               pw.Image(pw.MemoryImage(list2[2]),
                                   width: 150, height: 200),
-                              pw.SizedBox(width: 10),
+                              // pw.SizedBox(width: 10),
                             ],
                           )
                           // pw.SizedBox(height: 20),
@@ -224,7 +257,9 @@ class _MyPDFState extends State<MyPDF> {
     final Uint8List subHeadList = subHead.buffer.asUint8List();
     final ByteData grp = await rootBundle.load('assets/images/table.png');
     final Uint8List grp343 = grp.buffer.asUint8List();
-
+    //final font = await rootBundle.load("assets/open-sans.ttf");
+    final fontG = await PdfGoogleFonts.anekTeluguRegular();
+//final ttf = pw.Font.ttf(font);
     // final font = await rootBundle
     //     .load('assets/fonts/Tiro_Telugu/TiroTelugu-Regular.ttf');
 
@@ -267,31 +302,31 @@ class _MyPDFState extends State<MyPDF> {
                                   pw.Positioned(
                                     left: 80,
                                     child:
-                                        detailText("${widget.rModel.totalFam}"),
+                                        detailText("${widget.rModel.totalFam}",fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.totalFarmers}"),
+                                        "${widget.rModel.totalFarmers}",fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.totalWomen}"),
+                                        "${widget.rModel.totalWomen}",fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.totalStudents}"),
+                                        "${widget.rModel.totalStudents}",fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.totalUnEmployedYouth}"),
+                                        "${widget.rModel.totalUnEmployedYouth}",fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                 ]),
@@ -300,24 +335,7 @@ class _MyPDFState extends State<MyPDF> {
                                 left: 500,
                                 bottom: 40,
                                 child: pw.Column(children: [
-                                  pw.SizedBox(height: 50),
-                                  pw.Positioned(
-                                    left: 80,
-                                    child: pw.Row(
-                                        mainAxisAlignment:
-                                            pw.MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          pw.SizedBox(width: 30),
-                                          detailText2(
-                                              "${widget.rModel.totalWomen}"),
-                                          pw.SizedBox(width: 10),
-                                          detailText2(""),
-                                          pw.SizedBox(width: 10),
-                                          detailText2(
-                                              "${widget.rModel.totalWomen * 18000}"),
-                                          pw.SizedBox(width: 10),
-                                        ]),
-                                  ),
+                                  pw.SizedBox(height: 120),
                                   pw.Positioned(
                                     left: 80,
                                     child: pw.Row(
@@ -325,17 +343,82 @@ class _MyPDFState extends State<MyPDF> {
                                             pw.MainAxisAlignment.spaceEvenly,
                                         children: [
                                           pw.SizedBox(width: 10),
-                                          detailText2(
-                                              "${widget.rModel.totalStudents}"),
+                                          detailText2(""),
                                           pw.SizedBox(width: 10),
                                           detailText2(""),
                                           pw.SizedBox(width: 10),
-                                          detailText2(
-                                              "${widget.rModel.totalStudents * 15000}"),
+                                          detailText2(""),
                                           pw.SizedBox(width: 10),
                                         ]),
                                   ),
-                                  pw.SizedBox(height: 20),
+                                  pw.SizedBox(height: 10),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: pw.Row(
+                                        mainAxisAlignment:
+                                            pw.MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          pw.SizedBox(width: 10),
+                                          detailText2(" "),
+                                          pw.SizedBox(width: 10),
+                                          detailText2(""),
+                                          pw.SizedBox(width: 10),
+                                          detailText2(" "),
+                                          pw.SizedBox(width: 10),
+                                        ]),
+                                  ),
+                                  pw.SizedBox(height: 15),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child: pw.Row(
+                                        mainAxisAlignment:
+                                            pw.MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          pw.SizedBox(width: 10),
+                                          detailText2(" "),
+                                          pw.SizedBox(width: 10),
+                                          detailText2(""),
+                                          pw.SizedBox(width: 10),
+                                          detailText2(" "),
+                                          pw.SizedBox(width: 10),
+                                        ]),
+                                  ),
+                                  pw.SizedBox(height: 25),
+                                  pw.Row(
+                                      mainAxisAlignment:
+                                          pw.MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          pw.CrossAxisAlignment.center,
+                                      children: [
+                                        pw.SizedBox(width: 10),
+                                        detailText2(
+                                            "${widget.rModel.totalWomen}"),
+                                        pw.SizedBox(width: 10),
+                                        detailText2(""),
+                                        pw.SizedBox(width: 10),
+                                        detailText2(
+                                            "${widget.rModel.totalWomen * 18000}"),
+                                        pw.SizedBox(width: 10),
+                                      ]),
+                                  // pw.SizedBox(height: 15),
+
+                                  pw.Row(
+                                      mainAxisAlignment:
+                                          pw.MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          pw.CrossAxisAlignment.center,
+                                      children: [
+                                        pw.SizedBox(width: 10),
+                                        detailText2(
+                                            "${widget.rModel.totalStudents}"),
+                                        pw.SizedBox(width: 10),
+                                        detailText2(""),
+                                        pw.SizedBox(width: 10),
+                                        detailText2(
+                                            "${widget.rModel.totalStudents * 15000}"),
+                                        pw.SizedBox(width: 10),
+                                      ]),
+                                  pw.SizedBox(height: 15),
                                   pw.Positioned(
                                     left: 80,
                                     child: pw.Row(
@@ -353,7 +436,7 @@ class _MyPDFState extends State<MyPDF> {
                                           pw.SizedBox(width: 10),
                                         ]),
                                   ),
-                                  pw.SizedBox(height: 20),
+                                  pw.SizedBox(height: 15),
                                   pw.Positioned(
                                     left: 80,
                                     child: pw.Row(
@@ -371,7 +454,7 @@ class _MyPDFState extends State<MyPDF> {
                                           pw.SizedBox(width: 10),
                                         ]),
                                   ),
-                                  pw.SizedBox(height: 10),
+                                  pw.SizedBox(height: 15),
                                 ]),
                               ),
 
@@ -435,19 +518,19 @@ class _MyPDFState extends State<MyPDF> {
                                   pw.Positioned(
                                     left: 80,
                                     child:
-                                        detailText("${widget.rModel.pincode}"),
+                                        detailText("${widget.rModel.pincode}",fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.constituency}"),
+                                        "${widget.rModel.constituency}",fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child:
-                                        detailText("${widget.rModel.number}"),
+                                        detailText("${widget.rModel.number}",fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                 ]),
@@ -458,34 +541,34 @@ class _MyPDFState extends State<MyPDF> {
                                   pw.SizedBox(height: 20),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${widget.rModel.name}"),
+                                    child: detailText("${widget.rModel.name}",fontG),
                                   ),
                                   pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.fatherNamefield}"),
+                                        "${widget.rModel.fatherNamefield}",fontG),
                                   ),
                                   pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${widget.rModel.age}"),
-                                  ),
-                                  pw.SizedBox(height: 5),
-                                  pw.Positioned(
-                                    left: 80,
-                                    child:
-                                        detailText("${widget.rModel.address}"),
+                                    child: detailText("${widget.rModel.age}",fontG),
                                   ),
                                   pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
                                     child:
-                                        detailText("${widget.rModel.district}"),
+                                        detailText("${widget.rModel.address}",fontG),
+                                  ),
+                                  pw.SizedBox(height: 5),
+                                  pw.Positioned(
+                                    left: 80,
+                                    child:
+                                        detailText("${widget.rModel.district}",fontG),
                                   ),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("#######"),
+                                    child: detailText("#######",fontG),
                                   ),
                                   pw.SizedBox(height: 20),
                                 ]),
@@ -512,7 +595,7 @@ class _MyPDFState extends State<MyPDF> {
         });
   }
 
-  detailText(String value) {
+  detailText(String value,pw.Font ttf) {
     return pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.start,
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -523,7 +606,7 @@ class _MyPDFState extends State<MyPDF> {
               child: pw.Align(
                   alignment: pw.Alignment.centerLeft,
                   child: pw.Text(value,
-                      style: const pw.TextStyle(
+                      style:  pw.TextStyle(font: (ttf),
                           fontSize: 10, color: PdfColors.black))))
         ]);
   }

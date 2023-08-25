@@ -129,18 +129,18 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   nxtFun() {
-    print("object0$changeQuestion$_questionIndex");
+  //  print("object0$changeQuestion$_questionIndex");
     if(changeQuestion){
     if (_questionIndex < questions.length) {
       
-      print("object$changeQuestion");
+     // print("object$changeQuestion");
       setState(() {
         _questionIndex = _questionIndex + 1;
         changeQuestion =false;
       });
     } else if (_questionIndex == questions.length) {
       // ignore: avoid_print
-      print("object$changeQuestion");
+     // print("object$changeQuestion");
       setState(() {
         _questionIndex = -1;
         changeQuestion =true;
@@ -149,7 +149,7 @@ class _QuizScreenState extends State<QuizScreen> {
       AppConstants.showSnackBar(context, "Thanks For taking the Quiz!!");
     } else {
       setState(() {
-        print("object2$changeQuestion");
+     //   print("object2$changeQuestion");
         _questionIndex = -1;
       });
     }

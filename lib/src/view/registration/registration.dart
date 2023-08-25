@@ -9,7 +9,7 @@ import '../../provider/registration_provider.dart';
 
 class RegistratioScreen extends StatelessWidget {
   const RegistratioScreen({super.key});
- 
+
   @override
   Widget build(BuildContext context) {
     //print("Come Back::Register Page");
@@ -486,7 +486,11 @@ class RegistratioScreen extends StatelessWidget {
             validator: (value) =>
                 value!.trim().isEmpty ? 'phone number required' : null,
           ),
-        AppConstants.h_10,
+        
+        if (registrationProvider.enableOTPtext &&
+            !registrationProvider.showSubmit)
+            resendOption(),
+          AppConstants.h_10,
         if (registrationProvider.enableOTPtext &&
             !registrationProvider.showSubmit)
           Align(
@@ -547,21 +551,59 @@ class RegistratioScreen extends StatelessWidget {
     );
   }
 
+  resendOption() {
+    return Consumer<RegistrationProvider>(builder: (context, provider, child) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          AppConstants.w_40,
+          Text(
+            "${provider.minutes}:${provider.seconds}",
+            style: GoogleFonts.poppins(
+                color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          if (provider.second == 0)
+            resendButton(MediaQuery.of(context).size, "Regenerate UID"),
+            
+        ],
+      );
+    });
+  }
+
+  resendButton(Size size, String title) {
+    return InkWell(
+      child: Container(
+        width: 100,
+        height: 50,
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            color: AppConstants.appredColor),
+        child: Center(
+          child: Text(
+            title,
+            style: GoogleFonts.poppins(
+                color: AppConstants.appYellowBG,
+                fontSize: size.width < 450 ? 12 : 16,
+                fontWeight: FontWeight.w500),
+          ),
+        ),
+      ),
+    );
+  }
+
   getOtpBtn(BuildContext context, RegistrationProvider registrationProvider) {
-    // print("build method:S${registrationProvider.showLoaderOTP}");
-    // print("${registrationProvider.phoneTextController.text.length}");
     return Align(
       alignment: Alignment.center,
       child: InkWell(
           onTap: () {
+            //registrationProvider.registerUser(context);
+            //registrationProvider.sendToPdf(context);
             if (registrationProvider.phoneTextController.text.length == 10) {
-              //registrationProvider.sendToPdf(context);
               registrationProvider.verifyPhone(context,
                   "${registrationProvider.cc}${registrationProvider.phoneTextController.text}");
             } else {
               AppConstants.showSnackBar(context, "please enter valid Number");
             }
-            //AppConstants.moveNextClearAll(context, const HomeScreen());
           },
           child: Container(
               width: MediaQuery.of(context).size.width * 0.25,

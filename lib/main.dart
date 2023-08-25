@@ -152,13 +152,6 @@ class _MyAppState extends State<MyApp> {
               primary: Colors.blueGrey,
               secondary: Colors.white,
               surface: Colors.white),
-
-          // outlinedButtonTheme: OutlinedButtonThemeData(
-          //     style: OutlinedButton.styleFrom(
-          //       shape: const RoundedRectangleBorder(),
-          //       primary: const Color(0xFFF7BB0E),
-          //     ),
-          //   ),
         ),
         darkTheme: ThemeData.dark(),
         onGenerateRoute: (settings) {

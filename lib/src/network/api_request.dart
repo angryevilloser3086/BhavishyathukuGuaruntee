@@ -37,7 +37,7 @@ class ApiRequest {
     } on SocketException catch (_) {
       throw Exception('No Internet Connection');
     } catch (e) {
-      print(e);
+     // print(e);
       throw Exception(e);
     }
   }

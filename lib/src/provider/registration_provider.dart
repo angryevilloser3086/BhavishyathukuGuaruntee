@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
 import 'dart:math' as math;
@@ -26,6 +27,9 @@ class RegistrationProvider extends ChangeNotifier {
   int selectedRadio = 0;
   int selectedURadio = 0;
   int selectedGRadio = 0;
+  String hours = "00", minutes = "00", seconds = "00";
+  int hour = 0, minute = 0, second = 59;
+  Timer? timer;
   ApiRequest apiRequest = ApiRequest();
   bool isVerified = false;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -74,6 +78,26 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void processTimer() {
+    if (second > 0) {
+      second--;
+    } else if (second == 59) {
+      second = 0;
+      if (minute == 59) {
+        hour++;
+        minute = 0;
+      } else {
+        minute--;
+      }
+    }
+
+    hours = hour.toString().padLeft(2, '0');
+    minutes = (minute).toString().padLeft(2, '0');
+    seconds = second.toString().padLeft(2, '0');
+    if (second == 0) timer?.cancel();
+    notifyListeners();
+  }
+
   setVDetails() async {
     String name = await sharedPref.read("vname");
     String number = await sharedPref.read("vnum");
@@ -95,12 +119,12 @@ class RegistrationProvider extends ChangeNotifier {
       List<TextEditingController> controllers,
       List<TextEditingController> ageControllers,
       List<Widget> fields) {
-    print(length);
+    // print(length);
     controllers.clear();
     ageControllers.clear();
     fields.clear();
     for (int i = 0; i < length; i++) {
-      print("int$i");
+      // print("int$i");
 
       controllers.add(TextEditingController());
       ageControllers.add(TextEditingController());
@@ -120,12 +144,18 @@ class RegistrationProvider extends ChangeNotifier {
                     color: Colors.black),
               ),
               AppConstants.h_5,
-              TextField(
+              TextFormField(
                 style: GoogleFonts.inter(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.black),
                 cursorColor: Colors.grey,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please Enter the name ";
+                  }
+                  return "";
+                },
                 decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
@@ -149,12 +179,18 @@ class RegistrationProvider extends ChangeNotifier {
                 controller: controllers[fields.length],
               ),
               AppConstants.h_5,
-              TextField(
+              TextFormField(
                 style: GoogleFonts.inter(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.black),
                 cursorColor: Colors.grey,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Please Enter the Age";
+                  }
+                  return "";
+                },
                 decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
@@ -3117,61 +3153,21 @@ class RegistrationProvider extends ChangeNotifier {
       sDistrcts = value;
       selectedConstituency = '';
       sMandals = '';
-      //sendList(value);
     }
     notifyListeners();
   }
 
   setMandals(String value) {
-    // print(value);
-    //formKey.currentState!.validate();
     if (value == "Select Mandal") {
       sMandals = '';
       return "please Select the Mandal";
     } else {
       sMandals = value;
     }
-    // print(sMandals);
     notifyListeners();
   }
 
-  bool isNumVerified = false;
-  //  verifyPhone(BuildContext context, String phone) async {
-  //   //showLoader = true;
-  //   //var credential = PhoneAuthProvider.credential(verificationId: , smsCode: smsCodeController.text);
-  //   await FirebaseAuth.instance.verifyPhoneNumber(
-  //       phoneNumber: "+$cc$phone",
-  //       verificationCompleted: (credential) async {
-  //         PhoneAuthProvider.credential(
-  //             verificationId: credential.verificationId!,
-  //             smsCode: credential.smsCode!);
-  //       },
-  //       verificationFailed: (FirebaseAuthException e) {
-  //         print(e);
-  //         AppConstants.showSnackBar(context, "Failed to verify$e");
-  //       },
-  //       codeSent: (String verficationID, int? resendToken) async {
-  //         //getStorage.write("verificationID", verficationID);
-  //         enableOTPtext = true;
-  //         print("${resendToken} resendToken");
-  //         print("$verficationID codesent");
-  //         verificatioID = verficationID;
-  //         notifyListeners();
-  //         //showLoader = false;
-  //         // AppConstants.showSnackBar(context, "$verficationID codesent");
-  //       },
-  //       codeAutoRetrievalTimeout: (String verificationID) {
-  //         print(verificationID);
-  //         verificatioID = verificationID;
-  //         // Get.showSnackbar(GetSnackBar(message: verificationID));
-  //         // Get.offAllNamed(Routes.OTPSCREEN);
-  //       },
-  //       timeout: const Duration(seconds: 120));
-  //   notifyListeners();
-  // }
-
   verifyPhone(BuildContext context, String phone) async {
-    // print(phone);
     if (formKey.currentState!.validate()) {
       DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
       showLoaderOTP = true;
@@ -3179,9 +3175,6 @@ class RegistrationProvider extends ChangeNotifier {
       checkID(context, id);
       if (uniqueCode.text.isNotEmpty) {
         checkNumber(context, phone, id);
-        // if (!isNumVerified) {
-        //   sendSMS(context, phone, id);
-        // }
       }
       notifyListeners();
     }
@@ -3193,18 +3186,16 @@ class RegistrationProvider extends ChangeNotifier {
         .where("phone", isEqualTo: phone)
         .get()
         .then((value) {
-      print("db block");
       Navigator.of(context, rootNavigator: true).pop();
-      print(value.docs.first.get("id"));
+
       showAlert(context, "Error",
-          "User is already registered \n with this uinque Id: ${value.docs.first.get("id")} ");
+          "User is already registered \n with this UID: ${value.docs.first.get("id")} ");
 
       enableOTPtext = false;
-      isNumVerified = true;
+
       showLoaderOTP = false;
       notifyListeners();
     }).catchError((err) {
-      print("dbError block");
       sendSMS(context, phone, id);
       notifyListeners();
     });
@@ -3215,13 +3206,13 @@ class RegistrationProvider extends ChangeNotifier {
         "Please wait while we are sending UID to Registered Number");
     apiRequest.sendUID(phone, id).then((value) {
       enableOTPtext = true;
-      print("200 ok block");
+      timer =
+          Timer.periodic(const Duration(seconds: 1), (timer) => processTimer());
       Navigator.of(context, rootNavigator: true).pop();
       showLoaderOTP = false;
       AppConstants.showSnackBar(context, value);
       notifyListeners();
     }).catchError((err) {
-      print("send block");
       showLoaderOTP = false;
       enableOTPtext = false;
       Navigator.of(context, rootNavigator: true).pop();
@@ -3268,18 +3259,17 @@ class RegistrationProvider extends ChangeNotifier {
   }
 
   bool getDetails(BuildContext context, String id) {
-    print("called this method:$id");
+    
     bool checked = false;
     _db.collection('users').where("id", isEqualTo: id).get().then((value) {
       QuerySnapshot data = value;
-      log("enter firestore db: ${data.docs.first.get("id")}");
+      
       checked = false;
       notifyListeners();
     }).catchError((err) {
       checked = true;
       notifyListeners();
-      // uniqueCode = TextEditingController(text: id);
-      // notifyListeners();
+     
     });
     return checked;
   }
@@ -3315,38 +3305,9 @@ class RegistrationProvider extends ChangeNotifier {
       showLoader = false;
       Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, e.toString());
-      //verifyPhone(context, phoneTextController.text);
-      // print(e.toString());
     }
     notifyListeners();
   }
-
-//  otpVerify(BuildContext context) async {
-//     showLoader = true;
-//     print("e.toString()");
-//     try {
-//       await FirebaseAuth.instance
-//           .signInWithCredential(PhoneAuthProvider.credential(
-//               verificationId: verificatioID, smsCode: otpTextController.text))
-//           .then((value) async {
-//         if (value.user != null) {
-//           showLoader = false;
-//           AppConstants.showSnackBar(
-//               context, "User numer verified Successfully");
-//           showSubmit = true;
-//           FirebaseAuth.instance.signOut();
-
-//           // AppConstants.moveNextClearAll(context, const ProfileScreen());
-//         }
-//       });
-//     } catch (e) {
-//       showLoader = false;
-//       AppConstants.showSnackBar(context, e.toString());
-//       verifyPhone(context, phoneTextController.text);
-//       print(e.toString());
-//     }
-//     notifyListeners();
-//   }
 
   List<String> setSchemes() {
     List<String> schemes = [];
@@ -3390,34 +3351,78 @@ class RegistrationProvider extends ChangeNotifier {
     );
   }
 
-  sendToPdf(BuildContext context) {
-    List<String> schems = setSchemes();
-    DateTime dt = DateTime.now();
-    RegistrationModel rModel = RegistrationModel(
-        name: name.text,
-        age: age.text,
-        constituency: selectedConstituency,
-        district: sDistrcts,
-        mandal: sMandals,
-        address: address.text,
-        pincode: pincode.text,
-        vNum: vNumController.text.isNotEmpty ? vNumController.text : "",
-        vName: vName.text.isNotEmpty ? vName.text : "",
-        number: "$cc${phoneTextController.text}",
-        gender: gender,
-        isVerified: isVerified,
-        date: dt.toIso8601String(),
-        id: uniqueCode.text.isNotEmpty ? uniqueCode.text : "",
-        scheme: schems,
-        totalFam: famMembers,
-        totalFarmers: farmers,
-        totalStudents: students,
-        totalUnEmployedYouth: unEMployedYouth,
-        totalWomen: womenAbv,
-        fatherNamefield: fatherNamefield.text);
+  // sendToPdf(BuildContext context) {
+  //   List<String> schems = setSchemes();
+  //   DateTime dt = DateTime.now();
+  //   List<Map<String,dynamic>> fList = [];
+  //   List<Map<String,dynamic>> sList = [];
+  //   List<Map<String,dynamic>> wList = [];
+  //   List<Map<String,dynamic>> uEMPList = [];
+  //   if (farmers > 0) {
+  //     for (int i = 0; i < farmersFields.length; i++) {
+  //       fList.add(PersonDetails(
+  //           age: int.parse(farmersAgeController[i].text),
+  //           name: farmersController[i].text).toJson());
+  //     }
+  //   }
+  //   //PersonDetailsList farmerList = PersonDetailsList(pdList: fList);
 
-    AppConstants.moveNextstl(context, MyPDF(rModel: rModel));
-  }
+  //   if (students > 0) {
+  //     for (int i = 0; i < studentFields.length; i++) {
+  //       sList.add(PersonDetails(
+  //           age: int.parse(studentsAgeController[i].text),
+  //           name: studentsController[i].text).toJson());
+  //     }
+  //   }
+
+  //   //PersonDetailsList studentList = PersonDetailsList(pdList: sList);
+  //   if (womenAbv > 0) {
+  //     for (int i = 0; i < womenFields.length; i++) {
+  //       wList.add(PersonDetails(
+  //           age: int.parse(womenAgeController[i].text),
+  //           name: womenController[i].text).toJson());
+  //     }
+  //   }
+
+  //   //PersonDetailsList womentList = PersonDetailsList(pdList: wList);
+  //   if (unEMployedYouth > 0) {
+  //     for (int i = 0; i < uEmpYouthFields.length; i++) {
+  //       uEMPList.add(PersonDetails(
+  //           age: int.parse(uEmpYouthAgeController[i].text),
+  //           name: uEmpYouthController[i].text).toJson());
+  //     }
+  //   }
+
+  //    RegistrationModel rModel = RegistrationModel(
+  //       name: name.text,
+  //       age: age.text,
+  //       constituency: selectedConstituency,
+  //       district: sDistrcts,
+  //       mandal: sMandals,
+  //       address: address.text,
+  //       pincode: pincode.text,
+  //       vNum: vNumController.text.isNotEmpty ? vNumController.text : "",
+  //       vName: vName.text.isNotEmpty ? vName.text : "",
+  //       number: "$cc${phoneTextController.text}",
+  //       gender: gender,
+  //       isVerified: isVerified,
+  //       date: dt.toIso8601String(),
+  //       id: uniqueCode.text.isNotEmpty ? uniqueCode.text : "",
+  //       scheme: schems,
+  //       totalFam: famMembers,
+  //       totalFarmers: farmers,
+  //       totalStudents: students,
+  //       totalUnEmployedYouth: unEMployedYouth,
+  //       totalWomen: womenAbv,
+  //       fatherNamefield: fatherNamefield.text,
+  //       farmersList: fList,
+  //       womenList: wList,
+  //       studentList: sList,
+  //       uEMPList: uEMPList);
+
+  //    //print("${wList.first.toJson()}");
+  //   //AppConstants.moveNextstl(context, MyPDF(rModel: rModel));
+  // }
 
   setCC(String c) {
     cc = c;
@@ -3444,6 +3449,58 @@ class RegistrationProvider extends ChangeNotifier {
     DialogBuilder(context)
         .showLoadingIndicator("Please wait while we are updating details ");
     DateTime dt = DateTime.now();
+    List<Map<String, dynamic>> fList = [];
+    List<Map<String, dynamic>> sList = [];
+    List<Map<String, dynamic>> wList = [];
+    List<Map<String, dynamic>> uEMPList = [];
+    if (farmers > 0) {
+      for (int i = 0; i < farmersFields.length; i++) {
+        fList.add(PersonDetails(
+                age: int.parse(farmersAgeController[i].text),
+                name: farmersController[i].text)
+            .toJson());
+      }
+    }
+    //PersonDetailsList farmerList = PersonDetailsList(pdList: fList);
+
+    if (students > 0) {
+      for (int i = 0; i < studentFields.length; i++) {
+        sList.add(PersonDetails(
+                age: int.parse(studentsAgeController[i].text),
+                name: studentsController[i].text)
+            .toJson());
+      }
+    }
+
+    //PersonDetailsList studentList = PersonDetailsList(pdList: sList);
+    if (womenAbv > 0) {
+      for (int i = 0; i < womenFields.length; i++) {
+        wList.add(PersonDetails(
+                age: int.parse(womenAgeController[i].text),
+                name: womenController[i].text)
+            .toJson());
+      }
+    }
+
+    //PersonDetailsList womentList = PersonDetailsList(pdList: wList);
+    if (unEMployedYouth > 0) {
+      for (int i = 0; i < uEmpYouthFields.length; i++) {
+        uEMPList.add(PersonDetails(
+                age: int.parse(uEmpYouthAgeController[i].text),
+                name: uEmpYouthController[i].text)
+            .toJson());
+      }
+    }
+
+    // print("${wList.first}");
+    // print(fList.toList());
+
+    // PersonDetailsList? famdetails = PersonDetailsList(
+    //     uList: uEMPList,
+    //     womenList: wList,
+    //     studentList: sList,
+    //     farmerList: fList);
+
     RegistrationModel rModel = RegistrationModel(
         name: name.text,
         age: age.text,
@@ -3465,7 +3522,11 @@ class RegistrationProvider extends ChangeNotifier {
         totalStudents: students,
         totalUnEmployedYouth: unEMployedYouth,
         totalWomen: womenAbv,
-        fatherNamefield: fatherNamefield.text);
+        fatherNamefield: fatherNamefield.text,
+        farmersList: fList,
+        womenList: wList,
+        studentList: sList,
+        uEMPList: uEMPList);
 
     _db
         .collection('users')
@@ -3475,6 +3536,8 @@ class RegistrationProvider extends ChangeNotifier {
       showLoader = false;
       Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, "Registration Successfully done");
+      apiRequest.sendFinalMsg(
+          "$cc${phoneTextController.text}", rModel.id ?? "");
       AppConstants.moveNextClearAll(
           context,
           MyPDF(
@@ -3509,7 +3572,7 @@ class RegistrationProvider extends ChangeNotifier {
       List<String> uID = qrcode.split("/");
       // print("uid:${uID.last}");
       uniqueCode = TextEditingController(text: uID.last);
-      print(uniqueCode.text);
+      // print(uniqueCode.text);
     }
 
     notifyListeners();
@@ -3603,6 +3666,7 @@ class RegistrationProvider extends ChangeNotifier {
   @override
   void dispose() {
     name.dispose();
+    timer?.cancel();
     gpController.dispose();
     phoneTextController.dispose();
     super.dispose();
