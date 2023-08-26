@@ -73,9 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             AppConstants.h_5,
 
-             InkWell(
+            InkWell(
                 onTap: () {
-                  AppConstants.moveNextstl(context,const RegistratioScreen());
+                  AppConstants.moveNextstl(context, const RegistratioScreen());
                   // if (w < 450) {
                   //   setState(() {
                   //     scrollController.animateTo(
@@ -94,8 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: btn()),
 
-
-           CarouselSlider(
+            CarouselSlider(
               items: [
                 SizedBox(
                     width: w,
@@ -185,13 +184,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   btn() {
     return Container(
-        width: 150,
-        height: 50,
-        decoration: const BoxDecoration(
-            color: Colors.red,
-            borderRadius: BorderRadius.all(Radius.circular(30))),
-        child: const Center(child: Text("Register")),
-      );
+      width: 150,
+      height: 50,
+      decoration: const BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.all(Radius.circular(30))),
+      child: const Center(child: Text("Register")),
+    );
   }
 
   btnDownload() {
@@ -214,6 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _db.collection('users').get().then((value) {
       QuerySnapshot data = value;
+     // print(data.docs.first);
       for (QueryDocumentSnapshot snapshot in data.docs) {
         RegistrationModel user = RegistrationModel(
             name: snapshot.get('name'),
@@ -235,7 +235,8 @@ class _HomeScreenState extends State<HomeScreen> {
             totalFarmers: snapshot.get('total_farmers'),
             totalStudents: snapshot.get('total_students'),
             totalUnEmployedYouth: snapshot.get('total_unempyouth'),
-            totalWomen: snapshot.get('total_women'), fatherNamefield: snapshot.get('fatherName'));
+            totalWomen: snapshot.get('total_women'),
+            fatherNamefield: snapshot.get('fatherName'));
 
         setState(() {
           users.add(user);

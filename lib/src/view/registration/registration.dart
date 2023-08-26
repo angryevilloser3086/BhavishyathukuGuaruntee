@@ -502,8 +502,14 @@ class RegistratioScreen extends StatelessWidget {
             alignment: Alignment.center,
             child: InkWell(
                 onTap: () {
-                  registrationProvider.otpVerify(
-                      context); //AppConstants.moveNextClearAll(context, const HomeScreen());
+                 if(registrationProvider.otpTextController.text.isNotEmpty){
+                   registrationProvider.otpVerify(
+                      context);
+                 }else{
+                  AppConstants.showSnackBar(context, "Please enter the UID");
+                 }
+                 
+                  //AppConstants.moveNextClearAll(context, const HomeScreen());
                 },
                 child: Container(
                     width: MediaQuery.of(context).size.width * 0.25,

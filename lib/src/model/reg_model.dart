@@ -9,7 +9,7 @@ class RegistrationModel {
   String? mandal;
   String? address;
   String? pincode;
-  List<String> scheme;
+  List<dynamic> scheme;
   String? vNum;
   String? vName;
   String? number;
