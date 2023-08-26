@@ -568,7 +568,10 @@ class RegistratioScreen extends StatelessWidget {
                 color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500),
           ),
           if (provider.second == 0)
-            resendButton(MediaQuery.of(context).size, "Regenerate UID"),
+           InkWell(onTap: (){
+            provider.verifyPhone(context,
+                  "${provider.cc}${provider.phoneTextController.text}");
+           },child:  resendButton(MediaQuery.of(context).size, "Regenerate UID"),),
             
         ],
       );
@@ -576,8 +579,7 @@ class RegistratioScreen extends StatelessWidget {
   }
 
   resendButton(Size size, String title) {
-    return InkWell(
-      child: Container(
+    return Container(
         width: 100,
         height: 50,
         decoration: const BoxDecoration(
@@ -592,8 +594,7 @@ class RegistratioScreen extends StatelessWidget {
                 fontWeight: FontWeight.w500),
           ),
         ),
-      ),
-    );
+      );
   }
 
   getOtpBtn(BuildContext context, RegistrationProvider registrationProvider) {
