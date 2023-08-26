@@ -27,10 +27,10 @@ dependencies:
   carousel_slider: ^4.2.1
   syncfusion_flutter_gauges: ^22.2.5
   appinio_video_player: ^1.2.1
-  pdf: ^3.10.4
   path_provider: ^2.0.15
   http:
   printing: ^5.11.0
+  syncfusion_flutter_pdf: ^22.2.10
 
 dev_dependencies:
   flutter_test:
@@ -47,3 +47,4 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+    - assets/fonts/Noto_Serif_Telugu/NotoSerifTelugu-VariableFont_wght.ttf

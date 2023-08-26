@@ -87,7 +87,7 @@ class AppConstants {
         counterStyle: Theme.of(context).textTheme.bodySmall,
         counterText: counterText,
         hintText: hint,
-        hintStyle: Theme.of(context).textTheme.bodyLarge,
+        hintStyle: GoogleFonts.poppins(color: Colors.black,fontSize: 14),
         enabledBorder: outlineInputBorder,
         focusedBorder: outlineInputBorder,
         border: outlineInputBorder);

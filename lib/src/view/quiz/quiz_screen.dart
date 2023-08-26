@@ -162,7 +162,7 @@ class _QuizScreenState extends State<QuizScreen> {
           });
          AppConstants.showSnackBar(context, "Thanks For taking the Quiz!!");
       }else {
-        AppConstants.showSnackBar(context, "Please select the answer");
+        AppConstants.showSnackBar(context, "Please select your answer");
       }
     }
   }

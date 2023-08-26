@@ -137,13 +137,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             // const SizedBox.expand(child: TestimonialVideo(),),
-            SizedBox(
-              width: w,
-              height: h,
-              child: TestimonialVideo(
-                height:  h,
-              ),
-            ),
+            // SizedBox(
+            //   width: w,
+            //   height: h,
+            //   child: TestimonialVideo(
+            //     height:  h,
+            //   ),
+            // ),
             SizedBox(
                 width: w,
                 child: Image.asset(

@@ -102,11 +102,11 @@ class RegistratioScreen extends StatelessWidget {
           style: GoogleFonts.inter(
               fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
         ),
-        Row(
+        Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             SizedBox(
-              width: 100,
+              width: 150,
               child: ListTileTheme(
                 minLeadingWidth: 0,
                 minVerticalPadding: 0,
@@ -130,7 +130,7 @@ class RegistratioScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 120,
+              width: 150,
               child: ListTileTheme(
                 minLeadingWidth: 0,
                 horizontalTitleGap: 5,
@@ -151,7 +151,7 @@ class RegistratioScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 100,
+              width: 150,
               child: ListTileTheme(
                 minLeadingWidth: 0,
                 horizontalTitleGap: 5,
@@ -436,24 +436,29 @@ class RegistratioScreen extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: TextFormField(
-                    controller: registrationProvider.phoneTextController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: AppConstants.toAppInputDecoration2(
-                        context, "Enter number", ''),
-                    style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black),
-                    // onFieldSubmitted: (value) =>
-                    //     registrationProvider.verifyPhone(context, value),
-                    // onEditingComplete: () {
-                    //   registrationProvider.verifyPhone(context,
-                    //       registrationProvider.phoneTextController.text);
-                    // },
-                    maxLength: 10,
-                    validator: (value) =>
-                        value!.trim().isEmpty ? 'phone number required' : null,
+                  child: Padding(
+                    padding:const EdgeInsets.only(top: 15),
+                    child: TextFormField(
+                      textAlign: TextAlign.start,
+                      textAlignVertical: TextAlignVertical.center,
+                      controller: registrationProvider.phoneTextController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: AppConstants.toAppInputDecoration2(
+                          context, "Enter number", ''),
+                      style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black),
+                      // onFieldSubmitted: (value) =>
+                      //     registrationProvider.verifyPhone(context, value),
+                      // onEditingComplete: () {
+                      //   registrationProvider.verifyPhone(context,
+                      //       registrationProvider.phoneTextController.text);
+                      // },
+                      maxLength: 10,
+                      validator: (value) =>
+                          value!.trim().isEmpty ? 'phone number required' : null,
+                    ),
                   ),
                 ),
               ],
@@ -470,7 +475,7 @@ class RegistratioScreen extends StatelessWidget {
             controller: registrationProvider.otpTextController,
             keyboardType: TextInputType.number,
             decoration:
-                AppConstants.toAppInputDecoration2(context, "Enter OTP", ''),
+                AppConstants.toAppInputDecoration2(context, "Enter UID", ''),
             style: GoogleFonts.exo2(
               fontSize: 16,
               color: Colors.black,
@@ -484,7 +489,7 @@ class RegistratioScreen extends StatelessWidget {
             // },
             maxLength: 8,
             validator: (value) =>
-                value!.trim().isEmpty ? 'phone number required' : null,
+                value!.trim().isEmpty ? 'Please Enter valid UID' : null,
           ),
         
         if (registrationProvider.enableOTPtext &&
@@ -988,7 +993,7 @@ class RegistratioScreen extends StatelessWidget {
                 items: registrationProvider
                         .sendList(registrationProvider.sDistrcts)
                         .isEmpty
-                    ? ['please Select the District']
+                    ? ['Please select your District']
                         .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -1104,7 +1109,7 @@ class RegistratioScreen extends StatelessWidget {
                         .sendMandalList(
                             registrationProvider.selectedConstituency)
                         .isEmpty
-                    ? ['please Select the Assembly Constituency']
+                    ? ['Please select your Assembly Constituency']
                         .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,

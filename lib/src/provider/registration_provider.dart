@@ -7,6 +7,7 @@ import 'dart:math' as math;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -99,8 +100,12 @@ class RegistrationProvider extends ChangeNotifier {
   }
 
   setVDetails() async {
-    String name = await sharedPref.read("vname");
-    String number = await sharedPref.read("vnum");
+    String name='';
+    String number='';
+    if(kIsWeb){
+     name  = await sharedPref.read("vname");
+     number = await sharedPref.read("vnum");
+    }
     vName = TextEditingController(text: name);
     vNumController = TextEditingController(text: number);
     notifyListeners();
@@ -154,12 +159,12 @@ class RegistrationProvider extends ChangeNotifier {
                   if (value!.isEmpty) {
                     return "Please Enter the name ";
                   }
-                  return "";
+                  return null;
                 },
                 decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    hintText: "Enter Name...",
+                    hintText: "Enter Name",
                     counterText: "",
                     hintStyle: GoogleFonts.inter(
                         fontSize: 16,
@@ -189,12 +194,12 @@ class RegistrationProvider extends ChangeNotifier {
                   if (value!.isEmpty) {
                     return "Please Enter the Age";
                   }
-                  return "";
+                  return null;
                 },
                 decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    hintText: "Enter Age...",
+                    hintText: "Enter Age",
                     counterText: "",
                     hintStyle: GoogleFonts.inter(
                         fontSize: 16,
@@ -242,7 +247,7 @@ class RegistrationProvider extends ChangeNotifier {
   }
 
   List<String> sendList(String value) {
-    if (value.isNotEmpty && value != 'Select the district') {
+    if (value.isNotEmpty && value != 'Please Select your District') {
       if (value == 'Alluri Sitharama Raju') {
         return asRaju;
       } else if (value == 'Anakapalli') {
@@ -297,16 +302,16 @@ class RegistrationProvider extends ChangeNotifier {
       } else if (value == 'West Godavari') {
         return westGodavari;
       } else {
-        return ['please select the District'];
+        return ['Please select your District'];
       }
     } else {
-      return ['please select the District'];
+      return ['Please select your District'];
     }
   }
 
   List<String> sendMandalList(String value) {
-    if (value.isNotEmpty && value != 'please select the District' ||
-        value != 'please select the Assembly Constituency') {
+    if (value.isNotEmpty && value != 'Please select your District' ||
+        value != 'Please select your Assembly Constituency') {
       if (value == 'Araku Valley') {
         return arakuMandals;
       } else if (value == 'Paderu') {
@@ -658,15 +663,15 @@ class RegistrationProvider extends ChangeNotifier {
       } else if (value == 'Salur') {
         return salurMandals;
       } else {
-        return ['please select the Assembly Constituency'];
+        return ['Please select your Assembly Constituency'];
       }
     } else {
-      return ['please select the Assembly Constituency'];
+      return ['Please select your Assembly Constituency'];
     }
   }
 
   List<String> mandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Select Mandal",
     "Addateegala mandal",
     "Ananthagiri mandal",
@@ -1355,7 +1360,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Yerraguntla mandal"
   ];
   List<String> districts = <String>[
-    'Select the district',
+    'Please Select your District',
     'Alluri Sitharama Raju',
     'Anakapalli',
     'Anantapuramu',
@@ -1385,14 +1390,14 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> asRaju = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Araku Valley',
     'Paderu',
     'Rampachodavaram'
   ];
 
   List<String> anakapalli = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Chodavaram',
     'Madugula',
     'Anakapalle',
@@ -1403,7 +1408,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> anatapur = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Rayadurg',
     'Uravakonda',
     'Guntakal',
@@ -1414,7 +1419,7 @@ class RegistrationProvider extends ChangeNotifier {
     'Raptadu'
   ];
   List<String> bapatla = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Vemuru',
     'Repalle',
     'Bapatla',
@@ -1424,7 +1429,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> annamayya = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Rajampeta',
     'Kodur',
     'Rayachoti',
@@ -1434,7 +1439,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> chittoor = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Punganur',
     'Nagari',
     'Gangadhara Nellore',
@@ -1445,7 +1450,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> eastGodavari = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Anaparthy',
     'Rajanagaram',
     'Rajamundry City',
@@ -1455,7 +1460,7 @@ class RegistrationProvider extends ChangeNotifier {
     'Gopalapuram'
   ];
   List<String> eluru = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Unguturu',
     'Denduluru',
     'Eluru',
@@ -1466,7 +1471,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> guntur = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Tadikonda',
     'Mangalagiri',
     'Ponnuru',
@@ -1477,7 +1482,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> westGodavari = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Achanta',
     'Palakollu',
     'Narasapuram',
@@ -1488,7 +1493,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> vizianagaram = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Rajam',
     'Bobbili',
     'Cheepurupalli',
@@ -1499,7 +1504,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> vishakapatnam = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Bhimili',
     'Vishakapatnam East',
     'Vishakapatnam West',
@@ -1509,7 +1514,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> tirupati = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Gudur',
     'Sullurupeta',
     'Venkatagiri',
@@ -1520,7 +1525,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> srikakulam = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Ichchapuram',
     'Palasa',
     'Tekkali',
@@ -1532,7 +1537,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> sssai = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Madakasira',
     'Hindupur',
     'Penukonda',
@@ -1542,7 +1547,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> prakasam = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Yerragondapalem',
     'Darsi',
     'Santhanuthalapadu',
@@ -1554,7 +1559,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> palnadu = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Pedakurapadu',
     'Chilakaluripeta',
     'Narasaraopet',
@@ -1565,7 +1570,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> ntr = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Tiruvuru',
     'Vijayawada West',
     'Vijayawada Central',
@@ -1576,7 +1581,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> nellore = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Kandukur',
     'Kavali',
     'Atmakur',
@@ -1588,7 +1593,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> nandyal = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Allagadda',
     'Srisailam',
     'Nandikotkur',
@@ -1599,7 +1604,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> kadapa = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Badvel',
     'Kadapa',
     'Pulivendla',
@@ -1609,7 +1614,7 @@ class RegistrationProvider extends ChangeNotifier {
     'Mydukur'
   ];
   List<String> kakinada = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Tuni',
     'Prathipadu',
     'Pithapuram',
@@ -1619,7 +1624,7 @@ class RegistrationProvider extends ChangeNotifier {
     'Jaggampeta'
   ];
   List<String> konaseema = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Ramachandrapuram',
     'Mummidivaram',
     'Amalapuram',
@@ -1629,7 +1634,7 @@ class RegistrationProvider extends ChangeNotifier {
     'Mandapeta'
   ];
   List<String> krishna = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Gannavaram',
     'Gudivada',
     'Pedana',
@@ -1639,7 +1644,7 @@ class RegistrationProvider extends ChangeNotifier {
     'Penamaluru'
   ];
   List<String> kurnool = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Kurnool',
     'Pattikonda',
     'Kodumur',
@@ -1649,7 +1654,7 @@ class RegistrationProvider extends ChangeNotifier {
     'Alur'
   ];
   List<String> manyam = [
-    'please select the Assembly Constituency',
+    'Please select your Assembly Constituency',
     'Palakonda',
     'Kurupam',
     'Parvathipuram',
@@ -1676,7 +1681,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> arakuMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Munchingi Puttu",
     "Peda Bayalu",
     "Dumbriguda",
@@ -1686,7 +1691,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> kurupamMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Komarada",
     "Gummalakshmipuram",
     "Kurupam",
@@ -1694,7 +1699,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Garugubilli"
   ];
   List<String> paderuMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Paderu",
     "G.Madugula",
     "Chintapalle",
@@ -1702,7 +1707,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Koyyuru"
   ];
   List<String> palakondaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Veeraghattam",
     "Seethampeta",
     "Bhamini",
@@ -1710,14 +1715,14 @@ class RegistrationProvider extends ChangeNotifier {
     "Palakonda Town"
   ];
   List<String> parvathipuramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Parvathipuram",
     "Seethanagaram",
     "Balijipeta",
     "Parvathipuram Town"
   ];
   List<String> rampochodavaramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kunavaram",
     "Chintur",
     "Vararamachandrapuram",
@@ -1731,7 +1736,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Nellipaka"
   ];
   List<String> salurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Makkuva",
     "Salur",
     "Pachipenta",
@@ -1739,7 +1744,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Salur Town"
   ];
   List<String> amadalavalsaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Sarubujjili",
     "Burja",
     "Amadalavalasa",
@@ -1747,7 +1752,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Amadalavalasa Town"
   ];
   List<String> icchapuramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kanchili",
     "Ichchapuram",
     "Kaviti",
@@ -1755,21 +1760,21 @@ class RegistrationProvider extends ChangeNotifier {
     "Ichchapuram Town"
   ];
   List<String> narasannapetaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Saravakota"
         "Jalumuru"
         "Narasannapeta"
         "Polaki"
   ];
   List<String> palasaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Palasa",
     "Mandasa",
     "Vajrapukothuru",
     "Palasa Kasibugga Town"
   ];
   List<String> pathapatnamMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kothuru",
     "Pathapatnam",
     "Meliaputti",
@@ -1777,20 +1782,20 @@ class RegistrationProvider extends ChangeNotifier {
     "Lakshminarsupeta"
   ];
   List<String> srikakulamMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Gara",
     "Srikakulam",
     "Srikakulam Town"
   ];
   List<String> tekkaliMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Nandigam",
     "Tekkali",
     "Santhabommali",
     "Kotabommali"
   ];
   List<String> bobbiliMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Bobbili",
     "Ramabhadrapuram",
     "Badangi",
@@ -1798,21 +1803,21 @@ class RegistrationProvider extends ChangeNotifier {
     "Bobbili Town"
   ];
   List<String> chepurupalliMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Merakamudidam",
     "Garividi",
     "Cheepurupalle",
     "Gurla"
   ];
   List<String> etcherlaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Ganguvarisigadam",
     "Laveru",
     "Ranastalam",
     "Etcherla"
   ];
   List<String> gajapathinagaramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Dattirajeru",
     "Gajapathinagaram",
     "Bondapalle",
@@ -1820,7 +1825,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Jami"
   ];
   List<String> nellimarlaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Nellimarla",
     "Pusapatirega",
     "Denkada",
@@ -1828,7 +1833,7 @@ class RegistrationProvider extends ChangeNotifier {
     "NELLIMARLA Town"
   ];
   List<String> rajamMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Vangara",
     "Regidi Amadalavalasa",
     "Santhakaviti",
@@ -1836,7 +1841,7 @@ class RegistrationProvider extends ChangeNotifier {
     "RAJAM Town"
   ];
   List<String> vizianagaramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Vizianagaram",
     "Vizianagaram Town",
     "GVMC,WARD-1",
@@ -1850,13 +1855,13 @@ class RegistrationProvider extends ChangeNotifier {
     "GVMC,WARD-98"
   ];
   List<String> bhimiliMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Anandapuram",
     "Padmanabham",
     "Bheemunipatnam",
   ];
   List<String> gajuwakaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "GVMC,WARD-66",
     "GVMC,WARD-67",
     "GVMC,WARD-68",
@@ -1876,7 +1881,7 @@ class RegistrationProvider extends ChangeNotifier {
     "GVMC,WARD-71",
   ];
   List<String> srungavarapukotaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Srungavarapukota",
     "Vepada",
     "Lakkavarapukota",
@@ -1884,7 +1889,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Jami-2"
   ];
   List<String> vizagEastMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "GVMC",
     "GVMC,WARD-09",
     "GVMC,WARD-10",
@@ -1903,7 +1908,7 @@ class RegistrationProvider extends ChangeNotifier {
     "GVMC	WARD-13"
   ];
   List<String> vizagNorthMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "GVMC,WARD-24",
     "GVMC,WARD-25",
     "GVMC,WARD-26",
@@ -1923,7 +1928,7 @@ class RegistrationProvider extends ChangeNotifier {
     "GVMC,WARD-55",
   ];
   List<String> vizagSouthMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "GVMC,WARD-27",
     "GVMC,WARD-29",
     "GVMC,WARD-30",
@@ -1939,7 +1944,7 @@ class RegistrationProvider extends ChangeNotifier {
     "GVMC,WARD-36",
   ];
   List<String> vizagWestMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "GVMC,WARD-40",
     "GVMC,WARD-52",
     "GVMC,WARD-56",
@@ -1955,7 +1960,7 @@ class RegistrationProvider extends ChangeNotifier {
     "GVMC,WARD-57",
   ];
   List<String> anakapalliMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Anakapalle",
     "Kasimkota",
     "GVMC,WARD-80",
@@ -1965,14 +1970,14 @@ class RegistrationProvider extends ChangeNotifier {
     "GVMC,WARD-84",
   ];
   List<String> chodavaramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Rolugunta",
     "Ravikamatham",
     "Chodavaram",
     "Butchayyapeta"
   ];
   List<String> elamanchiliMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Yelamanchili Town",
     "Munagapaka",
     "Atchutapuram",
@@ -1980,14 +1985,14 @@ class RegistrationProvider extends ChangeNotifier {
     "Rambilli"
   ];
   List<String> madugulaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Madugula",
     "Cheedikada",
     "Devarapalle",
     "K.Kotapadu"
   ];
   List<String> narsipatnamMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "NARSIPATNAM Town",
     "Nathavaram",
     "Golugonda",
@@ -1995,14 +2000,14 @@ class RegistrationProvider extends ChangeNotifier {
     "Makavarapalem"
   ];
   List<String> payakaroapetMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kotauratla",
     "Nakkapalle",
     "Payakaraopeta",
     "S.Rayavaram"
   ];
   List<String> pendurthiMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Sabbavaram",
     "Pendurthi",
     "GVMC,WARD-93",
@@ -2017,27 +2022,27 @@ class RegistrationProvider extends ChangeNotifier {
     "Paravada"
   ];
   List<String> jaggampetaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Gokavaram",
     "Jaggampeta",
     "Kirlampudi",
     "Gandepalle",
   ];
-  List<String> kkdCityMandals = ["please select the mandal", "Kakinada Town"];
+  List<String> kkdCityMandals = ["Please select your Mandal", "Kakinada Town"];
   List<String> kkdRuralMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kakinada (Rural)",
     "Karapa"
   ];
   List<String> peddapuramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Peddapuram",
     "Samalkota",
     "Peddapuram Town",
     "Samalkota Town"
   ];
   List<String> pithapuramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Gollaprolu",
     "Pithapuram",
     "Kothapalle",
@@ -2045,7 +2050,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Gollaproplu Town"
   ];
   List<String> prathipaduMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Sankhavaram",
     "Yeleswaram",
     "Prathipadu",
@@ -2053,143 +2058,143 @@ class RegistrationProvider extends ChangeNotifier {
     "Yeleshwaram Town"
   ];
   List<String> tuniMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kotananduru",
     "Tuni",
     "Thondangi",
     "Tuni Town"
   ];
   List<String> amalapuramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Allavaram",
     "Amalapuram",
     "Uppalaguptam",
     "Amalapuram Town"
   ];
   List<String> gannavaramKSMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Ainavilli",
     "P.Gannavaram",
     "Ambajipeta"
   ];
   List<String> kothapetaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Atreyapuram",
     "Alamuru",
     "Ravulapalem",
     "Kothapeta"
   ];
   List<String> mandapetaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Mandapeta",
     "Rayavaram",
     "Kapileswarapuram",
     "Mandapeta Town"
   ];
   List<String> mummidivaramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Thallarevu",
     "I. Polavaram",
     "Mummidivaram",
     "Katrenikona"
   ];
   List<String> rcpmMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kajuluru",
     "Ramachandrapuram",
     "K.gangavaram",
     "Ramachandrapuram Town"
   ];
   List<String> razoleMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Mamidikuduru",
     "Razole",
     "Malikipuram",
     "Sakhinetipalle"
   ];
   List<String> anaparthyMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Rangampeta",
     "Pedapudi",
     "Biccavolu",
     "Anaparthy"
   ];
   List<String> gopalapuramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Gopalapuram",
     "Dwarakatirumala",
     "Nallajerla",
     "Devarapalle"
   ];
   List<String> kovvurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Tallapudi",
     "Kovvur",
     "Chagallu",
     "Kovvur Town"
   ];
   List<String> nidadavoleMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Nidadavole",
     "Undrajavaram",
     "Peravali",
     "Nidadavole Town"
   ];
   List<String> rjyCityMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Rajahmundry Town"
   ];
   List<String> rjyRuralMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Rajahmundry Rural",
     "Kadiam"
   ];
   List<String> rajanagaramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Seethanagaram",
     "Korukonda",
     "Rajanagaram"
   ];
   List<String> achantaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Penumantra",
     "Penugonda",
     "Achanta",
     "Poduru"
   ];
   List<String> bhimavaramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Veeravasaram",
     "Bhimavaram",
     "Bhimavaram Town"
   ];
   List<String> narsapurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Mogalthur",
     "Narasapuram",
     "Narsapur Town"
   ];
   List<String> palakolluMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Palacole",
     "Yelamanchili",
     "Palacole Town"
   ];
   List<String> tadepalligudemMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Tadepalligudem",
     "Pentapadu",
     "Tadepalligudem Town"
   ];
   List<String> tanukuMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Tanuku",
     "Attili",
     "Iragavaram",
     "Tanuku Town"
   ];
   List<String> undiMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Akividu",
     "Undi",
     "Palacoderu",
@@ -2197,7 +2202,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Akividu Town"
   ];
   List<String> chintalapudiMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Chintalapudi",
     "Lingapalem",
     "Jangareddigudem",
@@ -2206,16 +2211,16 @@ class RegistrationProvider extends ChangeNotifier {
     "Chintalapudi Town"
   ];
   List<String> dendulurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Pedavegi",
     "Pedapadu",
     "Denduluru",
     "Eluru"
   ];
-  List<String> eluruMandals = ["please select the mandal", 'Eluru Town'];
+  List<String> eluruMandals = ["Please select your Mandal", 'Eluru Town'];
 
   List<String> vjyCentralMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Vijayawada",
     "Vijayawada,WARD-23",
     "Vijayawada,WARD-24",
@@ -2240,7 +2245,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Vijayawada,WARD-64",
   ];
   List<String> vjyEastMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Vijayawada,WARD-2",
     "Vijayawada,WARD-3",
     "Vijayawada,WARD-4",
@@ -2264,7 +2269,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Vijayawada,WARD-21",
   ];
   List<String> vjyWestMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Vijayawada,WARD-34",
     "Vijayawada,WARD-35",
     "Vijayawada,WARD-37",
@@ -2289,14 +2294,14 @@ class RegistrationProvider extends ChangeNotifier {
     "Vijayawada,WARD-56",
   ];
   List<String> kaikaluruMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Mandavalli",
     "Kaikalur",
     "Kalidindi",
     "Mudinepalle"
   ];
   List<String> nuzvidMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Chatrai",
     "Musunuru",
     "Nuzvid",
@@ -2304,7 +2309,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Nuzvid Town"
   ];
   List<String> polavaramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Velairpadu",
     "Kukunoor",
     "T.Narasapuram",
@@ -2314,14 +2319,14 @@ class RegistrationProvider extends ChangeNotifier {
     "Koyyalagudem"
   ];
   List<String> unguturuMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Unguturu",
     "Bhimadole",
     "Nidamarru",
     "Ganapavaram"
   ];
   List<String> avanigaddaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Ghantasala",
     "Challapalle",
     "Mopidevi",
@@ -2330,26 +2335,26 @@ class RegistrationProvider extends ChangeNotifier {
     "Koduru"
   ];
   List<String> gannavaramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Bapulapadu",
     "Vijayawada (Rural)",
     "Gannavaram",
     "Unguturu"
   ];
   List<String> gudivadaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Nandivada",
     "Gudivada",
     "Gudlavalleru",
     "Gudivada Town"
   ];
   List<String> machilipatnamMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Machilipatnam",
     "Machilipatnam Town"
   ];
   List<String> pamarruMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Pedaparupudi",
     "Thotlavalluru",
     "Pamidimukkala",
@@ -2357,7 +2362,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Movva"
   ];
   List<String> pedanaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kruthivennu",
     "Bantumilli",
     "Pedana",
@@ -2365,7 +2370,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Pedana Town"
   ];
   List<String> penamaluruMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kankipadu",
     "Penamaluru",
     "Vuyyuru",
@@ -2373,14 +2378,14 @@ class RegistrationProvider extends ChangeNotifier {
     "YSR Tadigadapa"
   ];
   List<String> jaggayyapetMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Vatsavai",
     "Jaggayyapeta",
     "Penuganchiprolu",
     "Jaggayyapeta Town"
   ];
   List<String> mylavaramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Mylavaram",
     "Reddigudem",
     "G.Konduru",
@@ -2388,7 +2393,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Kondapalli"
   ];
   List<String> nandigamaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Nandigama",
     "Veerullapadu",
     "Kanchikacherla",
@@ -2396,31 +2401,31 @@ class RegistrationProvider extends ChangeNotifier {
     "Nandigama Town"
   ];
   List<String> tiruvuruMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Gampalagudem",
     "Tiruvuru",
     "A.Konduru",
     "Vissannapet",
     "Tiruvuru Town"
   ];
-  List<String> gunturEastMandals = ["please select the mandal", "Guntur East"];
-  List<String> gunturWestMandals = ["please select the mandal", "Guntur West"];
+  List<String> gunturEastMandals = ["Please select your Mandal", "Guntur East"];
+  List<String> gunturWestMandals = ["Please select your Mandal", "Guntur West"];
   List<String> mangalagiriMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Tadepalle",
     "Mangalagiri",
     "Duggirala",
     "Mangalagiri Town"
   ];
   List<String> ponnurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Pedakakani",
     "Chebrolu",
     "Ponnur",
     "Ponnur Town"
   ];
   List<String> prathipaduGMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Guntur Rural mandal",
     "Kakumanu",
     "Prathipadu",
@@ -2428,26 +2433,26 @@ class RegistrationProvider extends ChangeNotifier {
     "Vatticherukuru"
   ];
   List<String> tadikondaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Thullur",
     "Tadikonda",
     "Phirangipuram",
     "Medikonduru"
   ];
   List<String> tenaliMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kollipara",
     "Tenali",
     "Tenali Town"
   ];
   List<String> chilakaluripetaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Nadendla",
     "Purushotha Patnam",
     "Edlapadu"
   ];
   List<String> gurajalaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Gurazala",
     "Dachepalle",
     "Piduguralla",
@@ -2457,7 +2462,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Dachepalle Town"
   ];
   List<String> macherlaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Macherla",
     "Veldurthi",
     "Durgi",
@@ -2466,13 +2471,13 @@ class RegistrationProvider extends ChangeNotifier {
     "Macherla Town"
   ];
   List<String> narasaraopetMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Rompicherla",
     "Narasaraopet",
     "Narasaraopet"
   ];
   List<String> pedakurapaduMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Bellamkonda",
     "Atchampet",
     "Krosuru",
@@ -2480,7 +2485,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Pedakurapadu"
   ];
   List<String> sattenapalliMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Sattenapalle",
     "Rajupalem",
     "Nekarikallu",
@@ -2488,7 +2493,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Sattenapalle Town"
   ];
   List<String> vinkuondaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Bollapalle",
     "Vinukonda",
     "Nuzendla",
@@ -2497,7 +2502,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Vinukonda"
   ];
   List<String> addankiMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Santhamaguluru",
     "Ballikurava",
     "Janakavarampanguluru",
@@ -2506,20 +2511,20 @@ class RegistrationProvider extends ChangeNotifier {
     "Addanki Town"
   ];
   List<String> baptlaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Pittalavanipalem",
     "Karlapalem",
     "Bapatla",
     "Bapatla Town"
   ];
   List<String> chiralaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Chirala",
     "Vetapalem",
     "Chirala Town"
   ];
   List<String> parchurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Martur",
     "Yeddana Pudi",
     "Parchur",
@@ -2528,7 +2533,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Chinaganjam"
   ];
   List<String> repalleMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Cherukupalle HO Arumbaka",
     "Nizampatnam",
     "Nagaram",
@@ -2536,7 +2541,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Repalle Town"
   ];
   List<String> snathanuthalapaduMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Naguluppala Padu",
     "Maddipadu",
     "Chimakurthi",
@@ -2544,7 +2549,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Chimakurthy"
   ];
   List<String> vemuruMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Tsundur",
     "Amruthalur",
     "Vemuru",
@@ -2552,7 +2557,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Bhattiprolu"
   ];
   List<String> darsiMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Donakonda",
     "Kurichedu",
     "Mundlamuru",
@@ -2561,7 +2566,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Darsi Town"
   ];
   List<String> giddaluruMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Ardhaveedu",
     "Cumbum",
     "Bestawaripeta",
@@ -2571,7 +2576,7 @@ class RegistrationProvider extends ChangeNotifier {
     "GIDDALUR TOWN"
   ];
   List<String> kanigiriMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Hanumanthuni Padu",
     "Veligandla",
     "Kanigiri",
@@ -2581,7 +2586,7 @@ class RegistrationProvider extends ChangeNotifier {
     "KANIGIRI TOWN"
   ];
   List<String> kondepiMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Marripudi",
     "Kondapi",
     "Tangutur",
@@ -2590,7 +2595,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Singarayakonda",
   ];
   List<String> markapurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Markapur",
     "Tarlupadu",
     "Konakanamitla",
@@ -2599,13 +2604,13 @@ class RegistrationProvider extends ChangeNotifier {
     "Podili Town"
   ];
   List<String> ongoleMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Ongole",
     "Kotha Patnam",
     "Ongole Town"
   ];
   List<String> yerragondapalemMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Yerragondapalem",
     "Pullalacheruvu",
     "Tripuranthakam",
@@ -2613,7 +2618,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Peda Araveedu"
   ];
   List<String> allagaddaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Sirvel",
     "Rudravaram",
     "Allagadda",
@@ -2623,7 +2628,7 @@ class RegistrationProvider extends ChangeNotifier {
     "ALLAGADDA Town"
   ];
   List<String> banaganapalleMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Banaganapalle",
     "Owk",
     "Koilkuntla",
@@ -2631,7 +2636,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Kolimigundla"
   ];
   List<String> dhoneMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Bethamcherla",
     "Dhone",
     "Peapally",
@@ -2639,7 +2644,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Bethamcherla Town"
   ];
   List<String> nandikotkuruMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Nandikotkur",
     "Pagidyala",
     "Jupadu Bungalow",
@@ -2649,20 +2654,20 @@ class RegistrationProvider extends ChangeNotifier {
     "NANDIKOTKUR TOWN"
   ];
   List<String> nandyalMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Nandyal",
     "Gospadu",
     "Nandyal Town"
   ];
   List<String> panyamMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kallur",
     "Orvakal",
     "Panyam",
     "Gadivemula"
   ];
   List<String> srisailamMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Srisailam",
     "Atmakur",
     "Velgode",
@@ -2671,12 +2676,12 @@ class RegistrationProvider extends ChangeNotifier {
     "Atmakuru Town"
   ];
   List<String> adoniMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Adoni",
     "Adoni Town"
   ];
   List<String> alurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Holagunda",
     "Halaharvi",
     "Alur",
@@ -2685,7 +2690,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Chippagiri"
   ];
   List<String> kodumurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "C.Belagal",
     "C Belagala Town",
     "Gudur",
@@ -2693,16 +2698,16 @@ class RegistrationProvider extends ChangeNotifier {
     "Kodumur",
     "GUDUR Town"
   ];
-  List<String> kurnoolMandals = ["please select the mandal", "Kurnool Town"];
+  List<String> kurnoolMandals = ["Please select your Mandal", "Kurnool Town"];
   List<String> matralayamMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Mantralayam",
     "Kosigi",
     "Kowthalam",
     "Pedda Kadubur"
   ];
   List<String> pattikondaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Krishnagiri",
     "Veldurthi",
     "Pattikonda",
@@ -2710,15 +2715,15 @@ class RegistrationProvider extends ChangeNotifier {
     "Tuggali"
   ];
   List<String> yemmiagnurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Yemmiganur",
     "Nandavaram",
     "Gonegandla",
     "Yemmiganur Town"
   ];
-  List<String> anatapurUrbanMandals = ["please select the mandal", "Anatapur"];
+  List<String> anatapurUrbanMandals = ["Please select your Mandal", "Anatapur"];
   List<String> guntakalMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Guntakal",
     "Gooty",
     "Pamidi",
@@ -2727,7 +2732,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Pamidi"
   ];
   List<String> kalyandurgMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Brahmasamudram",
     "Brahmasamudram Town",
     "Kalyandurg",
@@ -2737,7 +2742,7 @@ class RegistrationProvider extends ChangeNotifier {
     "KALYANDURG Town"
   ];
   List<String> rayadurgMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "D.Hirehal",
     "Rayadurg",
     "Kanekal",
@@ -2746,7 +2751,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Rayadurg Town"
   ];
   List<String> singanamalaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Garladinne",
     "Singanamala",
     "Putlur",
@@ -2755,7 +2760,7 @@ class RegistrationProvider extends ChangeNotifier {
     "B.K. Samudram"
   ];
   List<String> tadipatriMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Peddavadugur",
     "Yadiki",
     "Tadpatri",
@@ -2763,7 +2768,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Tadpatri Town"
   ];
   List<String> uravakondaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Vidapanakal",
     "Vajrakarur",
     "Uravakonda",
@@ -2771,7 +2776,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Kudair"
   ];
   List<String> dharmavaramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Dharmavaram",
     "Bathalapalle",
     "Tadimarri",
@@ -2779,14 +2784,14 @@ class RegistrationProvider extends ChangeNotifier {
     "Dharmavaram Town"
   ];
   List<String> hindupurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Hindupur",
     "Lepakshi",
     "Chilamathur",
     "Hindupur Town"
   ];
   List<String> kadiriMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Talupula",
     "Nambulipulikunta",
     "Gandlapenta",
@@ -2796,7 +2801,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Kadiri Town"
   ];
   List<String> madakasiraMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Madakasira",
     "Amarapuram",
     "Gudibanda",
@@ -2805,7 +2810,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Madakasira"
   ];
   List<String> penukondaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Roddam",
     "Parigi",
     "Penukonda",
@@ -2814,7 +2819,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Penukonda Town"
   ];
   List<String> puttaparthiMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Nallamada",
     "Bukkapatnam",
     "Kothacheruvu",
@@ -2824,7 +2829,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Puttaparthi Town"
   ];
   List<String> raptaduMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Atmakur",
     "Anantapur Rural",
     "Raptadu",
@@ -2833,7 +2838,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Ramagiri"
   ];
   List<String> badvelMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Sri Avadhutha Kasinayana",
     "Kalasapadu",
     "Porumamilla",
@@ -2844,9 +2849,9 @@ class RegistrationProvider extends ChangeNotifier {
     "Badvel Town",
     "Yerraguntla"
   ];
-  List<String> kadapaMandals = ["please select the mandal", "Cuddapah"];
+  List<String> kadapaMandals = ["Please select your Mandal", "Cuddapah"];
   List<String> kamalapuramMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Veerapunayunipalle",
     "Kamalapuram",
     "Vallur",
@@ -2856,7 +2861,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Kamalapuram Town"
   ];
   List<String> mydukurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Duvvur",
     "S.Mydukur",
     "Brahmamgarimattam",
@@ -2865,13 +2870,13 @@ class RegistrationProvider extends ChangeNotifier {
     "Mydukur Town"
   ];
   List<String> proddaturMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Rajupalem",
     "Proddatur",
     "Proddatur Town"
   ];
   List<String> pulivendulaMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Simhadripuram",
     "Lingala",
     "Pulivendla",
@@ -2882,7 +2887,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Pulivendla Town"
   ];
   List<String> atmakurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Marripadu",
     "Atmakur",
     "Anumasamudrampeta",
@@ -2892,7 +2897,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Atmakur Town"
   ];
   List<String> kandukurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Voletivaripalem",
     "Kandukur",
     "Lingasamudram",
@@ -2901,7 +2906,7 @@ class RegistrationProvider extends ChangeNotifier {
     "KANDUKUR TOWN"
   ];
   List<String> kavaliMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kavali",
     "Bogole",
     "Dagadarthi",
@@ -2911,7 +2916,7 @@ class RegistrationProvider extends ChangeNotifier {
   ];
 
   List<String> kovurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Vidavalur",
     "Kodavalur",
     "Buchireddipalem",
@@ -2920,15 +2925,15 @@ class RegistrationProvider extends ChangeNotifier {
     "Buchireddipalem Town"
   ];
   List<String> nelloreCityMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Nellore City"
   ];
   List<String> nelloreRuralMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Nellore rural"
   ];
   List<String> udayagiriMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Seetharamapuram",
     "Udayagiri",
     "Varikuntapadu",
@@ -2939,7 +2944,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Duttalur"
   ];
   List<String> guduruMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Gudur",
     "Chillakur",
     "Kota",
@@ -2948,7 +2953,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Gudur Town"
   ];
   List<String> sarvepalliMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Podalakur",
     "Thotapalligudur",
     "Muthukur",
@@ -2956,7 +2961,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Manubolu"
   ];
   List<String> satyaveduMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Buchinaidu Kandriga",
     "Varadaiahpalem",
     "K.V.B.Puram",
@@ -2966,7 +2971,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Nagalapuram"
   ];
   List<String> srikalahasthiMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Renigunta",
     "Yerpedu",
     "Srikalahasti",
@@ -2974,7 +2979,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Srikalahasti Town"
   ];
   List<String> sullurpetMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Ojili",
     "Naidupet",
     "Pellakur",
@@ -2984,9 +2989,9 @@ class RegistrationProvider extends ChangeNotifier {
     "Naidupeta Town",
     "Sullurpet Town"
   ];
-  List<String> tirupatiMandals = ["please select the mandal", "Tirupati"];
+  List<String> tirupatiMandals = ["Please select your Mandal", "Tirupati"];
   List<String> venkatagiriMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Kaluvoya",
     "Rapur",
     "Sydapuram",
@@ -2996,7 +3001,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Venkatagiri Town"
   ];
   List<String> kodurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Penagalur",
     "Chitvel",
     "Pullampeta",
@@ -3004,14 +3009,14 @@ class RegistrationProvider extends ChangeNotifier {
     "Kodur"
   ];
   List<String> madanepalleMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Madanapalle",
     "Nimmanapalle",
     "Ramasamudram",
     "Madanapalle Town"
   ];
   List<String> pileruMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Gurramkonda",
     "Kalakada",
     "Kambhamvaripalle",
@@ -3020,7 +3025,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Valmikipuram"
   ];
   List<String> punganurMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Rompicherla",
     "Sodam",
     "Pulicherla",
@@ -3030,7 +3035,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Punganur Town"
   ];
   List<String> rajampetMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Vontimitta",
     "Sidhout",
     "T Sundupalle",
@@ -3040,7 +3045,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Rajampet Town"
   ];
   List<String> rayachotiMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Galiveedu",
     "Chinnamandem",
     "Sambepalle",
@@ -3050,7 +3055,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Rayachoti Town"
   ];
   List<String> thamballapalleMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Mulakalacheruvu",
     "Thamballapalle",
     "Peddamandyam",
@@ -3060,7 +3065,7 @@ class RegistrationProvider extends ChangeNotifier {
     "B.Kothakota Town"
   ];
   List<String> chandragiriMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Yerravaripalem",
     "Tirupati (Rural)",
     "Chandragiri",
@@ -3069,13 +3074,13 @@ class RegistrationProvider extends ChangeNotifier {
     "Ramachandrapuram"
   ];
   List<String> chittoorMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Chittoor",
     "Gudipala",
     "Chittoor Town"
   ];
   List<String> gangadharaNelloreMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Vedurukuppam",
     "Karvetinagar",
     "Penumuru",
@@ -3084,7 +3089,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Palasamudram"
   ];
   List<String> kuppamMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Santhipuram",
     "Gudupalle",
     "Kuppam",
@@ -3092,7 +3097,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Kuppam Town"
   ];
   List<String> nagariMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Vadamalapeta",
     "Nindra",
     "Vijayapuram",
@@ -3102,7 +3107,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Puttur"
   ];
   List<String> palamanerMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Peddapanjani",
     "Gangavaram",
     "Palamaner",
@@ -3111,7 +3116,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Palamaner Town"
   ];
   List<String> puthalapattuMandals = [
-    "please select the mandal",
+    "Please select your Mandal",
     "Puthalapattu",
     "Irala",
     "Thavanampalle",
@@ -3135,7 +3140,7 @@ class RegistrationProvider extends ChangeNotifier {
     //formKey.currentState!.validate();
     if (value == "Select AC Name") {
       selectedConstituency = '';
-      return "please Select the role";
+      return "Please select your role";
     } else {
       selectedConstituency = value;
       sMandals = '';
@@ -3148,7 +3153,7 @@ class RegistrationProvider extends ChangeNotifier {
     //formKey.currentState!.validate();
     if (value == "Select District") {
       sDistrcts = '';
-      return "please Select the district";
+      return "Please select your district";
     } else {
       sDistrcts = value;
       selectedConstituency = '';
@@ -3160,7 +3165,7 @@ class RegistrationProvider extends ChangeNotifier {
   setMandals(String value) {
     if (value == "Select Mandal") {
       sMandals = '';
-      return "please Select the Mandal";
+      return "Please select your Mandal";
     } else {
       sMandals = value;
     }
