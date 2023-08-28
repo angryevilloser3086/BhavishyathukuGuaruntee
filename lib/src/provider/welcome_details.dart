@@ -1,7 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:vregistration/src/utils/shared_pref.dart';
-import 'package:vregistration/src/view/home_screen.dart';
+import '/src/utils/shared_pref.dart';
+import '/src/view/home_screen.dart';
 
 import '../utils/app_utils.dart';
 

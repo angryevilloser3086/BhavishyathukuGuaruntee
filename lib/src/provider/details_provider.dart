@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:vregistration/src/model/reg_model.dart';
-import 'package:vregistration/src/utils/app_utils.dart';
-import 'package:vregistration/src/view/home_screen.dart';
+import '/src/model/reg_model.dart';
+import '/src/utils/app_utils.dart';
+import '/src/view/home_screen.dart';
 
 class DetailsProvider extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;

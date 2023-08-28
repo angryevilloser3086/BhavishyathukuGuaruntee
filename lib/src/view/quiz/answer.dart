@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:vregistration/src/utils/app_utils.dart';
+import '/src/utils/app_utils.dart';
 
 class Answer extends StatelessWidget {
   final Function(int) selectHandler;

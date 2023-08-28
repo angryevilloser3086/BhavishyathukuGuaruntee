@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:vregistration/src/provider/welcome_details.dart';
-import 'package:vregistration/src/view/splash.dart';
 import '../../src/view/home_screen.dart';
 import '../../src/provider/details_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'firebase_options.dart';
 import 'src/provider/registration_provider.dart';
+import 'src/provider/welcome_details.dart';
 import 'src/utils/app_utils.dart';
+import 'src/view/splash.dart';
 
 bool shouldUseFirestoreEmulator = false;
 void main() async {

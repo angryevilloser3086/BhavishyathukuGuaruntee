@@ -335,32 +335,32 @@ class RegistratioScreen extends StatelessWidget {
     return const Color.fromRGBO(0, 0, 0, 0);
   }
 
-  demands(BuildContext context, RegistrationProvider registrationProvider) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            Strings.of(context).demands,
-            textAlign: TextAlign.start,
-            style: GoogleFonts.inter(
-                fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white),
-          ),
-          ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: registrationProvider.options.map((e) {
-                return CheckboxListTile(
-                  checkColor: Colors.black,
-                  value: e.checked,
-                  onChanged: (value) =>
-                      registrationProvider.setValueChecked(value, e),
-                  title: Text(e.title!,
-                      style: Theme.of(context).textTheme.headlineLarge),
-                );
-              }).toList())
-        ]);
-  }
+  // demands(BuildContext context, RegistrationProvider registrationProvider) {
+  //   return Column(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           Strings.of(context).demands,
+  //           textAlign: TextAlign.start,
+  //           style: GoogleFonts.inter(
+  //               fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white),
+  //         ),
+  //         ListView(
+  //             shrinkWrap: true,
+  //             physics: const NeverScrollableScrollPhysics(),
+  //             children: registrationProvider.options.map((e) {
+  //               return CheckboxListTile(
+  //                 checkColor: Colors.black,
+  //                 value: e.checked,
+  //                 onChanged: (value) =>
+  //                     registrationProvider.setValueChecked(value, e),
+  //                 title: Text(e.title!,
+  //                     style: Theme.of(context).textTheme.headlineLarge),
+  //               );
+  //             }).toList())
+  //       ]);
+  // }
 
   vNum(BuildContext context, RegistrationProvider registrationProvider) {
     return Column(

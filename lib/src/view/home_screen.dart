@@ -4,8 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
-import 'package:vregistration/src/utils/app_utils.dart';
-import 'package:vregistration/src/view/registration/testimonial.dart';
+import '/src/utils/app_utils.dart';
 
 import '../model/reg_model.dart';
 import 'quiz/quiz_screen.dart';
@@ -255,6 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Write headers (optional) - Assuming jsonData is a list of Maps with identical keys
     // var headers = jsonData[0].toList();
     List<String> headers = [
+      'UID',
       'name',
       'age',
       'gender',
@@ -267,7 +267,13 @@ class _HomeScreenState extends State<HomeScreen> {
       'volunteer_number',
       'volunteer_name',
       'date',
-      "isVerified"
+      "isVerified",
+      "total family members",
+      "total farmers",
+      "total students",
+      "total women",
+      "total Unemployed youth",
+      "schemes"
     ];
     for (var i = 0; i < headers.length; i++) {
       sheet
@@ -280,6 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
       RegistrationModel row = jsonData[i];
       //var values = row;
       List<String> val = [];
+      val.add(row.id!);
       val.add(row.name!);
       val.add(row.age!);
       val.add(row.gender!);
@@ -288,12 +295,17 @@ class _HomeScreenState extends State<HomeScreen> {
       val.add(row.constituency!);
       val.add(row.mandal!);
       val.add(row.address!);
-
       val.add(row.pincode!);
       val.add(row.vName!);
       val.add(row.vNum!);
       val.add(row.date!);
       val.add(row.isVerified.toString());
+      val.add(row.totalFam.toString());
+      val.add(row.totalFarmers.toString());
+      val.add(row.totalStudents.toString());
+      val.add(row.totalWomen.toString());
+      val.add(row.totalUnEmployedYouth.toString());
+      val.add(row.scheme.toString());
       log("${val.toList()}");
 
       for (var j = 0; j < val.length; j++) {

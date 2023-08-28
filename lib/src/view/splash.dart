@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vregistration/src/view/home_screen.dart';
-import 'package:vregistration/src/view/welcomescreen.dart';
+import '/src/view/home_screen.dart';
+import '/src/view/welcomescreen.dart';
 
 import '../utils/app_utils.dart';
 import '../utils/shared_pref.dart';
