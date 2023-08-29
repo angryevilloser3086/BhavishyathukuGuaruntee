@@ -74,7 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
             InkWell(
                 onTap: () {
-                  AppConstants.moveNextstl(context, const RegistratioScreen());
+                  Navigator.of(context).pushNamed(RegistratioScreen.route);
+                  //AppConstants.moveNextstl(context, const RegistratioScreen());
                   // if (w < 450) {
                   //   setState(() {
                   //     scrollController.animateTo(

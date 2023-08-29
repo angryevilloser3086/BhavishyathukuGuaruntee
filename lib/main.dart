@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:vregistration/src/view/registration/registration.dart';
 import '../../src/view/home_screen.dart';
 import '../../src/provider/details_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -154,17 +155,35 @@ class _MyAppState extends State<MyApp> {
               surface: Colors.white),
         ),
         darkTheme: ThemeData.dark(),
-        onGenerateRoute: (settings) {
-          return MaterialPageRoute(
-            builder: (context) {
-              if (kIsWeb) {
-                return const HomeScreen();
-              } else {
-                return const SplashScreen();
-              }
-            },
-          );
+        initialRoute: '/',
+        routes: {
+          '/': (context) {
+            if(kIsWeb){
+              return const HomeScreen();
+            }else{
+              return const SplashScreen();
+            }
+          },
+          '/register': (context) =>const RegistratioScreen(),
         },
+        // onGenerateRoute: (settings) {
+        //   return MaterialPageRoute(
+        //     builder: (context) {
+        //       if (kIsWeb) {
+        //         List<String> pathComponents = settings.name!.split('/');
+        //         if (pathComponents[1] == 'registration') {
+        //           return const RegistratioScreen();
+        //         } else {
+        //           print("else block:${pathComponents.toList()}");
+
+        //           return const HomeScreen();
+        //         }
+        //       } else {
+        //         return const SplashScreen();
+        //       }
+        //     },
+        //   );
+        // },
       ),
     );
   }

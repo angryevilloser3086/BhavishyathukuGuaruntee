@@ -8,6 +8,7 @@ import '../../utils/app_utils.dart';
 import '../../provider/registration_provider.dart';
 
 class RegistratioScreen extends StatelessWidget {
+  static const String route = '/register';
   const RegistratioScreen({super.key});
 
   @override
