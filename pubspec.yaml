@@ -23,10 +23,7 @@ dependencies:
   pinput: ^2.2.31
   excel: ^2.1.0
   cloud_firestore: ^4.7.1
-  qr_code_scanner: ^1.0.1
   carousel_slider: ^4.2.1
-  syncfusion_flutter_gauges: ^22.2.5
-  appinio_video_player: ^1.2.1
   path_provider: ^2.0.15
   http:
   printing: ^5.11.0
