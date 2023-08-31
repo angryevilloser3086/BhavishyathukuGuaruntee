@@ -1579,7 +1579,7 @@ class RegistratioScreen extends StatelessWidget {
             ),
             AppConstants.w_10,
             InkWell(
-              onTap: () => registrationProvider.setQRValues(context),
+              //onTap: () => registrationProvider.setQRValues(context),
               child: SizedBox(
                   width: MediaQuery.of(context).size.width < 510 ? 50 : 100,
                   height: MediaQuery.of(context).size.width < 510 ? 120 : 100,

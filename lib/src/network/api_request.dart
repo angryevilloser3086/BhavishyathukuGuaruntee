@@ -89,6 +89,31 @@ class ApiRequest {
       throw Exception(e);
     }
   }
+
+  Future<bool> sendDataMaster(Map<String, dynamic> data) async {
+    try {
+      var res = await client.post(Uri.parse(baseUrlNumberVal),
+          body: jsonEncode(data),
+          headers: {
+            "Content-Type": "application/json;charset=UTF-8",
+            "test_chat_id": "5129193582"
+          });
+      var body = jsonDecode(utf8.decode(res.bodyBytes));
+      if (res.statusCode == 200) {
+        if (body['Status'] == "Success") {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        throw Exception(body);
+      }
+    } on SocketException catch (_) {
+      throw Exception("No Internet Connection");
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }
 
 

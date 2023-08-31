@@ -15,17 +15,16 @@ class DetailsProvider extends ChangeNotifier {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   RegistrationModel? userDetails;
   RegistrationModel? get userD => userDetails;
-  ApiRequest apiRequest=ApiRequest();
+  ApiRequest apiRequest = ApiRequest();
   TextEditingController phoneTextController = TextEditingController();
 
   String cc = "91";
-
 
   set userD(RegistrationModel? registrationModel) {
     userDetails = registrationModel;
   }
 
-   showCCPicker(BuildContext context) {
+  showCCPicker(BuildContext context) {
     showCountryPicker(
       context: context,
       showPhoneCode: true,
@@ -48,21 +47,24 @@ class DetailsProvider extends ChangeNotifier {
     );
   }
 
-   setCC(String c) {
+  setCC(String c) {
     cc = c;
     notifyListeners();
   }
 
-
-  getDetails(BuildContext context,String phone) {
+  getDetails(BuildContext context, String phone) {
     DialogBuilder(context)
         .showLoadingIndicator("Please wait while we are updating details ");
-    _db.collection('users').where("phone", isEqualTo:"91$phone").get().then((value) {
+    _db
+        .collection('users')
+        .where("phone", isEqualTo: "91$phone")
+        .get()
+        .then((value) {
       QuerySnapshot data = value;
-      Navigator.of(context,rootNavigator: true).pop();
+      Navigator.of(context, rootNavigator: true).pop();
       showAlert(context, "Error",
           "User is already registered \n with this UID: ${value.docs.first.get("id")} ");
-
+      print("entered success block");
       if (data.size != 0) {
         userDetails = RegistrationModel(
             name: data.docs.first.get('name'),
@@ -82,40 +84,46 @@ class DetailsProvider extends ChangeNotifier {
             totalFarmers: data.docs.first.get('total_farmers'),
             totalStudents: data.docs.first.get('total_students'),
             totalUnEmployedYouth: data.docs.first.get('total_unempyouth'),
-            totalWomen: data.docs.first.get('total_women'), fatherNamefield: data.docs.first.get('fatherName'));
+            totalWomen: data.docs.first.get('total_women'),
+            fatherNamefield: data.docs.first.get('fatherName'),
+            pc: data.docs.first.get('pc')??"",
+            zone: data.docs.first.get('zone')??"");
         log("${userDetails!.toJSON()}");
         notifyListeners();
       }
     }).catchError((err) {
-      print("error block");
+      print("error block: $err");
       checkMasterDb(context);
       //throw Exception(err);
     });
   }
 
-
-  checkMasterDb(BuildContext context){
+  checkMasterDb(BuildContext context) {
     apiRequest.validateNumMaster(phoneTextController.text).then((value) {
-      Navigator.of(context,rootNavigator: true).pop();
-      if(value){
-           showAlert(context, "Error",
-          "User is already registered \n with this mobile number please try again with another number ");
-      }else{
-        AppConstants.moveNextstl(context, RegistratioScreen(mob: phoneTextController.text,));
+      Navigator.of(context, rootNavigator: true).pop();
+      if (value) {
+        showAlert(context, "Error",
+            "User is already registered \n with this mobile number please try again with another number ");
+      } else {
+        AppConstants.moveNextstl(
+            context,
+            RegistratioScreen(
+              mob: phoneTextController.text,
+            ));
       }
-    }).catchError((err){
-      Navigator.of(context,rootNavigator: true).pop();
-         showAlert(context, "Error",
-          "$err");
+    }).catchError((err) {
+      Navigator.of(context, rootNavigator: true).pop();
+      showAlert(context, "Error", "$err");
     });
   }
 
-
- showAlert(BuildContext context, String title, String msg) {
+  showAlert(BuildContext context, String title, String msg) {
     return showDialog(
         context: context,
         builder: (_) {
           return AlertDialog(
+            actionsAlignment: MainAxisAlignment.start,
+            alignment: AlignmentDirectional.center,
             backgroundColor: AppConstants.appYellowBG,
             title: Text(
               title,
@@ -133,10 +141,17 @@ class DetailsProvider extends ChangeNotifier {
             ),
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10))),
+                actions: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child:  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child:const Icon(Icons.close,color: Colors.black,),
+                  ),
+                  ),
+                  
+                ],
           );
         });
   }
-
- 
-
 }

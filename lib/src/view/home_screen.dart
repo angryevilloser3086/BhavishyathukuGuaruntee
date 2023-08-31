@@ -8,7 +8,6 @@ import '/src/utils/app_utils.dart';
 
 import '../model/reg_model.dart';
 import 'quiz/quiz_screen.dart';
-import 'registration/registration.dart';
 import 'registration/validation.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -134,14 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   "assets/images/header-website.png1_.png",
                   fit: BoxFit.contain,
                 )),
-            // if(kIsWeb)
-            // SizedBox(
-            //   height: h < 500 ? h * 4.5 : h * 2.8,
-            //   width: w,
-            //   child: RegistratioScreen(
-            //     height: h < 500 ? h * 4.5 : h * 2.8,
-            //   ),
-            // ),
 
             SizedBox(
                 width: w,
@@ -149,23 +140,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: QuizScreen(
                   height: h < 450 ? h * 2 : h,
                 )),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  downloadData();
-                });
-              },
-              child: btnDownload(),
-            ),
+            // InkWell(
+            //   onTap: () {
+            //     setState(() {
+            //       downloadData();
+            //     });
+            //   },
+            //   child: btnDownload(),
+            // ),
           ],
         ),
       )),
     );
   }
 
-  // getWidthHeight() {
-  //   final height = MediaQuery.of(context).size.height;
-  // }
 
   btn() {
     return Container(
@@ -198,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _db.collection('users').get().then((value) {
       QuerySnapshot data = value;
-     // print(data.docs.first);
+      // print(data.docs.first);
       for (QueryDocumentSnapshot snapshot in data.docs) {
         RegistrationModel user = RegistrationModel(
             name: snapshot.get('name'),
@@ -221,7 +209,10 @@ class _HomeScreenState extends State<HomeScreen> {
             totalStudents: snapshot.get('total_students'),
             totalUnEmployedYouth: snapshot.get('total_unempyouth'),
             totalWomen: snapshot.get('total_women'),
-            fatherNamefield: snapshot.get('fatherName'));
+            fatherNamefield: snapshot.get('fatherName'),
+            pc: snapshot.get("pc")??"",
+            zone: snapshot.get("zone")??""
+            );
 
         setState(() {
           users.add(user);
@@ -259,7 +250,9 @@ class _HomeScreenState extends State<HomeScreen> {
       "total students",
       "total women",
       "total Unemployed youth",
-      "schemes"
+      "schemes",
+      "pc",
+      "zone"
     ];
     for (var i = 0; i < headers.length; i++) {
       sheet
@@ -292,6 +285,8 @@ class _HomeScreenState extends State<HomeScreen> {
       val.add(row.totalWomen.toString());
       val.add(row.totalUnEmployedYouth.toString());
       val.add(row.scheme.toString());
+      val.add(row.pc.toString());
+      val.add(row.zone.toString());
       log("${val.toList()}");
 
       for (var j = 0; j < val.length; j++) {
@@ -309,11 +304,5 @@ class _HomeScreenState extends State<HomeScreen> {
       log("${fileBytes!.toList()}");
     });
 
-    // Save the Excel file
-    // excel.encode()!.then((Uint8List bytes) {
-    //   final excelFile = ExcelFile(bytes);
-    //   final excelFileName = "output.xlsx"; // Replace with your desired filename
-    //   excelFile.save(excelFileName);
-    // });
   }
 }

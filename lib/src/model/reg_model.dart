@@ -20,6 +20,10 @@ class RegistrationModel {
   int totalWomen;
   int totalStudents;
   int totalUnEmployedYouth;
+  String? pc;
+  String? zone;
+  String? lat;
+  String? longitude;
 //  PersonDetailsList? famdetails;
   List<Map<String,dynamic>>? farmersList;
   List<Map<String,dynamic>>? studentList;
@@ -48,9 +52,13 @@ class RegistrationModel {
       required this.totalWomen,
       required this.totalStudents,
       required this.totalUnEmployedYouth,
+      required this.pc,
+      required this.zone,
       this.farmersList,
       this.studentList,
       this.uEMPList,
+      this.lat,
+      this.longitude,
       this.womenList});
   factory RegistrationModel.fromJson(Map<String, dynamic> json) {
     List<Map<String,dynamic>>? farmerList = [];
@@ -102,7 +110,10 @@ class RegistrationModel {
       farmersList: farmerList,
       womenList: womenList,
       studentList: studentList,
-      uEMPList: uList,
+      uEMPList: uList, pc: json['pc'],
+      zone: json['zone'],
+      lat: json['lat'],
+      longitude: json['longitude']
     );
     return rModel;
   }
@@ -131,7 +142,11 @@ class RegistrationModel {
         'farmers_List': farmersList,
         'women_list': womenList,
         'student_list': studentList,
-        'unEmployeed_List': uEMPList
+        'unEmployeed_List': uEMPList,
+        'pc':pc,
+        'zone':zone,
+        'lat':lat,
+        'longitude':longitude
       };
 }
 

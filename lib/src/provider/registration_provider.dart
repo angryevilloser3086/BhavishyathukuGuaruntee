@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
@@ -70,12 +71,12 @@ class RegistrationProvider extends ChangeNotifier {
   List<TextEditingController> uEmpYouthController = [];
   List<TextEditingController> uEmpYouthAgeController = [];
   List<Widget> uEmpYouthFields = [];
-  String pc='';
-  String zone='';
+  String pc = '';
+  String zone = '';
 
   List<int> famMem = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
-  setmobNum(String value){
+  setmobNum(String value) {
     phoneTextController = TextEditingController(text: value);
     notifyListeners();
   }
@@ -251,7 +252,6 @@ class RegistrationProvider extends ChangeNotifier {
 
     notifyListeners();
   }
-  
 
   List<String> sendList(String value) {
     if (value.isNotEmpty && value != 'Please Select your District') {
@@ -678,6 +678,626 @@ class RegistrationProvider extends ChangeNotifier {
     }
   }
 
+
+   String setAcID(String value) {
+    if (value.isNotEmpty && value != 'Please select your District' ||
+        value != 'Please select your Assembly Constituency') {
+      if (value == 'Araku Valley/అరకు లోయ') {
+        return "359";
+      } else if (value == 'Paderu/పాడేరు') {
+        return "139";
+      } else if (value == 'Rampachodavaram/రంపచోడవరం') {
+        return "306";
+      } else if (value == 'Chodavaram/చోడవరం') {
+        return "134";
+      } else if (value == 'Madugula/మాడుగుల') {
+        return "136";
+      } else if (value == 'Anakapalle/అనకాపల్లి') {
+        return "133";
+      } else if (value == 'Pendurthi/పెందుర్తి') {
+        return "141";
+      } else if (value == 'Elamanchili/ఎలమంచిలి') {
+        return "135";
+      } else if (value == 'Payakaraopet/పాయకరావుపేట') {
+        return "140";
+      } else if (value == 'Narsipatnam/నర్సీపట్నం') {
+        return "137";
+      } else if (value == 'Rayadurg/రాయదుర్గ్') {
+        return "276";
+      } else if (value == 'Uravakonda/ఉరవకొండ') {
+        return "279";
+      } else if (value == 'Guntakal/గుంతకల్') {
+        return "297";
+      } else if (value == 'Tadipatri/తాడిపత్రి') {
+        return "278";
+      } else if (value == 'Singanamala/సింగనమల') {
+        return "277";
+      } else if (value == 'Anantapur Urban/అనంతపూర్ అర్బన్') {
+        return "298";
+      } else if (value == 'Kalyandurg/కల్యాణదుర్గ్') {
+        return "272";
+      } else if (value == 'Raptadu/రాప్తాడు') {
+        return "299";
+      } else if (value == 'Vemuru/వేమూరు') {
+        return "217";
+      } else if (value == 'Repalle/రేపల్లె') {
+        return "213";
+      } else if (value == 'Bapatla/బాపట్ల') {
+        return "209";
+      } else if (value == 'Parchur/పర్చూరు') {
+        return "228";
+      } else if (value == 'Addanki/అద్దంకి') {
+        return "218";
+      } else if (value == 'Chirala/చీరాల') {
+        return "219";
+      } else if (value == 'Rajampeta/రాజంపేట') {
+        return "252";
+      } else if (value == 'Kodur/కోడూరు') {
+        return "246";
+      } else if (value == 'Rayachoti/రాయచోటి') {
+        return "248";
+      } else if (value == 'Thamballapalle/తంబళ్లపల్లె') {
+        return "290";
+      } else if (value == 'Pileru/పీలేరు') {
+        return "285";
+      } else if (value == 'Madanapalle/మదనపల్లె') {
+        return "294";
+      } else if (value == 'Punganur/పుంగనూరు') {
+        return "286";
+      } else if (value == 'Nagari/నగరి') {
+        return "283";
+      } else if (value == 'Gangadhara Nellore/గంగాధర  నెల్లూరు') {
+        return "301";
+      } else if (value == 'Chittoor/చిత్తూర్') {
+        return "281";
+      } else if (value == 'Puthalapattu/పూతలపట్టు') {
+        return "302";
+      } else if (value == 'palamaner/పలమనేరు') {
+        return "284";
+      } else if (value == 'Kuppam/కుప్పం') {
+        return "284";
+      } else if (value == 'Anaparthy/అనపర్తి') {
+        return "147";
+      } else if (value == 'Rajanagaram/రాజానగరం') {
+        return "303";
+      } else if (value == 'Rajamundry City/రాజమండ్రి సిటీ') {
+        return "304";
+      } else if (value == 'Rajahmundry Rural/రాజమండ్రి గ్రామీణ') {
+        return "305";
+      } else if (value == 'Kovvur/కొవ్వూరు') {
+        return "172";
+      } else if (value == 'Nidadavole/నిడదవోలే') {
+        return "366";
+      } else if (value == 'Gopalapuram/గోపాలపురం') {
+        return "171";
+      } else if (value == 'Unguturu/ఉంగుటూరు') {
+        return "180";
+      } else if (value == 'Denduluru/దెందులూరు') {
+        return "169";
+      } else if (value == 'Eluru/ఏలూరు') {
+        return "170";
+      } else if (value == 'Polavaram/పోలవరం') {
+        return "176";
+      } else if (value == 'Chintalapudi/చింతలపూడి') {
+        return "168";
+      } else if (value == 'Nuzvid/నూజివీడు') {
+        return "193";
+      } else if (value == 'Kaikalur/కైకలూరు') {
+        return "187";
+      } else if (value == 'Tadikonda/తాడికొండ') {
+        return "215";
+      } else if (value == 'Mangalagiri/మంగళగిరి') {
+        return "206";
+      } else if (value == 'Ponnuru/పొన్నూరు') {
+        return "211";
+      } else if (value == 'Tenali/తెనాలి') {
+        return "216";
+      } else if (value == 'Prathipadu/ప్రత్తిపాడు') {
+        return "157";
+      } else if (value == 'Guntur West/గుంటూరు పశ్చిమ') {
+        return "312";
+      } else if (value == 'Guntur East/గుంటూరు తూర్పు') {
+        return "311";
+      } else if (value == 'Achanta/ఆచంట') {
+        return "181";
+      } else if (value == 'Palakollu/పాలకొల్లు') {
+        return "174";
+      } else if (value == 'Narasapuram/నరసాపురం') {
+        return "173";
+      } else if (value == 'Bhimavaram/భీమవరం') {
+        return "167";
+      } else if (value == 'Undi/ఉండీ') {
+        return "179";
+      } else if (value == 'Tanuku/తణుకు') {
+        return "178";
+      } else if (value == 'Tadepalligudem/తాడేపల్లిగూడెం') {
+        return "177";
+      } else if (value == 'Rajam/రాజం') {
+        return "353";
+      } else if (value == 'Bobbili/బొబ్బిలి') {
+        return "122";
+      } else if (value == 'Cheepurupalli/చీపురుపల్లి') {
+        return "120";
+      } else if (value == 'Gajapathinagaram/గజపతినగరం') {
+        return "121";
+      } else if (value == 'Nellimarla/నెల్లిమర్ల') {
+        return "361";
+      } else if (value == 'Vizianagaram/విజయనగరం') {
+        return "129";
+      } else if (value == 'Srungavarapukota/శృంగవరపుకోట') {
+        return "127";
+      } else if (value == 'Bhimili/భీమిలి') {
+        return "368";
+      } else if (value == 'Vishakapatnam East/విశాఖపట్నం తూర్పు') {
+        return "354";
+      } else if (value == 'Vishakapatnam West/విశాఖపట్నం పడమర') {
+        return "357";
+      } else if (value == 'Vishakapatnam South/విశాఖపట్నం దక్షిణ') {
+        return "355";
+      } else if (value == 'Vishakapatnam North/విశాఖపట్నం ఉత్తరం') {
+        return "356";
+      } else if (value == 'Gajuwaka/గాజువాక') {
+        return "358";
+      } else if (value == 'Gudur/గూడూరు') {
+        return "231";
+      } else if (value == 'Sullurupeta/సూళ్లూరుపేట') {
+        return "237";
+      } else if (value == 'Venkatagiri/వెంకటగిరి') {
+        return "239";
+      } else if (value == 'Chandragiri/చంద్రగిరి') {
+        return "280";
+      } else if (value == 'Tirupati/తిరుపతి') {
+        return "291";
+      } else if (value == 'Srikalahasti/శ్రీకాళహస్తి') {
+        return "289";
+      } else if (value == 'Sathyavedu/సత్యవేడు') {
+        return "288";
+      } else if (value == 'Ichchapuram/ఇచ్ఛాపురం') {
+        return "111";
+      } else if (value == 'Palasa/పలాస') {
+        return "352";
+      } else if (value == 'Tekkali/టెక్కలి') {
+        return "117";
+      } else if (value == 'Pathapatnam/పాతపట్నం') {
+        return "114";
+      } else if (value == 'Srikakulam/శ్రీకాకుళం') {
+        return "116";
+      } else if (value == 'Amadalavalasa/ఆమదాలవలస') {
+        return "108";
+      } else if (value == 'Etcherla/ఎచ్చెర్ల') {
+        return "109";
+      } else if (value == 'Narasannapeta/నరసన్నపేట') {
+        return "112";
+      } else if (value == 'Madakasira/మడకశిర') {
+        return "273";
+      } else if (value == 'Hindupur/హిందూపూర్') {
+        return "270";
+      } else if (value == 'Penukonda/పెనుకొండ') {
+        return "275";
+      } else if (value == 'Puttaparthi/పుట్టపర్తి') {
+        return "300";
+      } else if (value == 'Dharmavaram/ధర్మవరం') {
+        return "267";
+      } else if (value == 'Kadiri/కదిరి') {
+        return "271";
+      } else if (value == 'Yerragondapalem/యర్రగొండపాలెం') {
+        return "344";
+      } else if (value == 'Darsi/దర్శి') {
+        return "221";
+      } else if (value == 'Santhanuthalapadu/సంతనూతలపాడు') {
+        return "229";
+      } else if (value == 'Ongole/ఒంగోలు') {
+        return "227";
+      } else if (value == 'Kondapi/కొండపి') {
+        return "225";
+      } else if (value == 'Markapuram/మార్కాపురం') {
+        return "226";
+      } else if (value == 'Giddalur/గిద్దలూరు') {
+        return "222";
+      } else if (value == 'Kanigiri/కనిగిరి') {
+        return "224";
+      } else if (value == 'Pedakurapadu/పెదకూరపాడు') {
+        return "210";
+      } else if (value == 'Chilakaluripeta/చిలకలూరిపేట') {
+        return "199";
+      } else if (value == 'Narasaraopet/నరసరావుపేట') {
+        return "208";
+      } else if (value == 'Sattenapalle/సత్తెనపల్లె') {
+        return "214";
+      } else if (value == 'Vinukonda/వినుకొండ') {
+        return "207";
+      } else if (value == 'Gurajala/గురజాల') {
+        return "203";
+      } else if (value == 'Macherla/మాచర్ల') {
+        return "205";
+      } else if (value == 'Tiruvuru/తిరువూరు') {
+        return "194";
+      } else if (value == 'Vijayawada West/విజయవాడ పడమర') {
+        return "196";
+      } else if (value == 'Vijayawada Central/విజయవాడ సెంట్రల్') {
+        return "331";
+      } else if (value == 'Vijayawada East/విజయవాడ తూర్పు') {
+        return "195";
+      } else if (value == 'Mylavaram/మైలవరం') {
+        return "191";
+      } else if (value == 'Nandigama/నందిగామ') {
+        return "192";
+      } else if (value == 'Jaggayyapeta/జగ్గయ్యపేట') {
+        return "186";
+      } else if (value == 'Kandukur/కందుకూరు') {
+        return "223";
+      } else if (value == 'Kavali/కావలి') {
+        return "232";
+      } else if (value == 'Atmakur/ఆత్మకూర్') {
+        return "241";
+      } else if (value == 'Kovur/కోవూరు') {
+        return "233";
+      } else if (value == 'Nellore City/నెల్లూరు సిటీ') {
+        return "340";
+      } else if (value == 'Nellore Rural/నెల్లూరు రూరల్') {
+        return "341";
+      } else if (value == 'Sarvepalli/సర్వేపల్లి') {
+        return "236";
+      } else if (value == 'Udayagiri/ఉదయగిరి') {
+        return "238";
+      } else if (value == 'Allagadda/ఆళ్లగడ్డ') {
+        return "254";
+      } else if (value == 'Srisailam/శ్రీశైలం') {
+        return "332";
+      } else if (value == 'Nandikotkur/నందికొట్కూరు') {
+        return "261";
+      } else if (value == 'Panyam/పాణ్యం') {
+        return "263";
+      } else if (value == 'Nandyal/నంద్యాల') {
+        return "262";
+      } else if (value == 'Banaganapalle/బనగానపల్లె') {
+        return "333";
+      } else if (value == 'Dhone/ధోన్') {
+        return "257";
+      } else if (value == 'Badvel/బద్వేల్') {
+        return "242";
+      } else if (value == 'Kadapa/కడప') {
+        return "243";
+      } else if (value == 'Pulivendla/పులివెందుల') {
+        return "251";
+      } else if (value == 'Kamalapuram/కమలాపురం') {
+        return "245";
+      } else if (value == 'Jammalamadugu/జమ్మలమడుగు') {
+        return "244";
+      } else if (value == 'Mydukur/మైదుకూరు') {
+        return "249";
+      } else if (value == 'Proddatur/ప్రొద్దుటూరు') {
+        return "250";
+      } else if (value == 'Tuni/తుని') {
+        return "163";
+      } else if (value == 'Prathipadu/ప్రత్తిపాడు'&&sDistrcts =="Kakinada/కాకినాడ") {
+        return "212";
+      } else if (value == 'Pithapuram/పిఠాపురం') {
+        return "156";
+      } else if (value == 'Kakinada Rural/కాకినాడ గ్రామీణ') {
+        return "307";
+      } else if (value == 'Peddapuram/పెద్దాపురం') {
+        return "155";
+      } else if (value == 'Kakinada City/కాకినాడ నగరం') {
+        return "308";
+      } else if (value == 'Jaggampeta/జగ్గంపేట') {
+        return "149";
+      } else if (value == 'Ramachandrapuram/రామచంద్రపురం') {
+        return "159";
+      } else if (value == 'Mummidivaram/ముమ్మిడివరం') {
+        return "153";
+      } else if (value == 'Amalapuram/అమలాపురం') {
+        return "146";
+      } else if (value == 'Razole/రజోల్') {
+        return "160";
+      } else if (value == 'Gannavaram (konaseema)/గన్నవరం') {
+        return "310";
+      } else if (value == 'Kothapeta/కొత్తపేట') {
+        return "152";
+      } else if (value == 'Mandapeta/మండపేట') {
+        return "309";
+      } else if (value == 'Gannavaram/గన్నవరం') {
+        return "185";
+      } else if (value == 'Gudivada/గుడివాడ') {
+        return "185";
+      } else if (value == 'Pedana/పెడన') {
+        return "327";
+      } else if (value == 'Machilipatnam/మచిలీపట్నం') {
+        return "328";
+      } else if (value == 'Avanigadda/అవనిగడ్డ') {
+        return "182";
+      } else if (value == 'Pamarru/పామర్రు') {
+        return "329";
+      } else if (value == 'Penamaluru/పెనమలూరు') {
+        return "330";
+      } else if (value == 'Kurnool/కర్నూలు') {
+        return "260";
+      } else if (value == 'Pattikonda/పత్తికొండ') {
+        return "264";
+      } else if (value == 'Kodumur/కోడుమూరు') {
+        return "258";
+      } else if (value == 'Yemmiganur/యెమ్మిగనూరు') {
+        return "265";
+      } else if (value == 'Mantralayam/మంత్రాలయం') {
+        return "334";
+      } else if (value == 'Adoni/ఆదోని') {
+        return "253";
+      } else if (value == 'Alur/ఆలూర్') {
+        return "255";
+      } else if (value == 'Palakonda/పాలకొండ') {
+        return "113";
+      } else if (value == 'Kurupam/కురుపాం') {
+        return "360";
+      } else if (value == 'Parvathipuram/పార్వతీపురం') {
+        return "125";
+      } else if (value == 'Salur/సాలూరు') {
+        return "125";
+      } else {
+        return '';
+      }
+    } else {
+      return '';
+    }
+  }
+
+
+
+  String setZone(String value){
+    if(value=="Anakapalli"||value=='Araku'||value=='Srikakulam'||value=='Vizianagaram'||value=='Visakhapatnam'){
+      return "Zone 1";
+    }else if(value=='Rajahmundry'||value=='Narsapuram'||value=='Amalapuram'||value =='Kakinada'||value=='Eluru'){
+      return "Zone 2";
+    }else if(value=='Vijayawada'||value=='Machilipatnam'||value=='Guntur'||value=='Narsaraopeta'||value=='Bapatla'){
+      return "Zone 3";
+    }else if(value=='Ongole'||value=='Tirupathi'||value=='Rajampet'||value=='Nellore'||value=='Chittoor'){
+      return "Zone 4";
+    }else if (value== "Kurnool"||value=='Nandyal'||value=='Kadapa'||value=='Anantapur'||value=='Hindupur'){
+      return "Zone 5";
+    }else{
+      return "";
+    }
+  }
+
+  String setPC(String value) {
+    if (value == "Anakapalli/అనకాపల్లి" ||
+        value == "Chodavaram/చోడవరం" ||
+        value == "Madugula/మడుగుల" ||
+        value == "Narsipatnam/నర్సీపట్నం" ||
+        value == "Payakaraopeta/పాయకరావుపేట" ||
+        value == "Pendurthi/పెందుర్తి" ||
+        value == "Elamanchili/ఎలమంచిలి") {
+      return "Anakapalli";
+    } else if (value == "Araku/అరకు" ||
+        value == "Araku Valley/అరకు లోయ" ||
+        value == "Kurupam/కురుపం" ||
+        value == "Paderu/పాడేరు" ||
+        value == "Palakonda/పాలకొండ" ||
+        value == "Parvathipuram/పార్వతీపురం" ||
+        value == "Rampachodavaram/రంపచోడవరం" ||
+        value == "salur/సాలూరు") {
+      return "Araku";
+    } else if (value == "Srikakulam/శ్రీకాకుళం" ||
+        value == "Amadalavalasa/ఆమదాలవలస" ||
+        value == "Ichapuram/ఇచ్చాపురం" ||
+        value == "Narasannapeta/నరసన్నపేట" ||
+        value == "Palasa/పలాస" ||
+        value == "Pathapatnam/పాతపట్నం" ||
+        value == "Srikakulam/శ్రీకాకుళం" ||
+        value == "Tekkali/టెక్కలి") {
+      return "Srikakulam";
+    } else if (value == "Vizianagaram/విజయనగరం" ||
+        value == "Bobbili/బొబ్బిలి" ||
+        value == "Cheepurupalli/చీపురుపల్లి" ||
+        value == "Etcherla/ఎచ్చెర్ల" ||
+        value == "Gajapathinagaram/గజపతినగరం" ||
+        value == "Nellimarla/నెల్లిమర్ల" ||
+        value == "Rajam/రాజం" ||
+        value == "Vizianagaram/విజయనగరం") {
+      return "Vizianagaram";
+    } else if (value == "Visakhapatnam/విశాఖపట్నం" ||
+        value == "Bhimili/భీమిలి" ||
+        value == "Gajuwaka/గాజువాక" ||
+        value == "Visakhapatnam East/విశాఖపట్నం తూర్పు" ||
+        value == "Visakhapatnam North/విశాఖపట్నం ఉత్తరం " ||
+        value == "Visakhapatnam South/విశాఖపట్నం దక్షిణ" ||
+        value == "Visakhapatnam West/విశాఖపట్నం పడమర") {
+      return "Visakhapatnam";
+    }
+    //  else if(value=="Rajahmundry/రాజమండ్రి"||
+    // value=="Rajahmundry City/రాజమండ్రి నగరం" ||
+    // value=="Rajahmundry Rural/రాజమండ్రి గ్రామీణ"||
+    // value=="Rajanagaram/రాజానగరం" ||
+    // value=="Anaparthy/అనపర్తి " ||
+    // value=="Nidadavole/నిడదవోలె" ||
+    // value=="Gopalpuram/గోపాలపురం" ||
+    // ){
+    //   return "Rajahmundry";
+    // }
+    // else if(value=="Rajampet/రాజంపేట"||
+    //  value=="Kodur/కోడూరు"||
+    //  value=="Rayachoty/రాయచోటి"||
+    //  value=="Thamballapalle/తంబళ్లపల్లె"||
+    //  value=="Pileru/పీలేరు"||
+    //  value=="Punganur/పుంగనూరు"||
+    //  value=="Madanapalle/మదనపల్లె"){
+    //   return "Rajampet";
+    //  }
+    else if (value == "Rajahmundry/రాజమండ్రి" ||
+        value == "Rajahmundry City/రాజమండ్రి నగరం" ||
+        value == "Rajahmundry Rural/రాజమండ్రి రూరల్" ||
+        value == "Rajanagaram/రాజానగరం" ||
+        value == "Anaparthy/అనపర్తి" ||
+        value == "Nidadavole/నిడదవోలె" ||
+        value == "Gopalpuram/గోపాలపురం" ||
+        value == "Kovvur/కొవ్వూరు") {
+      return "Rajahmundry";
+    } else if (value == "Narsapuram/నర్సాపురం" ||
+        value == "Narasapur/నరసపూర్" ||
+        value == "Tadepalligudem/తాడేపల్లిగూడెం" ||
+        value == "Achanta/ఆచంట" ||
+        value == "Bhimavaram/భీమవరం" ||
+        value == "Palacole/పాలకోల్" ||
+        value == "Rajam/రాజం" ||
+        value == "Undi/ఉండీ") {
+      return "Narsapuram";
+    } else if (value == "Amalapuram/అమలాపురం" ||
+        value == "Ramachandrapuram/రామచంద్రపురం" ||
+        value == "Amalapuram/అమలాపురం" ||
+        value == "Mandapeta/మండపేట" ||
+        value == "Kothapeta/కొత్తపేట" ||
+        value == "Razole/రజోల్" ||
+        value == "Mummidivaram/ముమ్మిడివరం" ||
+        value == "Gannavaram /గన్నవరం") {
+      return "Amalapuram";
+    } else if (value == "Kakinada/కాకినాడ" ||
+        value == "Kakinada City/కాకినాడ సిటీ" ||
+        value == "Kakinada Rural/కాకినాడ రూరల్" ||
+        value == "Prathipadu/ప్రత్తిపాడు" ||
+        value == "Pithapuram/పిఠాపురం" ||
+        value == "Jaggampeta/జగ్గంపేట" ||
+        value == "Peddapuram/పెద్దాపురం" ||
+        value == "Tuni /తుని") {
+      return "Kakinada";
+    } else if (value == "Eluru/ఏలూరు" ||
+        value == "Ungutur/ఉంగుటూరు" ||
+        value == "Polavaram/పోలవరం" ||
+        value == "Nuzvid/నుజ్విద్" ||
+        value == "Chintalapudi/చింతలపూడి" ||
+        value == "Kaikalur/కైకలూరు" ||
+        value == "Dendulur/దెందులూరు" ||
+        value == "Eluru/ఏలూరు") {
+      return "Eluru";
+    } else if (value == "Vijayawada/విజయవాడ" ||
+        value == "Vijayawada East/విజయవాడ ఈస్ట్" ||
+        value == "Vijayawada West/విజయవాడ వెస్ట్" ||
+        value == "Vijayawada central/విజయవాడ సెంట్రల్" ||
+        value == "Tiruvuru/తిరువూరు" ||
+        value == "Jaggayapet/జగ్గయ్యపేట" ||
+        value == "Nandigama/నందిగామ" ||
+        value == "Mylavaram/మైలవరం") {
+      return "Vijayawada";
+    } else if (value == "Machilipatnam/మచిలీపట్నం" ||
+        value == "Gudivada/గుడివాడ" ||
+        value == "Penamaluru/పెనమలూరు" ||
+        value == "Machilipatnam/మచిలీపట్నం" ||
+        value == "Avanigadda/అవనిగడ్డ" ||
+        value == "Pedana/పెడన" ||
+        value == "Gannavaram(Krishna)/గన్నవరం(కృష్ణ )" ||
+        value == "Pamarru/పామర్రు ") {
+      return "Machilipatnam";
+    } else if (value == "Guntur/గుంటూరు" ||
+        value == "Guntur West/గుంటూరు వెస్ట్" ||
+        value == "Guntur East/గుంటూరు ఈస్ట్" ||
+        value == "Mangalagiri/మంగళగిరి" ||
+        value == "Prathipadu/ప్రతిపాడు" ||
+        value == "Tadikonda/తాడికొండ" ||
+        value == "Tenali/తెనాలి" ||
+        value == "Ponnur/పొన్నూరు") {
+      return "Guntur";
+    } else if (value == "Narasaraopeta/నరసరావుపేట" ||
+        value == "Gurzala/గురజాల" ||
+        value == "Narasaraopeta/నరసరావుపేట" ||
+        value == "Vinukonda/వినుకొండ" ||
+        value == "Sattenapalli/సత్తెనపల్లి" ||
+        value == "Macherla/మాచెర్ల" ||
+        value == "Chilakaluripet/చిలకలూరిపేట" ||
+        value == "Peddakurapadu/పెద్దకూరపాడు") {
+      return "Narasaraopeta";
+    } else if (value == "Bapatla/బాపట్ల" ||
+        value == "Chirala/చీరాల" ||
+        value == "Repalle/రేపల్లె" ||
+        value == "Addanki/అద్దంకి" ||
+        value == "Parachur/పరచూరు" ||
+        value == "Santhanuthalapadu/సంతనూతలపాడు" ||
+        value == "Bapatla/బాపట్ల" ||
+        value == "Vemuru/వేమూరు") {
+      return "Bapatla";
+    } else if (value == "Ongole/ఒంగోలు" ||
+        value == "Darsi/బొబ్బిలి" ||
+        value == "Kondepi/కొండేపి" ||
+        value == "Yerragondapalem/యర్రగొండపాలెం" ||
+        value == "Giddalur/గజపతినగరం" ||
+        value == "Kanigiri/కనిగిరి" ||
+        value == "Markapur/మార్కాపూర్" ||
+        value == "Ongole/ఒంగోలు") {
+      return "Ongole";
+    } else if (value == "Tirupathi/తిరుపతి" ||
+        value == "Tirupathi/తిరుపతి" ||
+        value == "Sullurpet/సుల్లూర్పేట్" ||
+        value == "Sarvepalli/సర్వేపల్లి" ||
+        value == "Venkatagiri/వెంకటగిరి" ||
+        value == "Srikalahasti/శ్రీకలహస్తి" ||
+        value == "Gudur/గుడూర్" ||
+        value == "Satyavedu/సత్యవేడు") {
+      return "Tirupathi";
+    } else if (value == "Nellore/నెల్లూరు" ||
+        value == "Nellore City/నెల్లూరు సిటీ" ||
+        value == "Kavali/కావలి" ||
+        value == "Kandukur/కందుకూర్" ||
+        value == "Kovur/కోవూర్" ||
+        value == "Nellore Rural/నెల్లూరు రూరల్" ||
+        value == "Udayagiri/ఉదయగిరి" ||
+        value == "Atmakur/ఆత్మకూర్") {
+      return "Nellore";
+    } else if (value == "Chittoor/చిత్తూర్" ||
+        value == "Chittoor/చిత్తూర్" ||
+        value == "Nagari/నగరి" ||
+        value == "Gangadhara Nellore/గంగాధర నెల్లూరు" ||
+        value == "Puthalapattu/పుతలపట్టు" ||
+        value == "Palamaner/పాలమనేర్" ||
+        value == "Kuppam/కుప్పం" ||
+        value == "Chandragiri/చంద్రగిరి") {
+      return "Chittoor";
+    } else if (value == "Kurnool/కర్నూలు" ||
+        value == "Kurnool/కర్నూలు" ||
+        value == "Pattikonda/పత్తికొండ" ||
+        value == "Kodumur/కోడుమూరు" ||
+        value == "Yemmiganur/యెమ్మిగనూరు" ||
+        value == "Mantralayam/మంత్రాలయం" ||
+        value == "Adoni/ఆదోని" ||
+        value == "Alur/ఆలూర్") {
+      return "Kurnool";
+    } else if (value == "Nandyal/నంద్యాల" ||
+        value == "Nandyal/నంద్యాల" ||
+        value == "Panyam/పాణ్యం" ||
+        value == "Nandikotkur/నందికొట్కూరు" ||
+        value == "Allagadda/ఆళ్లగడ్డ" ||
+        value == "Dhone/డోన్" ||
+        value == "Srisailam/శ్రీశైలం" ||
+        value == "Banaganapalle/బనగానపల్లె") {
+      return "Nandyal";
+    } else if (value == "Kadapa/కడప" ||
+        value == "Kadapa/కడప" ||
+        value == "Badvel/బద్వేల్" ||
+        value == "Kamalapuram/కమలాపురం" ||
+        value == "Mydukur/మైదుకూరు" ||
+        value == "Jammalamadugu/జమ్మలమడుగు" ||
+        value == "Pulivendla/పులివెందల" ||
+        value == "Proddatur/ప్రొద్దుటూరు") {
+      return "Kadapa";
+    } else if (value == "Anantapur/అనంతపురం" ||
+        value == "Anantapur Urban/అనంతపురం అర్బన్" ||
+        value == "Guntakal/గుంతకల్లు " ||
+        value == "Kalyandurg/కళ్యాణదుర్గ్" ||
+        value == "Rayadurg/రాయదుర్గం" ||
+        value == "Singanamala/సింగనమల" ||
+        value == "Tadipatri/తాడిపత్రి" ||
+        value == "Uravakonda/ఉరవకొండ") {
+      return "Anantapur";
+    } else if (value == "Hindupur/హిందూపూర్" ||
+        value == "Hindupur/హిందూపూర్" ||
+        value == "Penukonda/పెనుకొండ" ||
+        value == "Puttaparthi/పుట్టపర్తి" ||
+        value == "Kadiri/కదిరి" ||
+        value == "Dharmavaram/ధర్మవరం" ||
+        value == "Raptadu/రాప్తాడు" ||
+        value == "Madakasira/మడకశిర") {
+      return "Hindupur";
+    }else{
+      return "";
+    }
+  }
+
   List<String> districts = <String>[
     'Select the district',
     'Alluri Sitharama Raju/అల్లూరి సీతారామ రాజు',
@@ -979,7 +1599,6 @@ class RegistrationProvider extends ChangeNotifier {
     'Parvathipuram/పార్వతీపురం',
     'Salur/సాలూరు'
   ];
-
 
   List<String> jammalamaduguMadals = [
     "Peddamudium/పెద్దముడియం",
@@ -2389,7 +3008,7 @@ class RegistrationProvider extends ChangeNotifier {
     "please select the mandal",
     "Yerravaripalem/యర్రావారిపాలెం",
     "Tirupati (Rural)/తిరుపతి (గ్రామీణ)",
-    "Chandragiriచంద్రగిరి/",
+    "Chandragiri/చంద్రగిరి",
     "Chinnagottigallu/చిన్నగొట్టిగల్లు",
     "Pakala/పాకాల",
     "Ramachandrapuram/రామచంద్రపురం"
@@ -2445,23 +3064,9 @@ class RegistrationProvider extends ChangeNotifier {
     "Yadamarri/యాడమర్రి"
   ];
 
-  // String setPC(String value) {
-  //   if (value == "Anakapalli" ||
-  //       value == "Chodavaram" ||
-  //       value == "Madugula" ||
-  //       value == "Narsipatnam" ||
-  //       value == "Payakaraopeta" ||
-  //       value == "Pendurthi" ||
-  //       value == "Elamanchili") {
-  //         return "Anakapalli";
-  //       }
-  // }
-
   HashMap<String, CheckBox> optionSelected = HashMap();
-
   String verificatioID = '';
   RegistrationModel? userDetails;
-
   bool enableOTPtext = false;
 
   setValueChecked(bool? value, CheckBox checkBox) {
@@ -2477,6 +3082,9 @@ class RegistrationProvider extends ChangeNotifier {
       return "Please select your role";
     } else {
       selectedConstituency = value;
+      pc= setPC(value);
+      zone= setZone(pc);
+      print(pc);
       sMandals = '';
     }
     notifyListeners();
@@ -2518,6 +3126,123 @@ class RegistrationProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+/// Determine the current position of the device.
+///
+/// When the location services are not enabled or permissions
+/// are denied the `Future` will return an error.
+Future<Position> _determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  // Test if location services are enabled.
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    // Location services are not enabled don't continue
+    // accessing the position and request users of the 
+    // App to enable the location services.
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      // Permissions are denied, next time you could try
+      // requesting permissions again (this is also where
+      // Android's shouldShowRequestPermissionRationale 
+      // returned true. According to Android guidelines
+      // your App should show an explanatory UI now.
+      return Future.error('Location permissions are denied');
+    }
+  }
+  
+  if (permission == LocationPermission.deniedForever) {
+    // Permissions are denied forever, handle appropriately. 
+    return Future.error(
+      'Location permissions are permanently denied, we cannot request permissions.');
+  } 
+
+  // When we reach here, permissions are granted and we can
+  // continue accessing the position of the device.
+  return await Geolocator.getCurrentPosition();
+}
+
+
+  sendToPdf(BuildContext context) {
+    List<String> schems = setSchemes();
+    DateTime dt = DateTime.now();
+    List<Map<String,dynamic>> fList = [];
+    List<Map<String,dynamic>> sList = [];
+    List<Map<String,dynamic>> wList = [];
+    List<Map<String,dynamic>> uEMPList = [];
+    if (farmers > 0) {
+      for (int i = 0; i < farmersFields.length; i++) {
+        fList.add(PersonDetails(
+            age: int.parse(farmersAgeController[i].text),
+            name: farmersController[i].text).toJson());
+      }
+    }
+    //PersonDetailsList farmerList = PersonDetailsList(pdList: fList);
+
+    if (students > 0) {
+      for (int i = 0; i < studentFields.length; i++) {
+        sList.add(PersonDetails(
+            age: int.parse(studentsAgeController[i].text),
+            name: studentsController[i].text).toJson());
+      }
+    }
+
+    //PersonDetailsList studentList = PersonDetailsList(pdList: sList);
+    if (womenAbv > 0) {
+      for (int i = 0; i < womenFields.length; i++) {
+        wList.add(PersonDetails(
+            age: int.parse(womenAgeController[i].text),
+            name: womenController[i].text).toJson());
+      }
+    }
+
+    //PersonDetailsList womentList = PersonDetailsList(pdList: wList);
+    if (unEMployedYouth > 0) {
+      for (int i = 0; i < uEmpYouthFields.length; i++) {
+        uEMPList.add(PersonDetails(
+            age: int.parse(uEmpYouthAgeController[i].text),
+            name: uEmpYouthController[i].text).toJson());
+      }
+    }
+
+     RegistrationModel rModel = RegistrationModel(
+        name: name.text,
+        age: age.text,
+        constituency: selectedConstituency,
+        district: sDistrcts,
+        mandal: sMandals,
+        address: address.text,
+        pincode: pincode.text,
+        vNum: vNumController.text.isNotEmpty ? vNumController.text : "",
+        vName: vName.text.isNotEmpty ? vName.text : "",
+        number: "$cc${phoneTextController.text}",
+        gender: gender,
+        isVerified: isVerified,
+        date: dt.toIso8601String(),
+        id: uniqueCode.text.isNotEmpty ? uniqueCode.text : "",
+        scheme: schems,
+        totalFam: famMembers,
+        totalFarmers: farmers,
+        totalStudents: students,
+        totalUnEmployedYouth: unEMployedYouth,
+        totalWomen: womenAbv,
+        fatherNamefield: fatherNamefield.text,
+        farmersList: fList,
+        womenList: wList,
+        studentList: sList,
+        uEMPList: uEMPList, pc: '', zone: '');
+
+     //print("${wList.first.toJson()}");
+    //AppConstants.moveNextstl(context, MyPDF(rModel: rModel));
+  }
+
+
 
   checkNumber(BuildContext context, String phone, String id) {
     _db
@@ -2681,86 +3406,15 @@ class RegistrationProvider extends ChangeNotifier {
       ),
       // optional. Shows phone code before the country name.
       onSelect: (Country country) {
-        //print('Select country: ${country.displayName}');
-        // print(country.countryCode);
-        // print(country.phoneCode);
         setCC(country.phoneCode);
       },
     );
   }
+  // setAcID(String value){
 
-  // sendToPdf(BuildContext context) {
-  //   List<String> schems = setSchemes();
-  //   DateTime dt = DateTime.now();
-  //   List<Map<String,dynamic>> fList = [];
-  //   List<Map<String,dynamic>> sList = [];
-  //   List<Map<String,dynamic>> wList = [];
-  //   List<Map<String,dynamic>> uEMPList = [];
-  //   if (farmers > 0) {
-  //     for (int i = 0; i < farmersFields.length; i++) {
-  //       fList.add(PersonDetails(
-  //           age: int.parse(farmersAgeController[i].text),
-  //           name: farmersController[i].text).toJson());
-  //     }
-  //   }
-  //   //PersonDetailsList farmerList = PersonDetailsList(pdList: fList);
-
-  //   if (students > 0) {
-  //     for (int i = 0; i < studentFields.length; i++) {
-  //       sList.add(PersonDetails(
-  //           age: int.parse(studentsAgeController[i].text),
-  //           name: studentsController[i].text).toJson());
-  //     }
-  //   }
-
-  //   //PersonDetailsList studentList = PersonDetailsList(pdList: sList);
-  //   if (womenAbv > 0) {
-  //     for (int i = 0; i < womenFields.length; i++) {
-  //       wList.add(PersonDetails(
-  //           age: int.parse(womenAgeController[i].text),
-  //           name: womenController[i].text).toJson());
-  //     }
-  //   }
-
-  //   //PersonDetailsList womentList = PersonDetailsList(pdList: wList);
-  //   if (unEMployedYouth > 0) {
-  //     for (int i = 0; i < uEmpYouthFields.length; i++) {
-  //       uEMPList.add(PersonDetails(
-  //           age: int.parse(uEmpYouthAgeController[i].text),
-  //           name: uEmpYouthController[i].text).toJson());
-  //     }
-  //   }
-
-  //    RegistrationModel rModel = RegistrationModel(
-  //       name: name.text,
-  //       age: age.text,
-  //       constituency: selectedConstituency,
-  //       district: sDistrcts,
-  //       mandal: sMandals,
-  //       address: address.text,
-  //       pincode: pincode.text,
-  //       vNum: vNumController.text.isNotEmpty ? vNumController.text : "",
-  //       vName: vName.text.isNotEmpty ? vName.text : "",
-  //       number: "$cc${phoneTextController.text}",
-  //       gender: gender,
-  //       isVerified: isVerified,
-  //       date: dt.toIso8601String(),
-  //       id: uniqueCode.text.isNotEmpty ? uniqueCode.text : "",
-  //       scheme: schems,
-  //       totalFam: famMembers,
-  //       totalFarmers: farmers,
-  //       totalStudents: students,
-  //       totalUnEmployedYouth: unEMployedYouth,
-  //       totalWomen: womenAbv,
-  //       fatherNamefield: fatherNamefield.text,
-  //       farmersList: fList,
-  //       womenList: wList,
-  //       studentList: sList,
-  //       uEMPList: uEMPList);
-
-  //    //print("${wList.first.toJson()}");
-  //   //AppConstants.moveNextstl(context, MyPDF(rModel: rModel));
   // }
+
+ 
 
   setCC(String c) {
     cc = c;
@@ -2781,7 +3435,7 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void registerUser(BuildContext context) {
+  void registerUser(BuildContext context) async{
     showLoader = true;
     List<String> schems = setSchemes();
     DialogBuilder(context)
@@ -2830,14 +3484,7 @@ class RegistrationProvider extends ChangeNotifier {
       }
     }
 
-    // print("${wList.first}");
-    // print(fList.toList());
-
-    // PersonDetailsList? famdetails = PersonDetailsList(
-    //     uList: uEMPList,
-    //     womenList: wList,
-    //     studentList: sList,
-    //     farmerList: fList);
+    Position pos = await _determinePosition();
 
     RegistrationModel rModel = RegistrationModel(
         name: name.text,
@@ -2864,7 +3511,9 @@ class RegistrationProvider extends ChangeNotifier {
         farmersList: fList,
         womenList: wList,
         studentList: sList,
-        uEMPList: uEMPList);
+        uEMPList: uEMPList, pc: pc,zone: zone,
+        lat:pos!=null? pos.latitude.toString():"",
+        longitude:pos!=null? pos.longitude.toString():"");
 
     _db
         .collection('users')
@@ -2874,8 +3523,9 @@ class RegistrationProvider extends ChangeNotifier {
       showLoader = false;
       Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, "Registration Successfully done");
+      sendtoMSDB(context, rModel);
       apiRequest.sendFinalMsg(
-          "$cc${phoneTextController.text}", rModel.id ?? "");
+          "$cc${phoneTextController.text}", uniqueCode.text);
       AppConstants.moveNextClearAll(
           context,
           MyPDF(
@@ -2899,21 +3549,43 @@ class RegistrationProvider extends ChangeNotifier {
     }
   }
 
-  setQRValues(BuildContext context) async {
-    // final qrResults = await Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //       builder: (context) => const QRViewExample(), fullscreenDialog: true),
-    // );
-    // if (qrResults != null) {
-    //   String qrcode = qrResults.code;
-    //   List<String> uID = qrcode.split("/");
-    //   // print("uid:${uID.last}");
-    //   uniqueCode = TextEditingController(text: uID.last);
-    //   // print(uniqueCode.text);
-    // }
+  // setQRValues(BuildContext context) async {
+  //   // final qrResults = await Navigator.push(
+  //   //   context,
+  //   //   MaterialPageRoute(
+  //   //       builder: (context) => const QRViewExample(), fullscreenDialog: true),
+  //   // );
+  //   // if (qrResults != null) {
+  //   //   String qrcode = qrResults.code;
+  //   //   List<String> uID = qrcode.split("/");
+  //   //   // print("uid:${uID.last}");
+  //   //   uniqueCode = TextEditingController(text: uID.last);
+  //   //   // print(uniqueCode.text);
+  //   // }
 
-    notifyListeners();
+  //   notifyListeners();
+  // }
+
+  sendtoMSDB(BuildContext context,RegistrationModel rmodel){
+    Map<String,dynamic> data={
+      "name":rmodel.name,
+      "age":rmodel.age,
+      "mobileNo":rmodel.number,
+      "constitunecyId":setAcID(rmodel.constituency!),
+      "pincode":rmodel.pincode,
+      "address":rmodel.address,
+      "noOfChildren":rmodel.totalStudents,
+      "noOfWomen":rmodel.totalWomen,
+      "noOfUnEmployed":rmodel.totalUnEmployedYouth
+
+    };
+    apiRequest.sendDataMaster(data).then((value) {
+      AppConstants.showSnackBar(context, "Thank you for enrolling into Bhavishyathuku guarantee");
+      notifyListeners();
+    }).catchError((err){
+      AppConstants.showSnackBar(context, "$err");
+      notifyListeners();
+    });
   }
 
   setSelectedRadio(int? val) {
@@ -2932,75 +3604,7 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // searchVolunteer(BuildContext context) async {
-  //  // print("number:${FirebaseAuth.instance.currentUser!.phoneNumber}");
-  //   showLoader = true;
-  //   var body = await _db
-  //       .collection('Mahashakti_volunteers')
-  //       .doc(FirebaseAuth.instance.currentUser!.phoneNumber)
-  //       .get();
-  //   if (body.data() != null) {
-  //    // print("Mobile:${body.data()}");
-
-  //     //print(body['name']);
-  //     //print(data);
-  //     VRegistration vRegistration = VRegistration(
-  //         name: body['name'] ?? "",
-  //         phone: body['phone'],
-  //         constituency: body['constituency'] ?? "",
-  //         district: body['district'] ?? "",
-  //         mandal: body['mandal'] ?? "",
-  //         panchayat: body['panchayat'] ?? "");
-
-  //     // AppConstants.moveNextstl(
-  //     //     context,
-  //     //     VolunteerRegistration(
-  //     //       vRegistration: vRegistration,
-  //     //     ));
-
-  //   } else {
-  //     VRegistration vRegistration = VRegistration(
-  //         name: '',
-  //         phone: FirebaseAuth.instance.currentUser?.phoneNumber ?? "",
-  //         constituency: '',
-  //         district: '',
-  //         mandal: '',
-  //         panchayat: '');
-  //     // AppConstants.moveNextstl(
-  //     //     context,
-  //     //     VolunteerRegistration(
-  //     //       vRegistration: vRegistration,
-  //     //     ));
-  //   }
-  //   notifyListeners();
-  // }
-
-  // // updateVolunteer(BuildContext context) async {
-  //   VRegistration vRegistration = VRegistration(
-  //       name: name.text,
-  //       phone: FirebaseAuth.instance.currentUser!.phoneNumber,
-  //       constituency: selectedConstituency,
-  //       district: sDistrcts,
-  //       mandal: sMandals,
-  //       panchayat: gpController.text);
-  //   FirebaseAuth.instance.currentUser!.updateDisplayName(name.text);
-  //  // print(vRegistration.toJSON());
-  //   showLoader = true;
-
-  //   _db
-  //       .collection('Mahashakti_volunteers')
-  //       .doc('${FirebaseAuth.instance.currentUser!.phoneNumber}')
-  //       .set(vRegistration.toJSON())
-  //       .then((value) {
-  //     showLoader = false;
-  //     AppConstants.showSnackBar(
-  //         context, "Volunteer Registration Successfully done");
-  //     AppConstants.moveNextClearAll(context, const HomeScreen());
-  //   });
-
-  //   notifyListeners();
-  // }
-
+  
   @override
   void dispose() {
     name.dispose();
