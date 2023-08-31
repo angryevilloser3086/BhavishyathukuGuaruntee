@@ -15,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:printing/printing.dart';
+import '../utils/svg_Image.dart';
+import '../utils/svg_pg2.dart';
 import '/src/utils/shared_pref.dart';
 import '../../src/network/api_request.dart';
 import '../../src/utils/loading_indicator.dart';
@@ -681,8 +683,7 @@ class RegistrationProvider extends ChangeNotifier {
     }
   }
 
-
-   String setAcID(String value) {
+  String setAcID(String value) {
     if (value.isNotEmpty && value != 'Please select your District' ||
         value != 'Please select your Assembly Constituency') {
       if (value == 'Araku Valley/అరకు లోయ') {
@@ -973,7 +974,8 @@ class RegistrationProvider extends ChangeNotifier {
         return "250";
       } else if (value == 'Tuni/తుని') {
         return "163";
-      } else if (value == 'Prathipadu/ప్రత్తిపాడు'&&sDistrcts =="Kakinada/కాకినాడ") {
+      } else if (value == 'Prathipadu/ప్రత్తిపాడు' &&
+          sDistrcts == "Kakinada/కాకినాడ") {
         return "212";
       } else if (value == 'Pithapuram/పిఠాపురం') {
         return "156";
@@ -1043,20 +1045,38 @@ class RegistrationProvider extends ChangeNotifier {
     }
   }
 
-
-
-  String setZone(String value){
-    if(value=="Anakapalli"||value=='Araku'||value=='Srikakulam'||value=='Vizianagaram'||value=='Visakhapatnam'){
+  String setZone(String value) {
+    if (value == "Anakapalli" ||
+        value == 'Araku' ||
+        value == 'Srikakulam' ||
+        value == 'Vizianagaram' ||
+        value == 'Visakhapatnam') {
       return "Zone 1";
-    }else if(value=='Rajahmundry'||value=='Narsapuram'||value=='Amalapuram'||value =='Kakinada'||value=='Eluru'){
+    } else if (value == 'Rajahmundry' ||
+        value == 'Narsapuram' ||
+        value == 'Amalapuram' ||
+        value == 'Kakinada' ||
+        value == 'Eluru') {
       return "Zone 2";
-    }else if(value=='Vijayawada'||value=='Machilipatnam'||value=='Guntur'||value=='Narsaraopeta'||value=='Bapatla'){
+    } else if (value == 'Vijayawada' ||
+        value == 'Machilipatnam' ||
+        value == 'Guntur' ||
+        value == 'Narsaraopeta' ||
+        value == 'Bapatla') {
       return "Zone 3";
-    }else if(value=='Ongole'||value=='Tirupathi'||value=='Rajampet'||value=='Nellore'||value=='Chittoor'){
+    } else if (value == 'Ongole' ||
+        value == 'Tirupathi' ||
+        value == 'Rajampet' ||
+        value == 'Nellore' ||
+        value == 'Chittoor') {
       return "Zone 4";
-    }else if (value== "Kurnool"||value=='Nandyal'||value=='Kadapa'||value=='Anantapur'||value=='Hindupur'){
+    } else if (value == "Kurnool" ||
+        value == 'Nandyal' ||
+        value == 'Kadapa' ||
+        value == 'Anantapur' ||
+        value == 'Hindupur') {
       return "Zone 5";
-    }else{
+    } else {
       return "";
     }
   }
@@ -1296,7 +1316,7 @@ class RegistrationProvider extends ChangeNotifier {
         value == "Raptadu/రాప్తాడు" ||
         value == "Madakasira/మడకశిర") {
       return "Hindupur";
-    }else{
+    } else {
       return "";
     }
   }
@@ -3085,8 +3105,8 @@ class RegistrationProvider extends ChangeNotifier {
       return "Please select your role";
     } else {
       selectedConstituency = value;
-      pc= setPC(value);
-      zone= setZone(pc);
+      pc = setPC(value);
+      zone = setZone(pc);
       print(pc);
       sMandals = '';
     }
@@ -3119,71 +3139,72 @@ class RegistrationProvider extends ChangeNotifier {
 
   verifyPhone(BuildContext context, String phone) async {
     if (formKey.currentState!.validate()) {
-      DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
+      //DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
       showLoaderOTP = true;
       String id = randomIdGenerator();
       checkID(context, id);
       if (uniqueCode.text.isNotEmpty) {
-        checkNumber(context, phone, id);
+        //checkNumber(context, phone, id);
+        sendSMS(context, phone, id);
       }
       notifyListeners();
     }
   }
 
-/// Determine the current position of the device.
-///
-/// When the location services are not enabled or permissions
-/// are denied the `Future` will return an error.
-Future<Position> _determinePosition() async {
-  bool serviceEnabled;
-  LocationPermission permission;
+  /// Determine the current position of the device.
+  ///
+  /// When the location services are not enabled or permissions
+  /// are denied the `Future` will return an error.
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
-  // Test if location services are enabled.
-  serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    // Location services are not enabled don't continue
-    // accessing the position and request users of the 
-    // App to enable the location services.
-    return Future.error('Location services are disabled.');
-  }
-
-  permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      // Permissions are denied, next time you could try
-      // requesting permissions again (this is also where
-      // Android's shouldShowRequestPermissionRationale 
-      // returned true. According to Android guidelines
-      // your App should show an explanatory UI now.
-      return Future.error('Location permissions are denied');
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
     }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
   }
-  
-  if (permission == LocationPermission.deniedForever) {
-    // Permissions are denied forever, handle appropriately. 
-    return Future.error(
-      'Location permissions are permanently denied, we cannot request permissions.');
-  } 
-
-  // When we reach here, permissions are granted and we can
-  // continue accessing the position of the device.
-  return await Geolocator.getCurrentPosition();
-}
-
 
   sendToPdf(BuildContext context) {
     List<String> schems = setSchemes();
     DateTime dt = DateTime.now();
-    List<Map<String,dynamic>> fList = [];
-    List<Map<String,dynamic>> sList = [];
-    List<Map<String,dynamic>> wList = [];
-    List<Map<String,dynamic>> uEMPList = [];
+    List<Map<String, dynamic>> fList = [];
+    List<Map<String, dynamic>> sList = [];
+    List<Map<String, dynamic>> wList = [];
+    List<Map<String, dynamic>> uEMPList = [];
     if (farmers > 0) {
       for (int i = 0; i < farmersFields.length; i++) {
         fList.add(PersonDetails(
-            age: int.parse(farmersAgeController[i].text),
-            name: farmersController[i].text).toJson());
+                age: int.parse(farmersAgeController[i].text),
+                name: farmersController[i].text)
+            .toJson());
       }
     }
     //PersonDetailsList farmerList = PersonDetailsList(pdList: fList);
@@ -3191,8 +3212,9 @@ Future<Position> _determinePosition() async {
     if (students > 0) {
       for (int i = 0; i < studentFields.length; i++) {
         sList.add(PersonDetails(
-            age: int.parse(studentsAgeController[i].text),
-            name: studentsController[i].text).toJson());
+                age: int.parse(studentsAgeController[i].text),
+                name: studentsController[i].text)
+            .toJson());
       }
     }
 
@@ -3200,8 +3222,9 @@ Future<Position> _determinePosition() async {
     if (womenAbv > 0) {
       for (int i = 0; i < womenFields.length; i++) {
         wList.add(PersonDetails(
-            age: int.parse(womenAgeController[i].text),
-            name: womenController[i].text).toJson());
+                age: int.parse(womenAgeController[i].text),
+                name: womenController[i].text)
+            .toJson());
       }
     }
 
@@ -3209,12 +3232,13 @@ Future<Position> _determinePosition() async {
     if (unEMployedYouth > 0) {
       for (int i = 0; i < uEmpYouthFields.length; i++) {
         uEMPList.add(PersonDetails(
-            age: int.parse(uEmpYouthAgeController[i].text),
-            name: uEmpYouthController[i].text).toJson());
+                age: int.parse(uEmpYouthAgeController[i].text),
+                name: uEmpYouthController[i].text)
+            .toJson());
       }
     }
 
-     RegistrationModel rModel = RegistrationModel(
+    RegistrationModel rModel = RegistrationModel(
         name: name.text,
         age: age.text,
         constituency: selectedConstituency,
@@ -3239,34 +3263,34 @@ Future<Position> _determinePosition() async {
         farmersList: fList,
         womenList: wList,
         studentList: sList,
-        uEMPList: uEMPList, pc: '', zone: '');
+        uEMPList: uEMPList,
+        pc: '',
+        zone: '');
 
-     //print("${wList.first.toJson()}");
+    //print("${wList.first.toJson()}");
     //AppConstants.moveNextstl(context, MyPDF(rModel: rModel));
   }
 
+  // checkNumber(BuildContext context, String phone, String id) {
+  //   _db
+  //       .collection('users')
+  //       .where("phone", isEqualTo: phone)
+  //       .get()
+  //       .then((value) {
+  //     Navigator.of(context, rootNavigator: true).pop();
 
+  //     showAlert(context, "Error",
+  //         "User is already registered \n with this UID: ${value.docs.first.get("id")} ");
 
-  checkNumber(BuildContext context, String phone, String id) {
-    _db
-        .collection('users')
-        .where("phone", isEqualTo: phone)
-        .get()
-        .then((value) {
-      Navigator.of(context, rootNavigator: true).pop();
+  //     enableOTPtext = false;
 
-      showAlert(context, "Error",
-          "User is already registered \n with this UID: ${value.docs.first.get("id")} ");
-
-      enableOTPtext = false;
-
-      showLoaderOTP = false;
-      notifyListeners();
-    }).catchError((err) {
-      sendSMS(context, phone, id);
-      notifyListeners();
-    });
-  }
+  //     showLoaderOTP = false;
+  //     notifyListeners();
+  //   }).catchError((err) {
+  //     sendSMS(context, phone, id);
+  //     notifyListeners();
+  //   });
+  // }
 
   sendSMS(BuildContext context, String phone, String id) {
     DialogBuilder(context).showLoadingIndicator(
@@ -3417,8 +3441,6 @@ Future<Position> _determinePosition() async {
 
   // }
 
- 
-
   setCC(String c) {
     cc = c;
     notifyListeners();
@@ -3438,7 +3460,7 @@ Future<Position> _determinePosition() async {
     notifyListeners();
   }
 
-  void registerUser(BuildContext context) async{
+  void registerUser(BuildContext context) async {
     showLoader = true;
     List<String> schems = setSchemes();
     DialogBuilder(context)
@@ -3514,10 +3536,12 @@ Future<Position> _determinePosition() async {
         farmersList: fList,
         womenList: wList,
         studentList: sList,
-        uEMPList: uEMPList, pc: pc,zone: zone,
-        lat:"",
-        longitude:"");
-      Uint8List data= await  makePDF(context, rModel);
+        uEMPList: uEMPList,
+        pc: pc,
+        zone: zone,
+        lat: "",
+        longitude: "");
+    Uint8List data = await makePDF(context, rModel);
 
     _db
         .collection('users')
@@ -3571,23 +3595,23 @@ Future<Position> _determinePosition() async {
   //   notifyListeners();
   // }
 
-  sendtoMSDB(BuildContext context,RegistrationModel rmodel){
-    Map<String,dynamic> data={
-      "name":rmodel.name,
-      "age":rmodel.age,
-      "mobileNo":rmodel.number,
-      "constitunecyId":setAcID(rmodel.constituency!),
-      "pincode":rmodel.pincode,
-      "address":rmodel.address,
-      "noOfChildren":rmodel.totalStudents,
-      "noOfWomen":rmodel.totalWomen,
-      "noOfUnEmployed":rmodel.totalUnEmployedYouth
-
+  sendtoMSDB(BuildContext context, RegistrationModel rmodel) {
+    Map<String, dynamic> data = {
+      "name": rmodel.name,
+      "age": rmodel.age,
+      "mobileNo": rmodel.number,
+      "constitunecyId": setAcID(rmodel.constituency!),
+      "pincode": rmodel.pincode,
+      "address": rmodel.address,
+      "noOfChildren": rmodel.totalStudents,
+      "noOfWomen": rmodel.totalWomen,
+      "noOfUnEmployed": rmodel.totalUnEmployedYouth
     };
     apiRequest.sendDataMaster(data).then((value) {
-      AppConstants.showSnackBar(context, "Thank you for enrolling into Bhavishyathuku guarantee");
+      AppConstants.showSnackBar(
+          context, "Thank you for enrolling into Bhavishyathuku guarantee");
       notifyListeners();
-    }).catchError((err){
+    }).catchError((err) {
       AppConstants.showSnackBar(context, "$err");
       notifyListeners();
     });
@@ -3609,7 +3633,6 @@ Future<Position> _determinePosition() async {
     notifyListeners();
   }
 
-  
   @override
   void dispose() {
     name.dispose();
@@ -3645,15 +3668,25 @@ Future<Position> _determinePosition() async {
     notifyListeners();
   }
 
-
-
-
-   Future<Uint8List> makePDF(BuildContext context,RegistrationModel rModel) async {
+  Future<Uint8List> makePDF(
+      BuildContext context, RegistrationModel rModel) async {
     final pdf = pw.Document();
-    
-    pdf.addPage(await createPageOne(rModel));
-    pdf.addPage(await createPageTwo(rModel));
+    final svgmage = pw.SvgImage(svg: svgImage);
+    final svgmage2 = pw.SvgImage(svg: pg2SVG);
+
+    pdf.addPage(pw.Page(build: (pw.Context context) {
+      return  svgmage; // Center
+    }));
+    pdf.addPage(pw.Page(build: (pw.Context context) {
+      return  svgmage; // Center
+    }));
+    // pdf.addPage(await createPageOne(rModel));
+   // pdf.addPage(await createPageTwo(rModel));
     return pdf.save();
+  }
+
+  createPage() async {
+    final svgmage = pw.SvgImage(svg: svgImage);
   }
 
   createPageOne(RegistrationModel rModel) async {
@@ -3842,8 +3875,8 @@ Future<Position> _determinePosition() async {
                                   pw.SizedBox(height: 20),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText(
-                                        "${rModel.totalFam}", fontG),
+                                    child:
+                                        detailText("${rModel.totalFam}", fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
@@ -3861,8 +3894,7 @@ Future<Position> _determinePosition() async {
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                    "${rModel.totalStudents}",
-                                        fontG),
+                                        "${rModel.totalStudents}", fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
@@ -3934,8 +3966,7 @@ Future<Position> _determinePosition() async {
                                           pw.CrossAxisAlignment.center,
                                       children: [
                                         pw.SizedBox(width: 10),
-                                        detailText2(
-                                            "${rModel.totalWomen}"),
+                                        detailText2("${rModel.totalWomen}"),
                                         pw.SizedBox(width: 10),
                                         detailText2(""),
                                         pw.SizedBox(width: 10),
@@ -3952,8 +3983,7 @@ Future<Position> _determinePosition() async {
                                           pw.CrossAxisAlignment.center,
                                       children: [
                                         pw.SizedBox(width: 10),
-                                        detailText2(
-                                            "${rModel.totalStudents}"),
+                                        detailText2("${rModel.totalStudents}"),
                                         pw.SizedBox(width: 10),
                                         detailText2(""),
                                         pw.SizedBox(width: 10),
@@ -3969,8 +3999,7 @@ Future<Position> _determinePosition() async {
                                             pw.MainAxisAlignment.spaceEvenly,
                                         children: [
                                           pw.SizedBox(width: 10),
-                                          detailText2(
-                                              "${rModel.totalFarmers}"),
+                                          detailText2("${rModel.totalFarmers}"),
                                           pw.SizedBox(width: 10),
                                           detailText2(""),
                                           pw.SizedBox(width: 10),
@@ -4060,8 +4089,8 @@ Future<Position> _determinePosition() async {
                                   pw.SizedBox(height: 55),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText(
-                                        "${rModel.pincode}", fontG),
+                                    child:
+                                        detailText("${rModel.pincode}", fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
@@ -4072,8 +4101,8 @@ Future<Position> _determinePosition() async {
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText(
-                                        "${rModel.number}", fontG),
+                                    child:
+                                        detailText("${rModel.number}", fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                 ]),
@@ -4084,33 +4113,30 @@ Future<Position> _determinePosition() async {
                                   pw.SizedBox(height: 20),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText(
-                                        "${rModel.name}", fontG),
+                                    child: detailText("${rModel.name}", fontG),
                                   ),
                                   pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${rModel.fatherNamefield}",
-                                        fontG),
+                                        "${rModel.fatherNamefield}", fontG),
                                   ),
                                   pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText(
-                                        "${rModel.age}", fontG),
+                                    child: detailText("${rModel.age}", fontG),
                                   ),
                                   pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText(
-                                        "${rModel.address}", fontG),
+                                    child:
+                                        detailText("${rModel.address}", fontG),
                                   ),
                                   pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText(
-                                        "${rModel.district}", fontG),
+                                    child:
+                                        detailText("${rModel.district}", fontG),
                                   ),
                                   pw.Positioned(
                                     left: 80,
@@ -4172,5 +4198,4 @@ Future<Position> _determinePosition() async {
                           fontSize: 10, color: PdfColors.black))))
         ]);
   }
-
 }

@@ -1,9 +1,16 @@
 import 'dart:developer';
+import 'dart:typed_data';
+
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
+import 'package:vregistration/src/view/details/pdf_screen.dart';
+import '../utils/svg_Image.dart';
+import '../utils/svg_pg2.dart';
 import '/src/utils/app_utils.dart';
 
 import '../model/reg_model.dart';
@@ -73,8 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
             AppConstants.h_5,
 
             InkWell(
-                onTap: () {
-                  Navigator.of(context).pushNamed(ValidationScreen.route);
+                onTap: () async {
+                  Navigator.pushNamed(context,ValidationScreen.route );
+                  // AppConstants.moveNextstl(
+                  //     context, MyPDF(data: await makePDF(context)));
                 },
                 child: btn()),
 
@@ -154,7 +163,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   btn() {
     return Container(
       width: 150,
@@ -178,6 +186,34 @@ class _HomeScreenState extends State<HomeScreen> {
         child: const Center(child: Text("Download")),
       ),
     );
+  }
+
+  Future<Uint8List> makePDF(BuildContext context) async {
+    final pdf = pw.Document();
+    final svgmage = pw.SvgImage(svg: svgImage);
+    final svgmage2 = pw.SvgImage(svg: pg2SVG);
+
+    pdf.addPage(pw.Page(
+        pageFormat: PdfPageFormat.standard.landscape,
+        build: (pw.Context context) {
+          return pw.FullPage(
+              ignoreMargins: false,
+              child: pw.Container(
+                  decoration: const pw.BoxDecoration(
+                      image: pw.DecorationSvgImage(svg: pg2SVG)))); // Center;
+        }));
+    pdf.addPage(pw.Page(
+        pageFormat: PdfPageFormat.standard.landscape,
+        build: (pw.Context context) {
+          return pw.FullPage(
+              ignoreMargins: true,
+              child: pw.Container(
+                  decoration: const pw.BoxDecoration(
+                      image: pw.DecorationSvgImage(svg: pg2SVG,fit: pw.BoxFit.contain)))); // Center
+        }));
+    // pdf.addPage(await createPageOne(rModel));
+    // pdf.addPage(await createPageTwo(rModel));
+    return pdf.save();
   }
 
   downloadData() {
@@ -211,8 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
             totalWomen: snapshot.get('total_women'),
             fatherNamefield: snapshot.get('fatherName'),
             pc: "",
-            zone:""
-            );
+            zone: "");
 
         setState(() {
           users.add(user);
@@ -303,6 +338,5 @@ class _HomeScreenState extends State<HomeScreen> {
       var fileBytes = excel.save(fileName: 'details$dt.xlsx');
       log("${fileBytes!.toList()}");
     });
-
   }
 }

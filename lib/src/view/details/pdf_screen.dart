@@ -26,18 +26,18 @@ class MyPDF extends StatefulWidget {
 class _MyPDFState extends State<MyPDF> {
   Uint8List? pdfvalue;
 
-  @override
-  void initState() {
-    init();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   init();
+  //   super.initState();
+  // }
 
-  init() async {
-    final value = await makePDF(context);
-    setState(() {
-      pdfvalue = value;
-    });
-  }
+  // init() async {
+  //   final value = await makePDF(context);
+  //   setState(() {
+  //     pdfvalue = value;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class _MyPDFState extends State<MyPDF> {
                     ],
                   ),
                 AppConstants.h_10,
-                if (pdfvalue != null)
+                //if (pdfvalue != null)
                   SizedBox(
                     // width: 1970,
                     width: 595,
@@ -80,7 +80,7 @@ class _MyPDFState extends State<MyPDF> {
                         canChangePageFormat: false,
                         build: (_) => widget.data),
                   ),
-                if (pdfvalue == null) const CircularProgressIndicator(),
+                //if (pdfvalue == null) const CircularProgressIndicator(),
 
                 // Image.asset("assets/images/ic_background.png"),
               ],
