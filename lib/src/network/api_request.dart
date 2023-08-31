@@ -48,7 +48,7 @@ class ApiRequest {
   Future<String> sendFinalMsg(String number, String link) async {
     try {
       var res = await client.get(Uri.parse(
-          '$baseURL+number=91$number&text=ధన్యవాదాలు ఇది మీ భవిష్యత్తుకు గ్యారెంటీ రిజిస్ట్రేషన్ సర్టిఫికేట్  %23%23$link%23%23&route=1##'));
+          '$baseURL&number=91$number&text=ధన్యవాదాలు ఇది మీ భవిష్యత్తుకు గ్యారెంటీ రిజిస్ట్రేషన్ సర్టిఫికేట్ $link&route=1##'));
 
       var body = jsonDecode(utf8.decode(res.bodyBytes));
       AppResponse appResponse = AppResponse.fromJson(body);

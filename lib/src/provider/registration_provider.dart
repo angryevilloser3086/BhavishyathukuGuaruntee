@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:printing/printing.dart';
+import 'package:vregistration/src/view/registration/validation.dart';
 import '../utils/svg_Image.dart';
 import '../utils/svg_pg2.dart';
 import '/src/utils/shared_pref.dart';
@@ -3541,7 +3542,7 @@ class RegistrationProvider extends ChangeNotifier {
         zone: zone,
         lat: "",
         longitude: "");
-    Uint8List data = await makePDF(context, rModel);
+    //Uint8List data = await makePDF(context, rModel);
 
     _db
         .collection('users')
@@ -3550,16 +3551,20 @@ class RegistrationProvider extends ChangeNotifier {
         .then((value) {
       showLoader = false;
       Navigator.of(context, rootNavigator: true).pop();
-      AppConstants.showSnackBar(context, "Registration Successfully done");
+      AppConstants.moveNextClearAll(context,const ValidationScreen());
       sendtoMSDB(context, rModel);
       apiRequest.sendFinalMsg(
-          "$cc${phoneTextController.text}", uniqueCode.text);
-      AppConstants.moveNextClearAll(
-          context,
-          MyPDF(
-            rModel: rModel,
-            data: data,
-          ));
+          "$cc${phoneTextController.text}", uniqueCode.text).then((value) =>AppConstants.showSnackBar(context, "Registration Successfully done") ).catchError((err){
+            AppConstants.showSnackBar(context, "Registration Successfully done");
+            AppConstants.showSnackBar(context, "$err");
+          });
+      // AppConstants.moveNextClearAll(
+      //     context,
+      //     MyPDF(
+      //       rModel: rModel,
+      //       data: data,
+      //     ));
+
     }).catchError((err) {
       Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, "$err");
