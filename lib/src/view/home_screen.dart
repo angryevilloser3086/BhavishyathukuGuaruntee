@@ -246,8 +246,8 @@ class _HomeScreenState extends State<HomeScreen> {
             totalUnEmployedYouth: snapshot.get('total_unempyouth'),
             totalWomen: snapshot.get('total_women'),
             fatherNamefield: snapshot.get('fatherName'),
-            pc: "",
-            zone: "");
+            pc: snapshot.get("pc"),
+            zone: snapshot.get("zone"));
 
         setState(() {
           users.add(user);

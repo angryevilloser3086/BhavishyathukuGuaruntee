@@ -140,7 +140,7 @@ class ValidationScreen extends StatelessWidget {
       decoration: const BoxDecoration(
           color: Colors.red,
           borderRadius: BorderRadius.all(Radius.circular(30))),
-      child: const Center(child: Text("validate")),
+      child: const Center(child: Text("Validate")),
     );
   }
 

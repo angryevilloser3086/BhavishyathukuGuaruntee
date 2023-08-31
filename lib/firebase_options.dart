@@ -46,22 +46,23 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web =FirebaseOptions(
-        apiKey: "AIzaSyBMg7coOVDddbu2pQdiOSS9gIcL9g0eXOc",
-        authDomain: "bhavishyathukuguarantee-d3199.firebaseapp.com",
-        projectId: "bhavishyathukuguarantee-d3199",
-        storageBucket: "bhavishyathukuguarantee-d3199.appspot.com",
-        messagingSenderId: "174297607342",
-        appId: "1:174297607342:web:b5badce64bf01ab422513f",
-        measurementId: "G-0XVQ3VP3E9");
+  static const FirebaseOptions web = FirebaseOptions(
+      apiKey: "AIzaSyD-H_A7PMb0O8FjbXNpHAS074dl7R8rdRI",
+      authDomain: "bgregistration-campaign.firebaseapp.com",
+      projectId: "bgregistration-campaign",
+      storageBucket: "bgregistration-campaign.appspot.com",
+      messagingSenderId: "269311589693",
+      appId: "1:269311589693:web:cf97eaa62feb637cfe1954",
+      measurementId: "G-D0EWBCPWYJ");
 
-  static  const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBIrBtPCOzcpxkBaMhlwiv_2Edc3Mq91yQ',
-    appId: '1:174297607342:android:973c3fba57d5f4d322513fe',
-    messagingSenderId: '174297607342',
-    projectId: 'bhavishyathukuguarantee-d3199',
-    storageBucket: 'bhavishyathukuguarantee-d3199.appspot.com',
-  );
+  static const FirebaseOptions android = FirebaseOptions(
+      apiKey: "AIzaSyD-H_A7PMb0O8FjbXNpHAS074dl7R8rdRI",
+      authDomain: "bgregistration-campaign.firebaseapp.com",
+      projectId: "bgregistration-campaign",
+      storageBucket: "bgregistration-campaign.appspot.com",
+      messagingSenderId: "269311589693",
+      appId: "1:269311589693:web:cf97eaa62feb637cfe1954",
+      measurementId: "G-D0EWBCPWYJ");
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC_NfJWu5WK5ijKTFRj078WFFQHBCPHMro',
@@ -69,7 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '174297607342',
     projectId: 'bhavishyathukuguarantee-d3199',
     storageBucket: 'bhavishyathukuguarantee-d3199.appspot.com',
-    androidClientId: '174297607342-ciuq9nkmut1lkqq650mql6kijhp5r4n9.apps.googleusercontent.com',
+    androidClientId:
+        '174297607342-ciuq9nkmut1lkqq650mql6kijhp5r4n9.apps.googleusercontent.com',
     iosBundleId: 'com.example.vregistration',
   );
 }
