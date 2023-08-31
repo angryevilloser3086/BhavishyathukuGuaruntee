@@ -1234,9 +1234,9 @@ class RegistratioScreen extends StatelessWidget {
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
                 value: registrationProvider.farmers == 0
-                    ? registrationProvider.famMem.first
+                    ? registrationProvider.farmersNum(registrationProvider.famMembers).first
                     : registrationProvider.farmers,
-                items: registrationProvider.famMem
+                items: registrationProvider.farmersNum(registrationProvider.famMembers)
                     .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,

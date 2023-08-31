@@ -82,6 +82,17 @@ class RegistrationProvider extends ChangeNotifier {
 
   List<int> famMem = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
+
+  List<int> farmersNum(int framers){
+    
+    List<int> lNum=[];
+    for(int i=0;i<=framers;i++){
+      lNum.add(i);
+    }
+  
+    return lNum;
+  }
+
   setmobNum(String value) {
     phoneTextController = TextEditingController(text: value);
     notifyListeners();
@@ -3139,7 +3150,7 @@ class RegistrationProvider extends ChangeNotifier {
   }
 
   verifyPhone(BuildContext context, String phone) async {
-   // showAlert(context, "భవిష్యత్తుకు గ్యారెంటీ... ఇది చంద్రబాబు గ్యారెంటీ తెలుగుదేశం పార్టీ", "నమస్కారం K SIVA.name},\nమీ భవిష్యత్తుకు గ్యారెంటీ నమోదు సంఖ్య : ${uniqueCode.text} \nభవిష్యత్తుకు గ్యారెంటీ కార్యక్రమంలో మీ పేరు నమోదు చేసుకున్నందుకు కృతజ్ఞతలు.");
+    // showAlert(context, "భవిష్యత్తుకు గ్యారెంటీ... ఇది చంద్రబాబు గ్యారెంటీ తెలుగుదేశం పార్టీ", "నమస్కారం K SIVA.name},\nమీ భవిష్యత్తుకు గ్యారెంటీ నమోదు సంఖ్య : ${uniqueCode.text} \nభవిష్యత్తుకు గ్యారెంటీ కార్యక్రమంలో మీ పేరు నమోదు చేసుకున్నందుకు కృతజ్ఞతలు.");
     if (formKey.currentState!.validate()) {
       //DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
       showLoaderOTP = true;
@@ -3319,7 +3330,13 @@ class RegistrationProvider extends ChangeNotifier {
         context: context,
         builder: (_) {
           return AlertDialog(
-            icon: SizedBox(width: 150,height: 150,child: Image.asset("assets/images/ic_new_logo.png",scale: 3.5,)),
+            icon: SizedBox(
+                width: 150,
+                height: 150,
+                child: Image.asset(
+                  "assets/images/ic_new_logo.png",
+                  scale: 3.5,
+                )),
             backgroundColor: AppConstants.appYellowBG,
             title: Text(
               title,
@@ -3553,22 +3570,22 @@ class RegistrationProvider extends ChangeNotifier {
         .then((value) {
       showLoader = false;
       Navigator.of(context, rootNavigator: true).pop();
-      showAlert(context, "భవిష్యత్తుకు గ్యారెంటీ... ఇది చంద్రబాబు గ్యారెంటీ తెలుగుదేశం పార్టీ", "దాన్యవాదాలు ${rModel.name},\nమీ భవిష్యత్తుకు గ్యారెంటీ నమోదు సంఖ్య : ${uniqueCode.text} \nభవిష్యత్తుకు గ్యారెంటీ కార్యక్రమంలో మీ పేరు నమోదు చేసుకున్నందుకు కృతజ్ఞతలు.");
-      Future.delayed(Duration(seconds: 2),(){AppConstants.moveNextClearAll(context,const ValidationScreen());
-});
+      showAlert(
+          context,
+          "భవిష్యత్తుకు గ్యారెంటీ... ఇది చంద్రబాబు గ్యారెంటీ తెలుగుదేశం పార్టీ",
+          "దాన్యవాదాలు ${rModel.name},\nమీ భవిష్యత్తుకు గ్యారెంటీ నమోదు సంఖ్య : ${uniqueCode.text} \nభవిష్యత్తుకు గ్యారెంటీ కార్యక్రమంలో మీ పేరు నమోదు చేసుకున్నందుకు కృతజ్ఞతలు.");
+      Future.delayed(Duration(seconds: 10), () {
+        AppConstants.moveNextClearAll(context, const ValidationScreen());
+      });
       sendtoMSDB(context, rModel);
-      apiRequest.sendFinalMsg(
-          "$cc${phoneTextController.text}", uniqueCode.text).then((value) =>AppConstants.showSnackBar(context, "Registration Successfully done") ).catchError((err){
-            AppConstants.showSnackBar(context, "Registration Successfully done");
-            AppConstants.showSnackBar(context, "$err");
-          });
-      // AppConstants.moveNextClearAll(
-      //     context,
-      //     MyPDF(
-      //       rModel: rModel,
-      //       data: data,
-      //     ));
-
+      apiRequest
+          .sendFinalMsg("$cc${phoneTextController.text}", uniqueCode.text)
+          .then((value) => AppConstants.showSnackBar(
+              context, "Registration Successfully done"))
+          .catchError((err) {
+        AppConstants.showSnackBar(context, "Registration Successfully done");
+        AppConstants.showSnackBar(context, "$err");
+      });
     }).catchError((err) {
       Navigator.of(context, rootNavigator: true).pop();
       AppConstants.showSnackBar(context, "$err");
@@ -3684,13 +3701,13 @@ class RegistrationProvider extends ChangeNotifier {
     final svgmage2 = pw.SvgImage(svg: pg2SVG);
 
     pdf.addPage(pw.Page(build: (pw.Context context) {
-      return  svgmage; // Center
+      return svgmage; // Center
     }));
     pdf.addPage(pw.Page(build: (pw.Context context) {
-      return  svgmage; // Center
+      return svgmage; // Center
     }));
     // pdf.addPage(await createPageOne(rModel));
-   // pdf.addPage(await createPageTwo(rModel));
+    // pdf.addPage(await createPageTwo(rModel));
     return pdf.save();
   }
 
