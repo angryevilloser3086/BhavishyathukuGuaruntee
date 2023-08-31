@@ -3,8 +3,8 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.json": "edbe420d197dc16444ddcd8e233a3764",
-"assets/AssetManifest.smcbin": "91e81634ea5fb62c2c85110720c2a7bf",
+const RESOURCES = {"assets/AssetManifest.json": "c9de427eca0780b2c684eaa599b3b3c2",
+"assets/AssetManifest.smcbin": "6176b0835a767b7aea8a1aeaeb08b96b",
 "assets/assets/fonts/Noto_Serif_Telugu/NotoSerifTelugu-VariableFont_wght.ttf": "be601c6f279d65e413a0f446c39186b7",
 "assets/assets/images/123.pdf": "b9b13cc9e3b9b41f20ed1a636cea0e1f",
 "assets/assets/images/Annadatha.png": "71b4a34b87d36b442083dfa82db675bd",
@@ -26,6 +26,7 @@ const RESOURCES = {"assets/AssetManifest.json": "edbe420d197dc16444ddcd8e233a376
 "assets/assets/images/ic_header_2.png": "98d0923a247636efd34434312ab97d19",
 "assets/assets/images/ic_headline.png": "8df21cd106609bdcfa532bc91e270d57",
 "assets/assets/images/ic_insta+box.png": "88531e65fe1fe82c7008a352f808ef47",
+"assets/assets/images/ic_new_logo.png": "43a462cf48d5a31b60b265f7b56cc07f",
 "assets/assets/images/ic_pdf_header.png": "cbf84af5598672e795d1cc80765cadf4",
 "assets/assets/images/ic_pdf_image_1.png": "e553e41eea7e89d0f4e072b5c810a08f",
 "assets/assets/images/ic_pdf_img_2.png": "8a435e0554e77030b995225e2fa8828f",
@@ -61,9 +62,9 @@ const RESOURCES = {"assets/AssetManifest.json": "edbe420d197dc16444ddcd8e233a376
 "icons/icon-192.png": "88bee33470024aea0c63b5cb0bb64dae",
 "icons/icon-512-maskable.png": "28e361daaaac75e247b90a8e706e4382",
 "icons/icon-512.png": "dd5d681ccf4499f1bd7c4bb1ec35e334",
-"index.html": "a8dcdee46b13d48ff06d81f82a6d8248",
-"/": "a8dcdee46b13d48ff06d81f82a6d8248",
-"main.dart.js": "dbd3f7625f948d935a0f73a5fdbad7ed",
+"index.html": "59ad74f3481de830113c6d05a5529935",
+"/": "59ad74f3481de830113c6d05a5529935",
+"main.dart.js": "e826ee14778fa9d9d395504091e93aaf",
 "manifest.json": "d6cb154c271add3622965d4d74bacbb5",
 "version.json": "898f7869a1d22cc7f5be1a8266a020bd"};
 // The application shell files that are downloaded before a service worker can

@@ -47,9 +47,9 @@ class ValidationScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Image.asset("assets/images/BG-Logo-small 1.png"),
+              Image.asset("assets/images/ic_new_logo.png"),
                Text(
-              Strings.of(context).mNumberReq,
+              Strings.of(context).validateText,
               textAlign: TextAlign.start,
               style: GoogleFonts.inter(
                   fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),

@@ -51,5 +51,6 @@
   "registerForSelf": "Are you Registering for self ?/మీరు స్వయంగా నమోదు చేసుకుంటున్నారా?",
   "instruction": "Instructions",
   "quizIns1": "This quiz consists of eight multiple-choice questions. Read each question carefully and select the option you believe is the correct answer.",
-  "quizIns2": "Click on the \"Next\" button to move to the next question. Once you have completed all the questions, click on the \"Submit\" button to view your score."
+  "quizIns2": "Click on the \"Next\" button to move to the next question. Once you have completed all the questions, click on the \"Submit\" button to view your score.",
+  "validateText":"Please enter the Voter Phone Number/ఓటర్ యొక్క ఫోన్ నంబర్ నమోదు చేయండి:"
 }
