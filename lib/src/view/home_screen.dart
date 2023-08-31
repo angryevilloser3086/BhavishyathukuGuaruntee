@@ -9,6 +9,7 @@ import '/src/utils/app_utils.dart';
 import '../model/reg_model.dart';
 import 'quiz/quiz_screen.dart';
 import 'registration/registration.dart';
+import 'registration/validation.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -74,23 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             InkWell(
                 onTap: () {
-                  Navigator.of(context).pushNamed(RegistratioScreen.route);
-                  //AppConstants.moveNextstl(context, const RegistratioScreen());
-                  // if (w < 450) {
-                  //   setState(() {
-                  //     scrollController.animateTo(
-                  //         MediaQuery.of(context).size.height * 1.5,
-                  //         duration: const Duration(seconds: 2),
-                  //         curve: Curves.bounceOut);
-                  //   });
-                  // } else {
-                  //   setState(() {
-                  //     scrollController.animateTo(
-                  //         MediaQuery.of(context).size.height * 2.5,
-                  //         duration: const Duration(seconds: 2),
-                  //         curve: Curves.bounceOut);
-                  //   });
-                  // }
+                  Navigator.of(context).pushNamed(ValidationScreen.route);
                 },
                 child: btn()),
 
@@ -164,14 +149,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: QuizScreen(
                   height: h < 450 ? h * 2 : h,
                 )),
-            // InkWell(
-            //   onTap: () {
-            //     setState(() {
-            //       downloadData();
-            //     });
-            //   },
-            //   child: btnDownload(),
-            // ),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  downloadData();
+                });
+              },
+              child: btnDownload(),
+            ),
           ],
         ),
       )),

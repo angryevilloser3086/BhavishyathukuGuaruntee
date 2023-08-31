@@ -1,8 +1,12 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -47,9 +51,18 @@ class _MyPDFState extends State<MyPDF> {
             child: Column(
               children: [
                 if (pdfvalue != null)
-                  InkWell(
-                    onTap: () async => downloadFile(pdfvalue!),
-                    child: startBtn(size, "Donwload"),
+                  Row(
+                    children: [
+                      if (!kIsWeb)
+                        InkWell(
+                          onTap: () async => saveFile(pdfvalue!),
+                          child: startBtn(size, "Donwload"),
+                        ),
+                      InkWell(
+                        onTap: () async => downloadFile(pdfvalue!),
+                        child: startBtn(size, kIsWeb ? "Download" : "Share"),
+                      ),
+                    ],
                   ),
                 AppConstants.h_10,
                 if (pdfvalue != null)
@@ -78,12 +91,65 @@ class _MyPDFState extends State<MyPDF> {
   }
 
   downloadFile(Uint8List files) async {
-    Printing.sharePdf(bytes: files, filename: '${widget.rModel.number}')
+    Printing.sharePdf(bytes: files, filename: '${widget.rModel.number}.pdf')
         .then((value) {
       AppConstants.showSnackBar(context, "Certificate downloaded Successfully");
       AppConstants.moveNextClearAll(context, const RegistratioScreen());
     });
   }
+
+  Future<void> saveFile(Uint8List files) async {
+    var file = File('');
+    
+    // Platform.isIOS comes from dart:io
+    if (Platform.isIOS) {
+      final dir = await getApplicationDocumentsDirectory();
+      file = File('${dir.path}/${widget.rModel.number}.pdf');
+      file
+          .writeAsBytes(files)
+          .then((value) => {
+                AppConstants.showSnackBar(context,
+                    "Your Certificate is saved successfully to ${value.path}")
+              })
+          .catchError((err) {
+        AppConstants.showSnackBar(context, "$err");
+      });
+    }
+    if (Platform.isAndroid) {
+      const downloadsFolderPath = '/storage/emulated/0/Download/';
+      Directory dir = Directory(downloadsFolderPath);
+      file = File('${dir.path}/${widget.rModel.number}.pdf');
+      file
+          .writeAsBytes(files)
+          .then((value) => {
+                AppConstants.showSnackBar(context,
+                    "Your Certificate is saved successfully to ${value.path}"),
+                AppConstants.moveNextClearAll(
+                    context, const RegistratioScreen())
+              })
+          .catchError((err) {
+        AppConstants.showSnackBar(context, "$err");
+        return null;
+      });
+    }
+  }
+
+  // saveAndroid() async {
+  //   final Directory? downloadsDir = await getExternalStorageDirectory();
+
+  //   final file = File("${downloadsDir!.path}/qr_code.pdf");
+  //   await file.writeAsBytes(await pdf.save()).then((value) {
+  //     final snackBar = SnackBar(
+  //       content: Text('PDF saved to Dir: ${value.path}'),
+  //       backgroundColor: (Colors.black12),
+  //       action: SnackBarAction(
+  //         label: 'dismiss',
+  //         onPressed: () {},
+  //       ),
+  //     );
+  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //   });
+  // }
 
   startBtn(Size size, String title) {
     return Container(
@@ -250,7 +316,7 @@ class _MyPDFState extends State<MyPDF> {
     final ByteData bytes = await rootBundle.load('assets/images/ic_bg_1.png');
     final Uint8List byteList = bytes.buffer.asUint8List();
     final ByteData headerbB =
-        await rootBundle.load('assets/images/ic_pdf_header.png');
+        await rootBundle.load('assets/images/ic_header_2.png');
     final Uint8List hByteList = headerbB.buffer.asUint8List();
     final ByteData subHead =
         await rootBundle.load('assets/images/ic_subhead_secondCard.png');
@@ -259,9 +325,6 @@ class _MyPDFState extends State<MyPDF> {
     final Uint8List grp343 = grp.buffer.asUint8List();
     //final font = await rootBundle.load("assets/open-sans.ttf");
     final fontG = await PdfGoogleFonts.anekTeluguRegular();
-//final ttf = pw.Font.ttf(font);
-    // final font = await rootBundle
-    //     .load('assets/fonts/Tiro_Telugu/TiroTelugu-Regular.ttf');
 
     return pw.Page(
         pageFormat: PdfPageFormat.standard.landscape,
@@ -301,32 +364,34 @@ class _MyPDFState extends State<MyPDF> {
                                   pw.SizedBox(height: 20),
                                   pw.Positioned(
                                     left: 80,
-                                    child:
-                                        detailText("${widget.rModel.totalFam}",fontG),
+                                    child: detailText(
+                                        "${widget.rModel.totalFam}", fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.totalFarmers}",fontG),
+                                        "${widget.rModel.totalFarmers}", fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.totalWomen}",fontG),
+                                        "${widget.rModel.totalWomen}", fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.totalStudents}",fontG),
+                                        "${widget.rModel.totalStudents}",
+                                        fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.totalUnEmployedYouth}",fontG),
+                                        "${widget.rModel.totalUnEmployedYouth}",
+                                        fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                 ]),
@@ -517,20 +582,20 @@ class _MyPDFState extends State<MyPDF> {
                                   pw.SizedBox(height: 55),
                                   pw.Positioned(
                                     left: 80,
-                                    child:
-                                        detailText("${widget.rModel.pincode}",fontG),
+                                    child: detailText(
+                                        "${widget.rModel.pincode}", fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.constituency}",fontG),
+                                        "${widget.rModel.constituency}", fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                   pw.Positioned(
                                     left: 80,
-                                    child:
-                                        detailText("${widget.rModel.number}",fontG),
+                                    child: detailText(
+                                        "${widget.rModel.number}", fontG),
                                   ),
                                   pw.SizedBox(height: 10),
                                 ]),
@@ -541,34 +606,37 @@ class _MyPDFState extends State<MyPDF> {
                                   pw.SizedBox(height: 20),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${widget.rModel.name}",fontG),
+                                    child: detailText(
+                                        "${widget.rModel.name}", fontG),
                                   ),
                                   pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
                                     child: detailText(
-                                        "${widget.rModel.fatherNamefield}",fontG),
+                                        "${widget.rModel.fatherNamefield}",
+                                        fontG),
                                   ),
                                   pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("${widget.rModel.age}",fontG),
+                                    child: detailText(
+                                        "${widget.rModel.age}", fontG),
                                   ),
                                   pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
-                                    child:
-                                        detailText("${widget.rModel.address}",fontG),
+                                    child: detailText(
+                                        "${widget.rModel.address}", fontG),
                                   ),
                                   pw.SizedBox(height: 5),
                                   pw.Positioned(
                                     left: 80,
-                                    child:
-                                        detailText("${widget.rModel.district}",fontG),
+                                    child: detailText(
+                                        "${widget.rModel.district}", fontG),
                                   ),
                                   pw.Positioned(
                                     left: 80,
-                                    child: detailText("#######",fontG),
+                                    child: detailText("#######", fontG),
                                   ),
                                   pw.SizedBox(height: 20),
                                 ]),
@@ -595,7 +663,7 @@ class _MyPDFState extends State<MyPDF> {
         });
   }
 
-  detailText(String value,pw.Font ttf) {
+  detailText(String value, pw.Font ttf) {
     return pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.start,
         crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -606,8 +674,8 @@ class _MyPDFState extends State<MyPDF> {
               child: pw.Align(
                   alignment: pw.Alignment.centerLeft,
                   child: pw.Text(value,
-                      style:  pw.TextStyle(font: (ttf),
-                          fontSize: 10, color: PdfColors.black))))
+                      style: pw.TextStyle(
+                          font: (ttf), fontSize: 10, color: PdfColors.black))))
         ]);
   }
 

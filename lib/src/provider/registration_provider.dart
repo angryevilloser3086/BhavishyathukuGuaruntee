@@ -13,7 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/src/utils/shared_pref.dart';
 import '../../src/network/api_request.dart';
-import '../../src/view/registration/qr.dart';
 import '../../src/utils/loading_indicator.dart';
 import '../model/checkbox.dart';
 import '../model/reg_model.dart';
@@ -71,8 +70,15 @@ class RegistrationProvider extends ChangeNotifier {
   List<TextEditingController> uEmpYouthController = [];
   List<TextEditingController> uEmpYouthAgeController = [];
   List<Widget> uEmpYouthFields = [];
+  String pc='';
+  String zone='';
 
   List<int> famMem = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+
+  setmobNum(String value){
+    phoneTextController = TextEditingController(text: value);
+    notifyListeners();
+  }
 
   setFamMembers(int value) {
     famMembers = value;
@@ -100,11 +106,11 @@ class RegistrationProvider extends ChangeNotifier {
   }
 
   setVDetails() async {
-    String name='';
-    String number='';
-    if(Platform.isAndroid||Platform.isIOS){
-     name  = await sharedPref.read("vname");
-     number = await sharedPref.read("vnum");
+    String name = '';
+    String number = '';
+    if (Platform.isAndroid || Platform.isIOS) {
+      name = await sharedPref.read("vname");
+      number = await sharedPref.read("vnum");
     }
     vName = TextEditingController(text: name);
     vNumController = TextEditingController(text: number);
@@ -245,6 +251,7 @@ class RegistrationProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+  
 
   List<String> sendList(String value) {
     if (value.isNotEmpty && value != 'Please Select your District') {
@@ -261,7 +268,8 @@ class RegistrationProvider extends ChangeNotifier {
         return bapatla;
       } else if (value == 'Chittoor/చిత్తూరు') {
         return chittoor;
-      } else if (value == 'Dr. B. R. Ambedkar Konaseema/డా.బి.ఆర్.అంబేద్కర్ కోనసీమ') {
+      } else if (value ==
+          'Dr. B. R. Ambedkar Konaseema/డా.బి.ఆర్.అంబేద్కర్ కోనసీమ') {
         return konaseema;
       } else if (value == 'East Godavari/తూర్పు గోదావరి') {
         return eastGodavari;
@@ -670,7 +678,7 @@ class RegistrationProvider extends ChangeNotifier {
     }
   }
 
-   List<String> districts = <String>[
+  List<String> districts = <String>[
     'Select the district',
     'Alluri Sitharama Raju/అల్లూరి సీతారామ రాజు',
     'Anakapalli/అనకాపల్లి',
@@ -971,24 +979,15 @@ class RegistrationProvider extends ChangeNotifier {
     'Parvathipuram/పార్వతీపురం',
     'Salur/సాలూరు'
   ];
-  // List<CheckBox> options = [
-  //   CheckBox(title: 'Rising essential commodity prices', checked: false),
-  //   CheckBox(title: 'Drinking water issues', checked: false),
-  //   CheckBox(title: 'Electricity prices', checked: false),
-  //   CheckBox(title: "Women's safety", checked: false),
-  //   CheckBox(title: "Employment opportunities", checked: false),
-  //   CheckBox(title: 'Financial empowerment', checked: false),
-  //   CheckBox(title: 'Maternity Benefits', checked: false),
-  //   CheckBox(title: 'Others', checked: false)
-  // ];
+
 
   List<String> jammalamaduguMadals = [
     "Peddamudium/పెద్దముడియం",
     "Mylavaram/మైలవరం",
     "Kondapuram/కొండాపురం",
     "Jammalamadugu/జమ్మలమడుగు"
-    "Muddanur/ముద్దనూరు"
-    "Yerraguntla/యర్రగుంట్ల"
+        "Muddanur/ముద్దనూరు"
+        "Yerraguntla/యర్రగుంట్ల"
   ];
 
   List<String> arakuMandals = [
@@ -1072,10 +1071,10 @@ class RegistrationProvider extends ChangeNotifier {
   ];
   List<String> narasannapetaMandals = [
     "please select the mandal",
-    "Saravakota/సారవకోట"
-    "Jalumuru/జలుమూరు"
-    "Narasannapeta/నరసన్నపేట"
-    "Polaki/పోలాకి"
+    "Saravakota/సారవకోట",
+    "Jalumuru/జలుమూరు",
+    "Narasannapeta/నరసన్నపేట",
+    "Polaki/పోలాకి",
   ];
   List<String> palasaMandals = [
     "please select the mandal",
@@ -1215,7 +1214,6 @@ class RegistrationProvider extends ChangeNotifier {
     "GVMC,WARD-23/జీవియంసి వార్డ్-23",
     "GVMC,WARD-28/జీవియంసి వార్డ్-28",
     "GVMC,WARD-11/జీవియంసి వార్డ్-11",
-
     "GVMC,WARD-12/జీవియంసి వార్డ్-12",
     "GVMC,WARD-13/జీవియంసి వార్డ్-13",
   ];
@@ -1271,7 +1269,7 @@ class RegistrationProvider extends ChangeNotifier {
     "GVMC,WARD-92/జీవియంసి వార్డ్-92",
     "GVMC,WARD-57/జీవియంసి వార్డ్-57",
   ];
- List<String> anakapalliMandals = [
+  List<String> anakapalliMandals = [
     "please select the mandal",
     "Anakapalle/అనకాపల్లి",
     "Kasimkota/కాసింకోట",
@@ -1294,7 +1292,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Munagapaka/మునగపాక",
     "Atchutapuram/అచ్యుతాపురం",
     "Yelamanchili/యలమంచిలి",
- "Rambilli/రాంబిల్లి"
+    "Rambilli/రాంబిల్లి"
   ];
   List<String> madugulaMandals = [
     "please select the mandal",
@@ -1318,7 +1316,7 @@ class RegistrationProvider extends ChangeNotifier {
     "Payakaraopeta/పాయకరావుపేట",
     "S.Rayavaram/ఎస్.రాయవరం"
   ];
-List<String> pendurthiMandals = [
+  List<String> pendurthiMandals = [
     "please select the mandal",
     "Sabbavaram/సబ్బవరం",
     "Pendurthi/పెందుర్తి",
@@ -1340,7 +1338,10 @@ List<String> pendurthiMandals = [
     "Kirlampudi/కిర్లంపూడి",
     "Gandepalle/గండేపల్లె",
   ];
-  List<String> kkdCityMandals = ["please select the mandal", "Kakinada Town/కాకినాడ టౌన్"];
+  List<String> kkdCityMandals = [
+    "please select the mandal",
+    "Kakinada Town/కాకినాడ టౌన్"
+  ];
   List<String> kkdRuralMandals = [
     "please select the mandal",
     "Kakinada (Rural)/కాకినాడ (రూరల్)",
@@ -1366,7 +1367,7 @@ List<String> pendurthiMandals = [
     "Sankhavaram/శంఖవరం",
     "Yeleswaram/ఏలేశ్వరం",
     "Prathipadu/ప్రత్తిపాడు",
- "Rowthulapudi/రౌతులపూడి",
+    "Rowthulapudi/రౌతులపూడి",
     "Yeleshwaram Town/ఏలేశ్వరం పట్టణం"
   ];
   List<String> tuniMandals = [
@@ -1390,7 +1391,7 @@ List<String> pendurthiMandals = [
     "Ambajipeta/అంబాజీపేట"
   ];
   List<String> kothapetaMandals = [
-  "please select the mandal",
+    "please select the mandal",
     "Atreyapuram/ఆత్రేయపురం",
     "Alamuru/ఆలమూరు",
     "Ravulapalem/రావులపాలెం",
@@ -1414,9 +1415,9 @@ List<String> pendurthiMandals = [
     "please select the mandal",
     "Kajuluru/కాజులూరు",
     "Ramachandrapuram/రామచంద్రపురం",
-  "K.gangavaram/కె.గంగవరం",
+    "K.gangavaram/కె.గంగవరం",
     "Ramachandrapuram Town/రామచంద్రపురం టౌన్"
-    ];
+  ];
 
   List<String> razoleMandals = [
     "please select the mandal",
@@ -1673,7 +1674,7 @@ List<String> pendurthiMandals = [
     "Pamidimukkala/పమిడిముక్కల",
     "Pamarru/పామర్రు",
     "Movva/మొవ్వ"
-    ];
+  ];
   List<String> pedanaMandals = [
     "please select the mandal",
     "Kruthivennu/కృతివెన్ను",
@@ -1702,6 +1703,7 @@ List<String> pendurthiMandals = [
     "Mylavaram/మైలవరం",
     "Reddigudem/రెడ్డిగూడెం",
     "G.Konduru/జి.కొండూరు",
+    "Vijayawada (Rural)/విజయవాడ (గ్రామీణ)",
     "Ibrahimpatnam/ఇబ్రహీంపట్నం",
     "Kondapalli/కొండపల్లి"
   ];
@@ -1721,8 +1723,14 @@ List<String> pendurthiMandals = [
     "Vissannapet/విస్సన్నపేట్",
     "Tiruvuru Town/తిరువూరు టౌన్"
   ];
-  List<String> gunturEastMandals = ["please select the mandal", "Guntur East/గుంటూరు తూర్పు"];
-  List<String> gunturWestMandals = ["please select the mandal", "Guntur West/గుంటూరు వెస్ట్"];
+  List<String> gunturEastMandals = [
+    "please select the mandal",
+    "Guntur East/గుంటూరు తూర్పు"
+  ];
+  List<String> gunturWestMandals = [
+    "please select the mandal",
+    "Guntur West/గుంటూరు వెస్ట్"
+  ];
   List<String> mangalagiriMandals = [
     "please select the mandal",
     "Tadepalle/తాడేపల్లి",
@@ -1869,7 +1877,7 @@ List<String> pendurthiMandals = [
     "Kollur/కొల్లూర్",
     "Bhattiprolu/భట్టిప్రోలు"
   ];
- List<String> darsiMandals = [
+  List<String> darsiMandals = [
     "please select the mandal",
     "Donakonda/దొనకొండ",
     "Kurichedu/కురిచేడు",
@@ -2022,7 +2030,7 @@ List<String> pendurthiMandals = [
   List<String> pattikondaMandals = [
     "please select the mandal",
     "Krishnagiri/కృష్ణగిరి"
-    "Veldurthi/వెల్దుర్తి",
+        "Veldurthi/వెల్దుర్తి",
     "Pattikonda/పట్టికొండ",
     "Maddikera (East)/మద్దికెర (తూర్పు)",
     "Tuggali/తుగ్గలి",
@@ -2436,7 +2444,19 @@ List<String> pendurthiMandals = [
     "Bangarupalem/బంగారుపాలెం",
     "Yadamarri/యాడమర్రి"
   ];
-  
+
+  // String setPC(String value) {
+  //   if (value == "Anakapalli" ||
+  //       value == "Chodavaram" ||
+  //       value == "Madugula" ||
+  //       value == "Narsipatnam" ||
+  //       value == "Payakaraopeta" ||
+  //       value == "Pendurthi" ||
+  //       value == "Elamanchili") {
+  //         return "Anakapalli";
+  //       }
+  // }
+
   HashMap<String, CheckBox> optionSelected = HashMap();
 
   String verificatioID = '';
@@ -2578,17 +2598,15 @@ List<String> pendurthiMandals = [
   }
 
   bool getDetails(BuildContext context, String id) {
-    
     bool checked = false;
     _db.collection('users').where("id", isEqualTo: id).get().then((value) {
       QuerySnapshot data = value;
-      
+
       checked = false;
       notifyListeners();
     }).catchError((err) {
       checked = true;
       notifyListeners();
-     
     });
     return checked;
   }
@@ -2612,7 +2630,7 @@ List<String> pendurthiMandals = [
         if (uniqueCode.text == otpTextController.text) {
           showLoader = false;
           showSubmit = true;
-          isVerified =true;
+          isVerified = true;
           Navigator.of(context, rootNavigator: true).pop();
           AppConstants.showSnackBar(context, "Verifed Successfully");
         } else {

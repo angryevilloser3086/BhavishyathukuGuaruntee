@@ -9,7 +9,8 @@ import '../../provider/registration_provider.dart';
 
 class RegistratioScreen extends StatelessWidget {
   static const String route = '/register';
-  const RegistratioScreen({super.key});
+  final String? mob;
+  const RegistratioScreen({super.key,this.mob});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class RegistratioScreen extends StatelessWidget {
             padding: AppConstants.all_10,
             child: Consumer<RegistrationProvider>(
                 builder: (context, registrationProvider, child) {
+                  
               return Form(
                 key: registrationProvider.formKey,
                 child: Column(
@@ -394,6 +396,11 @@ class RegistratioScreen extends StatelessWidget {
 
   verifyNumber(
       BuildContext context, RegistrationProvider registrationProvider) {
+        if(mob!=null&&mob!.isNotEmpty){
+                    if(registrationProvider.phoneTextController.text.isEmpty){
+                    registrationProvider.setmobNum(mob!);
+                  }
+                  }
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -467,6 +474,8 @@ class RegistratioScreen extends StatelessWidget {
           }),
         ),
         AppConstants.h_5,
+        
+        
         if (!registrationProvider.enableOTPtext)
           getOtpBtn(context, registrationProvider),
         AppConstants.h_5,
