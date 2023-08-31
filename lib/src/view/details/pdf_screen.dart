@@ -15,8 +15,9 @@ import '../../model/reg_model.dart';
 import '../../utils/app_utils.dart';
 
 class MyPDF extends StatefulWidget {
-  const MyPDF({super.key, required this.rModel});
+  const MyPDF({super.key, required this.rModel, required this.data});
   final RegistrationModel rModel;
+  final Uint8List data;
 
   @override
   State<MyPDF> createState() => _MyPDFState();
@@ -77,7 +78,7 @@ class _MyPDFState extends State<MyPDF> {
                         canDebug: false,
                         canChangeOrientation: false,
                         canChangePageFormat: false,
-                        build: (_) => pdfvalue!),
+                        build: (_) => widget.data),
                   ),
                 if (pdfvalue == null) const CircularProgressIndicator(),
 
@@ -153,8 +154,8 @@ class _MyPDFState extends State<MyPDF> {
 
   startBtn(Size size, String title) {
     return Container(
-      width: size.width * 0.17,
-      height: size.height * 0.04,
+      width: 120,
+      height: 60,
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(25)),
           color: AppConstants.appredColor),
