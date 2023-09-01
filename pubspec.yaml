@@ -28,6 +28,7 @@ dependencies:
   http:
   printing: ^5.11.0
   syncfusion_flutter_pdf: ^22.2.10
+  geolocator: ^10.0.0
 
 dev_dependencies:
   flutter_test:
