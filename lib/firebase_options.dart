@@ -56,12 +56,12 @@ class DefaultFirebaseOptions {
       measurementId: "G-D0EWBCPWYJ");
 
   static const FirebaseOptions android = FirebaseOptions(
-      apiKey: "AIzaSyD-H_A7PMb0O8FjbXNpHAS074dl7R8rdRI",
+      apiKey: "AIzaSyCIgYVKNfigOTGA-y4JKY6b4FrZjjiJ9gQ",
       authDomain: "bgregistration-campaign.firebaseapp.com",
       projectId: "bgregistration-campaign",
       storageBucket: "bgregistration-campaign.appspot.com",
       messagingSenderId: "269311589693",
-      appId: "1:269311589693:web:cf97eaa62feb637cfe1954",
+      appId: "1:269311589693:android:2888c2e5286f73d0fe1954",
       measurementId: "G-D0EWBCPWYJ");
 
   static const FirebaseOptions ios = FirebaseOptions(

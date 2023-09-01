@@ -3678,7 +3678,8 @@ class RegistrationProvider extends ChangeNotifier {
 // 	"noOfUnEmployed" : 1
 // }
 
-    apiRequest.sendDataMaster(data).then((value) {
+   Future.delayed(Duration(seconds: 15),(){
+     apiRequest.sendDataMaster(data).then((value) {
       AppConstants.showSnackBar(
           context, "Thank you for enrolling into Bhavishyathuku guarantee");
       apiRequest
@@ -3694,6 +3695,7 @@ class RegistrationProvider extends ChangeNotifier {
       AppConstants.showSnackBar(context, "$err");
       notifyListeners();
     });
+   });
   }
 
   setSelectedRadio(int? val) {
