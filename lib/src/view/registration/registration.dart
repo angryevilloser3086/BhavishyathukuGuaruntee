@@ -586,7 +586,7 @@ class RegistratioScreen extends StatelessWidget {
           if (provider.second == 0)
            InkWell(onTap: (){
             provider.verifyPhone(context,
-                  "${provider.cc}${provider.phoneTextController.text}");
+                  "${provider.cc}${provider.phoneTextController.text}",true);
            },child:  resendButton(MediaQuery.of(context).size, "Regenerate UID"),),
             
         ],
@@ -622,7 +622,7 @@ class RegistratioScreen extends StatelessWidget {
             //registrationProvider.sendToPdf(context);
             if (registrationProvider.phoneTextController.text.length == 10) {
               registrationProvider.verifyPhone(context,
-                  "${registrationProvider.cc}${registrationProvider.phoneTextController.text}");
+                  "${registrationProvider.cc}${registrationProvider.phoneTextController.text}",false);
             } else {
               AppConstants.showSnackBar(context, "please enter valid Number");
             }

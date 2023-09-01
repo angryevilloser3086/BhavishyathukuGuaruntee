@@ -164,7 +164,7 @@ class RegistrationProvider extends ChangeNotifier {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Please enter the person details below :",
+                "Please enter the person details below \nదయచేసి క్రింద ఉన్న వ్యక్తి వివరాలను నమోదు చేయండి:",
                 style: GoogleFonts.inter(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
@@ -186,7 +186,7 @@ class RegistrationProvider extends ChangeNotifier {
                 decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    hintText: "Enter Name",
+                    hintText: "పేరు నమోదు చేయండి",
                     counterText: "",
                     hintStyle: GoogleFonts.inter(
                         fontSize: 16,
@@ -214,14 +214,14 @@ class RegistrationProvider extends ChangeNotifier {
                 cursorColor: Colors.grey,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Please Enter the Age";
+                    return "దయచేసి వయస్సుని నమోదు చేయండి";
                   }
                   return null;
                 },
                 decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    hintText: "Enter Age",
+                    hintText: "దయచేసి వయస్సుని నమోదు చేయండి",
                     counterText: "",
                     hintStyle: GoogleFonts.inter(
                         fontSize: 16,
@@ -1136,8 +1136,7 @@ class RegistrationProvider extends ChangeNotifier {
         value == "Visakhapatnam West/విశాఖపట్నం పడమర" ||
         value == 'Srungavarapukota/శృంగవరపుకోట') {
       return "Visakhapatnam";
-    }
-    else if (value == "Rajahmundry/రాజమండ్రి" ||
+    } else if (value == "Rajahmundry/రాజమండ్రి" ||
         value == "Rajamundry City/రాజమండ్రి సిటీ" ||
         value == "Rajahmundry Rural/రాజమండ్రి గ్రామీణ" ||
         value == "Rajanagaram/రాజానగరం" ||
@@ -3129,10 +3128,21 @@ class RegistrationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  verifyPhone(BuildContext context, String phone) async {
+  verifyPhone(BuildContext context, String phone, bool resend) async {
     // showAlert(context, "భవిష్యత్తుకు గ్యారెంటీ... ఇది చంద్రబాబు గ్యారెంటీ తెలుగుదేశం పార్టీ", "నమస్కారం K SIVA.name},\nమీ భవిష్యత్తుకు గ్యారెంటీ నమోదు సంఖ్య : ${uniqueCode.text} \nభవిష్యత్తుకు గ్యారెంటీ కార్యక్రమంలో మీ పేరు నమోదు చేసుకున్నందుకు కృతజ్ఞతలు.");
-    if (formKey.currentState!.validate()) {
-      //DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
+    if (!resend) {
+      if (formKey.currentState!.validate()) {
+        //DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
+        showLoaderOTP = true;
+        String id = randomIdGenerator();
+        checkID(context, id);
+        if (uniqueCode.text.isNotEmpty) {
+          //checkNumber(context, phone, id);
+          sendSMS(context, phone, id);
+        }
+        notifyListeners();
+      }
+    } else {
       showLoaderOTP = true;
       String id = randomIdGenerator();
       checkID(context, id);
@@ -3596,7 +3606,7 @@ class RegistrationProvider extends ChangeNotifier {
     Map<String, dynamic> data = {
       "name": rmodel.name,
       "age": rmodel.age,
-      "gender":rmodel.gender!.substring(0,1),
+      "gender": rmodel.gender!.substring(0, 1),
       "mobileNo": rmodel.number,
       "constituencyId": setAcID(rmodel.constituency!),
       "pinCode": rmodel.pincode,
@@ -3616,7 +3626,7 @@ class RegistrationProvider extends ChangeNotifier {
 // 	"noOfChildren" : 2,
 // 	"noOfWomen" : 1,
 // 	"noOfUnEmployed" : 1
-// }    
+// }
 
     apiRequest.sendDataMaster(data).then((value) {
       AppConstants.showSnackBar(
