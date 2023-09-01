@@ -3596,14 +3596,28 @@ class RegistrationProvider extends ChangeNotifier {
     Map<String, dynamic> data = {
       "name": rmodel.name,
       "age": rmodel.age,
+      "gender":rmodel.gender!.substring(0,1),
       "mobileNo": rmodel.number,
-      "constitunecyId": setAcID(rmodel.constituency!),
-      "pincode": rmodel.pincode,
+      "constituencyId": setAcID(rmodel.constituency!),
+      "pinCode": rmodel.pincode,
       "address": rmodel.address,
       "noOfChildren": rmodel.totalStudents,
       "noOfWomen": rmodel.totalWomen,
       "noOfUnEmployed": rmodel.totalUnEmployedYouth
     };
+//    {
+// 	"name" : "Ramu",
+// 	"age" : 35,
+// 	"gender" : "M",
+// 	"mobileNo" : "9988776655",
+// 	"constituencyId" : 206,
+// 	"pinCode" : "512345",
+// 	"address" : "Mangalagiri",
+// 	"noOfChildren" : 2,
+// 	"noOfWomen" : 1,
+// 	"noOfUnEmployed" : 1
+// }    
+
     apiRequest.sendDataMaster(data).then((value) {
       AppConstants.showSnackBar(
           context, "Thank you for enrolling into Bhavishyathuku guarantee");
