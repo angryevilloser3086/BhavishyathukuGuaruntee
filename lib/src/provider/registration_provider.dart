@@ -249,6 +249,7 @@ class RegistrationProvider extends ChangeNotifier {
     unEMployedYouth = value;
     updatePersonDetails(context, unEMployedYouth, uEmpYouthController,
         uEmpYouthAgeController, uEmpYouthFields);
+        //print(value);
     notifyListeners();
   }
 
