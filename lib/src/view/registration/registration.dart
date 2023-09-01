@@ -1283,9 +1283,9 @@ class RegistratioScreen extends StatelessWidget {
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
                 value: registrationProvider.womenAbv == 0
-                    ? registrationProvider.farmersNum(registrationProvider.famMembers).first
+                    ? registrationProvider.womenNum(registrationProvider.famMembers,registrationProvider.farmers).first
                     : registrationProvider.womenAbv,
-                items: registrationProvider.farmersNum(registrationProvider.famMembers)
+                items: registrationProvider.womenNum(registrationProvider.famMembers,registrationProvider.farmers)
                     .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,
@@ -1332,9 +1332,9 @@ class RegistratioScreen extends StatelessWidget {
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
                 value:registrationProvider.students == 0
-                    ? registrationProvider.farmersNum(registrationProvider.famMembers).first
+                    ? registrationProvider.studentNum(registrationProvider.famMembers,registrationProvider.farmers, registrationProvider.womenAbv).first
                     : registrationProvider.students,
-                items: registrationProvider.farmersNum(registrationProvider.famMembers)
+                items: registrationProvider.studentNum(registrationProvider.famMembers,registrationProvider.farmers, registrationProvider.womenAbv)
                     .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,
@@ -1381,9 +1381,9 @@ class RegistratioScreen extends StatelessWidget {
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
                 value: registrationProvider.unEMployedYouth == 0
-                    ? registrationProvider.farmersNum(registrationProvider.famMembers).first
+                    ? registrationProvider.youthNum(registrationProvider.famMembers,registrationProvider.farmers,registrationProvider.womenAbv,registrationProvider.students).first
                     : registrationProvider.unEMployedYouth,
-                items: registrationProvider.farmersNum(registrationProvider.famMembers)
+                items: registrationProvider.youthNum(registrationProvider.famMembers,registrationProvider.farmers,registrationProvider.womenAbv,registrationProvider.students)
                     .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,

@@ -79,6 +79,7 @@ class RegistrationProvider extends ChangeNotifier {
   List<Widget> uEmpYouthFields = [];
   String pc = '';
   String zone = '';
+  int leftOver=0;
 
   List<int> famMem = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
@@ -86,6 +87,42 @@ class RegistrationProvider extends ChangeNotifier {
     List<int> lNum = [];
     for (int i = 0; i <= framers; i++) {
       lNum.add(i);
+    }
+
+    return lNum;
+  }
+  List<int> womenNum(int fam,int farme) {
+    List<int> lNum = [];
+    int total= fam - farme;
+    if(total>0)
+    {for (int i = 0; i <= total; i++) {
+      lNum.add(i);
+    }}else{
+      lNum.add(0);
+    }
+
+    return lNum;
+  }
+  List<int> studentNum(int fam,int farmer, int women) {
+    List<int> lNum = [];
+    int total = fam-(farmer+women);
+    if(total>0)
+   { for (int i = 0; i <= total; i++) {
+      lNum.add(i);
+    }}else{
+      lNum.add(0);
+    }
+
+    return lNum;
+  }
+  List<int> youthNum(int fam,int farmer, int women,int student) {
+    List<int> lNum = [];
+    int total = fam-(farmer+women+student);
+    if(total>0)
+   { for (int i = 0; i <= total; i++) {
+      lNum.add(i);
+    }}else{
+      lNum.add(0);
     }
 
     return lNum;
@@ -3092,6 +3129,7 @@ class RegistrationProvider extends ChangeNotifier {
 
   setRoles(String value) {
     //formKey.currentState!.validate();
+    print(value);
     if (value == "Select AC Name") {
       selectedConstituency = '';
       return "Please select your role";
@@ -3099,7 +3137,7 @@ class RegistrationProvider extends ChangeNotifier {
       selectedConstituency = value;
       pc = setPC(value);
       zone = setZone(pc);
-      print(pc);
+      print("pc:$pc");
       sMandals = '';
     }
     notifyListeners();
@@ -3131,9 +3169,12 @@ class RegistrationProvider extends ChangeNotifier {
 
   verifyPhone(BuildContext context, String phone, bool resend) async {
     // showAlert(context, "భవిష్యత్తుకు గ్యారెంటీ... ఇది చంద్రబాబు గ్యారెంటీ తెలుగుదేశం పార్టీ", "నమస్కారం K SIVA.name},\nమీ భవిష్యత్తుకు గ్యారెంటీ నమోదు సంఖ్య : ${uniqueCode.text} \nభవిష్యత్తుకు గ్యారెంటీ కార్యక్రమంలో మీ పేరు నమోదు చేసుకున్నందుకు కృతజ్ఞతలు.");
+    
+    print("famMembers:$famMembers");
     if (!resend) {
       if (formKey.currentState!.validate()) {
-        //DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
+      if((sDistrcts.isNotEmpty||sMandals.isNotEmpty||selectedConstituency.isNotEmpty)&&famMembers>0){
+          //DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
         showLoaderOTP = true;
         String id = randomIdGenerator();
         checkID(context, id);
@@ -3141,15 +3182,23 @@ class RegistrationProvider extends ChangeNotifier {
           //checkNumber(context, phone, id);
           sendSMS(context, phone, id);
         }
+      }else{
+        AppConstants.showSnackBar(context, "Please select the district, AC, and mandal, also the family members");
+      }
         notifyListeners();
       }
     } else {
-      showLoaderOTP = true;
-      String id = randomIdGenerator();
-      checkID(context, id);
-      if (uniqueCode.text.isNotEmpty) {
-        //checkNumber(context, phone, id);
-        sendSMS(context, phone, id);
+      if((sDistrcts.isNotEmpty||sMandals.isNotEmpty||selectedConstituency.isNotEmpty)&&famMembers>0){
+          //DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
+        showLoaderOTP = true;
+        String id = randomIdGenerator();
+        checkID(context, id);
+        if (uniqueCode.text.isNotEmpty) {
+          //checkNumber(context, phone, id);
+          sendSMS(context, phone, id);
+        }
+      }else{
+        AppConstants.showSnackBar(context, "Please select the district, AC, and mandal");
       }
       notifyListeners();
     }
