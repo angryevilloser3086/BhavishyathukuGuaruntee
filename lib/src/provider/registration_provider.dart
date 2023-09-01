@@ -79,7 +79,7 @@ class RegistrationProvider extends ChangeNotifier {
   List<Widget> uEmpYouthFields = [];
   String pc = '';
   String zone = '';
-  int leftOver=0;
+  int leftOver = 0;
 
   List<int> famMem = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
@@ -91,37 +91,43 @@ class RegistrationProvider extends ChangeNotifier {
 
     return lNum;
   }
-  List<int> womenNum(int fam,int farme) {
+
+  List<int> womenNum(int fam, int farme) {
     List<int> lNum = [];
-    int total= fam - farme;
-    if(total>0)
-    {for (int i = 0; i <= total; i++) {
-      lNum.add(i);
-    }}else{
+    int total = fam - farme;
+    if (total > 0) {
+      for (int i = 0; i <= total; i++) {
+        lNum.add(i);
+      }
+    } else {
       lNum.add(0);
     }
 
     return lNum;
   }
-  List<int> studentNum(int fam,int farmer, int women) {
+
+  List<int> studentNum(int fam, int farmer, int women) {
     List<int> lNum = [];
-    int total = fam-(farmer+women);
-    if(total>0)
-   { for (int i = 0; i <= total; i++) {
-      lNum.add(i);
-    }}else{
+    int total = fam - (farmer + women);
+    if (total > 0) {
+      for (int i = 0; i <= total; i++) {
+        lNum.add(i);
+      }
+    } else {
       lNum.add(0);
     }
 
     return lNum;
   }
-  List<int> youthNum(int fam,int farmer, int women,int student) {
+
+  List<int> youthNum(int fam, int farmer, int women, int student) {
     List<int> lNum = [];
-    int total = fam-(farmer+women+student);
-    if(total>0)
-   { for (int i = 0; i <= total; i++) {
-      lNum.add(i);
-    }}else{
+    int total = fam - (farmer + women + student);
+    if (total > 0) {
+      for (int i = 0; i <= total; i++) {
+        lNum.add(i);
+      }
+    } else {
       lNum.add(0);
     }
 
@@ -286,7 +292,7 @@ class RegistrationProvider extends ChangeNotifier {
     unEMployedYouth = value;
     updatePersonDetails(context, unEMployedYouth, uEmpYouthController,
         uEmpYouthAgeController, uEmpYouthFields);
-        //print(value);
+    //print(value);
     notifyListeners();
   }
 
@@ -1825,6 +1831,12 @@ class RegistrationProvider extends ChangeNotifier {
     "please select the mandal",
     "Vizianagaram/విజయనగరం",
     "Vizianagaram Town/విజయనగరం పట్టణం",
+  ];
+  List<String> bhimiliMandals = [
+    "please select the mandal",
+    "Anandapuram/ఆనందపురం",
+    "Padmanabham/పద్మనాభం",
+    "Bheemunipatnam/భీమునిపట్నం",
     "GVMC,WARD-1/జీవియంసి వార్డ్-1",
     "GVMC,WARD-2/జీవియంసి వార్డ్-2",
     "GVMC,WARD-3/జీవియంసి వార్డ్-3",
@@ -1834,12 +1846,6 @@ class RegistrationProvider extends ChangeNotifier {
     "GVMC,WARD-4/జీవియంసి వార్డ్-4",
     "GVMC,WARD-5/జీవియంసి వార్డ్-4",
     "GVMC,WARD-98/జీవియంసి వార్డ్-98",
-  ];
-  List<String> bhimiliMandals = [
-    "please select the mandal",
-    "Anandapuram/ఆనందపురం",
-    "Padmanabham/పద్మనాభం",
-    "Bheemunipatnam/భీమునిపట్నం",
   ];
   List<String> gajuwakaMandals = [
     "please select the mandal",
@@ -3169,27 +3175,34 @@ class RegistrationProvider extends ChangeNotifier {
 
   verifyPhone(BuildContext context, String phone, bool resend) async {
     // showAlert(context, "భవిష్యత్తుకు గ్యారెంటీ... ఇది చంద్రబాబు గ్యారెంటీ తెలుగుదేశం పార్టీ", "నమస్కారం K SIVA.name},\nమీ భవిష్యత్తుకు గ్యారెంటీ నమోదు సంఖ్య : ${uniqueCode.text} \nభవిష్యత్తుకు గ్యారెంటీ కార్యక్రమంలో మీ పేరు నమోదు చేసుకున్నందుకు కృతజ్ఞతలు.");
-    
+
     print("famMembers:$famMembers");
     if (!resend) {
       if (formKey.currentState!.validate()) {
-      if((sDistrcts.isNotEmpty||sMandals.isNotEmpty||selectedConstituency.isNotEmpty)&&famMembers>0){
+        if ((sDistrcts.isNotEmpty ||
+                sMandals.isNotEmpty ||
+                selectedConstituency.isNotEmpty) &&
+            famMembers > 0) {
           //DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
-        showLoaderOTP = true;
-        String id = randomIdGenerator();
-        checkID(context, id);
-        if (uniqueCode.text.isNotEmpty) {
-          //checkNumber(context, phone, id);
-          sendSMS(context, phone, id);
+          showLoaderOTP = true;
+          String id = randomIdGenerator();
+          checkID(context, id);
+          if (uniqueCode.text.isNotEmpty) {
+            //checkNumber(context, phone, id);
+            sendSMS(context, phone, id);
+          }
+        } else {
+          AppConstants.showSnackBar(context,
+              "Please select the district, AC, and mandal, also the family members");
         }
-      }else{
-        AppConstants.showSnackBar(context, "Please select the district, AC, and mandal, also the family members");
-      }
         notifyListeners();
       }
     } else {
-      if((sDistrcts.isNotEmpty||sMandals.isNotEmpty||selectedConstituency.isNotEmpty)&&famMembers>0){
-          //DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
+      if ((sDistrcts.isNotEmpty ||
+              sMandals.isNotEmpty ||
+              selectedConstituency.isNotEmpty) &&
+          famMembers > 0) {
+        //DialogBuilder(context).showLoadingIndicator("Please wait while loading!");
         showLoaderOTP = true;
         String id = randomIdGenerator();
         checkID(context, id);
@@ -3197,8 +3210,9 @@ class RegistrationProvider extends ChangeNotifier {
           //checkNumber(context, phone, id);
           sendSMS(context, phone, id);
         }
-      }else{
-        AppConstants.showSnackBar(context, "Please select the district, AC, and mandal");
+      } else {
+        AppConstants.showSnackBar(
+            context, "Please select the district, AC, and mandal");
       }
       notifyListeners();
     }
@@ -3678,24 +3692,24 @@ class RegistrationProvider extends ChangeNotifier {
 // 	"noOfUnEmployed" : 1
 // }
 
-   Future.delayed(Duration(seconds: 15),(){
-     apiRequest.sendDataMaster(data).then((value) {
-      AppConstants.showSnackBar(
-          context, "Thank you for enrolling into Bhavishyathuku guarantee");
-      apiRequest
-          .sendFinalMsg("$cc${phoneTextController.text}", uniqueCode.text)
-          .then((value) {
-        AppConstants.moveNextClearAll(context, ValidationScreen());
+    Future.delayed(Duration(seconds: 15), () {
+      apiRequest.sendDataMaster(data).then((value) {
+        AppConstants.showSnackBar(
+            context, "Thank you for enrolling into Bhavishyathuku guarantee");
+        apiRequest
+            .sendFinalMsg("$cc${phoneTextController.text}", uniqueCode.text)
+            .then((value) {
+          AppConstants.moveNextClearAll(context, ValidationScreen());
+        }).catchError((err) {
+          AppConstants.showSnackBar(context, "Registration Successfully done");
+          AppConstants.showSnackBar(context, "$err");
+        });
+        notifyListeners();
       }).catchError((err) {
-        AppConstants.showSnackBar(context, "Registration Successfully done");
         AppConstants.showSnackBar(context, "$err");
+        notifyListeners();
       });
-      notifyListeners();
-    }).catchError((err) {
-      AppConstants.showSnackBar(context, "$err");
-      notifyListeners();
     });
-   });
   }
 
   setSelectedRadio(int? val) {
