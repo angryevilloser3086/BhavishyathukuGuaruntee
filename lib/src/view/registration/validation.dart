@@ -122,7 +122,9 @@ class ValidationScreen extends StatelessWidget {
                builder: (context,provider,child) {
                  return InkWell(
                       onTap: () {
-                       provider.getDetails(context, provider.phoneTextController.text);
+                      if(provider.phoneTextController.text.isNotEmpty){
+                         provider.getDetails(context, provider.phoneTextController.text);
+                      }
                       },
                       child: btn());
                }

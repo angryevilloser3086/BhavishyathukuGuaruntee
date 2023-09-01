@@ -17,7 +17,7 @@ class ApiRequest {
 
   static const String baseUrlNumberVal =
       "https://www.mypartydashboard.com/BSA/WebService/FTRGRT/isMobileNoRegisteredForEnrollment";
-
+  static const String url = 'https://projectkv.com/bot_api/v1/bgEnroll';
   Future<String> sendUID(String number, String uID) async {
     try {
       // var res = await client
@@ -92,7 +92,7 @@ class ApiRequest {
 
   Future<bool> sendDataMaster(Map<String, dynamic> data) async {
     try {
-      var res = await client.post(Uri.parse(baseUrlNumberVal),
+      var res = await client.post(Uri.parse(url),
           body: jsonEncode(data),
           headers: {
             "Content-Type": "application/json;charset=UTF-8",
