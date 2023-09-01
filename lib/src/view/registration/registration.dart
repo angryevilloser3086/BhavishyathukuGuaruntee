@@ -1283,9 +1283,9 @@ class RegistratioScreen extends StatelessWidget {
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
                 value: registrationProvider.womenAbv == 0
-                    ? registrationProvider.famMem.first
+                    ? registrationProvider.farmersNum(registrationProvider.famMembers).first
                     : registrationProvider.womenAbv,
-                items: registrationProvider.famMem
+                items: registrationProvider.farmersNum(registrationProvider.famMembers)
                     .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,
@@ -1331,10 +1331,10 @@ class RegistratioScreen extends StatelessWidget {
                 iconDisabledColor: Colors.black,
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
-                value: registrationProvider.students == 0
-                    ? registrationProvider.famMem.first
+                value:registrationProvider.students == 0
+                    ? registrationProvider.farmersNum(registrationProvider.famMembers).first
                     : registrationProvider.students,
-                items: registrationProvider.famMem
+                items: registrationProvider.farmersNum(registrationProvider.famMembers)
                     .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,
@@ -1381,9 +1381,9 @@ class RegistratioScreen extends StatelessWidget {
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
                 value: registrationProvider.unEMployedYouth == 0
-                    ? registrationProvider.famMem.first
+                    ? registrationProvider.farmersNum(registrationProvider.famMembers).first
                     : registrationProvider.unEMployedYouth,
-                items: registrationProvider.famMem
+                items: registrationProvider.farmersNum(registrationProvider.famMembers)
                     .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,
