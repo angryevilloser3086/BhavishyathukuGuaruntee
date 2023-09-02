@@ -8,6 +8,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
+import 'package:vregistration/src/view/details/details_screen.dart';
 import 'package:vregistration/src/view/details/pdf_screen.dart';
 import '../utils/svg_Image.dart';
 import '../utils/svg_pg2.dart';
@@ -79,13 +80,26 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             AppConstants.h_5,
 
-            InkWell(
-                onTap: () async {
-                  Navigator.pushNamed(context,ValidationScreen.route );
-                  // AppConstants.moveNextstl(
-                  //     context, MyPDF(data: await makePDF(context)));
-                },
-                child: btn()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                    onTap: () async {
+                      Navigator.pushNamed(context, ValidationScreen.route);
+                      // AppConstants.moveNextstl(
+                      //     context, MyPDF(data: await makePDF(context)));
+                    },
+                    child: btn("Register")),
+                    AppConstants.w_5,
+                InkWell(
+                    onTap: () async {
+                      Navigator.pushNamed(context, DetailsScreen.route);
+                      // AppConstants.moveNextstl(
+                      //     context, MyPDF(data: await makePDF(context)));
+                    },
+                    child: btn("Already Register?")),
+              ],
+            ),
 
             CarouselSlider(
               items: [
@@ -128,14 +142,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            // const SizedBox.expand(child: TestimonialVideo(),),
-            // SizedBox(
-            //   width: w,
-            //   height: h,
-            //   child: TestimonialVideo(
-            //     height:  h,
-            //   ),
-            // ),
             SizedBox(
                 width: w,
                 child: Image.asset(
@@ -163,14 +169,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  btn() {
+  btn(String title) {
     return Container(
       width: 150,
       height: 50,
       decoration: const BoxDecoration(
           color: Colors.red,
           borderRadius: BorderRadius.all(Radius.circular(30))),
-      child: const Center(child: Text("Register")),
+      child:  Center(child: Text(title)),
     );
   }
 
@@ -209,7 +215,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ignoreMargins: true,
               child: pw.Container(
                   decoration: const pw.BoxDecoration(
-                      image: pw.DecorationSvgImage(svg: pg2SVG,fit: pw.BoxFit.contain)))); // Center
+                      image: pw.DecorationSvgImage(
+                          svg: pg2SVG, fit: pw.BoxFit.contain)))); // Center
         }));
     // pdf.addPage(await createPageOne(rModel));
     // pdf.addPage(await createPageTwo(rModel));
