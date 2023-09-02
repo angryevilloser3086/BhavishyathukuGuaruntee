@@ -91,13 +91,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: btn("Register")),
                     AppConstants.w_5,
-                InkWell(
-                    onTap: () async {
-                      Navigator.pushNamed(context, DetailsScreen.route);
-                      // AppConstants.moveNextstl(
-                      //     context, MyPDF(data: await makePDF(context)));
-                    },
-                    child: btn("Already Register?")),
+                // InkWell(
+                //     onTap: () async {
+                //       Navigator.pushNamed(context, DetailsScreen.route);
+                //       // AppConstants.moveNextstl(
+                //       //     context, MyPDF(data: await makePDF(context)));
+                //     },
+                //     child: btn("Already Register?")
               ],
             ),
 
