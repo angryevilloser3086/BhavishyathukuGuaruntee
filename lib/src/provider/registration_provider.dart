@@ -3697,9 +3697,9 @@ class RegistrationProvider extends ChangeNotifier {
         AppConstants.showSnackBar(
             context, "Thank you for enrolling into Bhavishyathuku guarantee");
         apiRequest
-            .sendFinalMsg("$cc${phoneTextController.text}", uniqueCode.text)
+            .sendFinalMsg(phoneTextController.text, uniqueCode.text)
             .then((value) {
-          AppConstants.moveNextClearAll(context, ValidationScreen());
+          AppConstants.moveNextClearAll(context,const ValidationScreen());
         }).catchError((err) {
           AppConstants.showSnackBar(context, "Registration Successfully done");
           AppConstants.showSnackBar(context, "$err");
