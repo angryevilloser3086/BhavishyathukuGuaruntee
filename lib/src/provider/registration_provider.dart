@@ -1088,7 +1088,7 @@ class RegistrationProvider extends ChangeNotifier {
       } else if (value == 'Kurupam/కురుపాం') {
         return "360";
       } else if (value == 'Parvathipuram/పార్వతీపురం') {
-        return "125";
+        return "124";
       } else if (value == 'Salur/సాలూరు') {
         return "125";
       } else {
@@ -1418,7 +1418,7 @@ class RegistrationProvider extends ChangeNotifier {
   List<String> bapatla = [
     'please select the Assembly Constituency',
     'Vemuru/వేమూరు',
-    'Repalle/రేపల్లె ',
+    'Repalle/రేపల్లె',
     'Bapatla/బాపట్ల',
     'Parchur/పర్చూరు',
     'Addanki/అద్దంకి',
