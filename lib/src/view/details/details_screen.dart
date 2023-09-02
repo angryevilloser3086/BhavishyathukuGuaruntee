@@ -235,7 +235,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     onTap: () {
                       if (provider.phoneTextController.text.isNotEmpty) {
                         provider.getDetails(
-                            context, provider.phoneTextController.text);
+                            context, provider.phoneTextController.text, true);
                       }
                     },
                     child: btn());

@@ -59,7 +59,7 @@ class DetailsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  getDetails(BuildContext context, String phone) {
+  getDetails(BuildContext context, String phone,bool isPDF) {
     DialogBuilder(context)
         .showLoadingIndicator("Please wait while we are updating details ");
     _db
@@ -96,7 +96,9 @@ class DetailsProvider extends ChangeNotifier {
             pc: data.docs.first.get('pc') ?? "",
             zone: data.docs.first.get('zone') ?? "");
         enableSelector = true;
-        dataPdf = await makePDF(context, userDetails!);
+        if(isPDF){
+          dataPdf = await makePDF(context, userDetails!);
+        }
       //  log("${userDetails!.toJSON()}");
         notifyListeners();
       }

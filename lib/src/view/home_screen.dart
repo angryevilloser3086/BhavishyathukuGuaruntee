@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //       // AppConstants.moveNextstl(
                 //       //     context, MyPDF(data: await makePDF(context)));
                 //     },
-                //     child: btn("Already Register?")
+                //     child: btn("Already Register?")),
               ],
             ),
 
