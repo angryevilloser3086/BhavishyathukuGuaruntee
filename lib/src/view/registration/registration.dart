@@ -1234,9 +1234,9 @@ class RegistratioScreen extends StatelessWidget {
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
                 value: registrationProvider.farmers == 0
-                    ? registrationProvider.farmersNum(registrationProvider.famMembers).first
+                    ? registrationProvider.farmersNum(registrationProvider.famMembers,registrationProvider.students,registrationProvider.womenAbv,registrationProvider.unEMployedYouth).first
                     : registrationProvider.farmers,
-                items: registrationProvider.farmersNum(registrationProvider.famMembers)
+                items: registrationProvider.farmersNum(registrationProvider.famMembers,registrationProvider.students,registrationProvider.womenAbv,registrationProvider.unEMployedYouth)
                     .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,
@@ -1283,9 +1283,9 @@ class RegistratioScreen extends StatelessWidget {
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
                 value: registrationProvider.womenAbv == 0
-                    ? registrationProvider.womenNum(registrationProvider.famMembers,registrationProvider.farmers).first
+                    ? registrationProvider.womenNum(registrationProvider.famMembers,registrationProvider.farmers,registrationProvider.students,registrationProvider.unEMployedYouth).first
                     : registrationProvider.womenAbv,
-                items: registrationProvider.womenNum(registrationProvider.famMembers,registrationProvider.farmers)
+                items: registrationProvider.womenNum(registrationProvider.famMembers,registrationProvider.farmers,registrationProvider.students,registrationProvider.unEMployedYouth)
                     .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,
@@ -1332,9 +1332,9 @@ class RegistratioScreen extends StatelessWidget {
                 iconEnabledColor: Colors.black,
                 isExpanded: true,
                 value:registrationProvider.students == 0
-                    ? registrationProvider.studentNum(registrationProvider.famMembers,registrationProvider.farmers, registrationProvider.womenAbv).first
+                    ? registrationProvider.studentNum(registrationProvider.famMembers,registrationProvider.farmers, registrationProvider.womenAbv,registrationProvider.unEMployedYouth).first
                     : registrationProvider.students,
-                items: registrationProvider.studentNum(registrationProvider.famMembers,registrationProvider.farmers, registrationProvider.womenAbv)
+                items: registrationProvider.studentNum(registrationProvider.famMembers,registrationProvider.farmers, registrationProvider.womenAbv,registrationProvider.unEMployedYouth)
                     .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,

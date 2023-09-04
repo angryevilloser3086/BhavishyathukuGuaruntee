@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '/src/view/quiz/questions.dart';
 import '../../utils/app_utils.dart';
 import 'result_screen.dart';
 
@@ -106,7 +105,6 @@ class _QuizScreenState extends State<QuizScreen> {
   var _totalScore = 0;
 
   void resetQuiz(bool val) {
-    print("objectreset$changeQuestion");
     if (true) {
       setState(() {
         _questionIndex = -1;
@@ -181,7 +179,7 @@ class _QuizScreenState extends State<QuizScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: size.height < 500 ? widget.height : size.height,
             width: size.width,
             child: Column(
@@ -225,7 +223,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 fontWeight: FontWeight.w500,
                 color: Colors.white),
           ),
-          Spacer(),
+          const Spacer(),
           Text(
             "Follow us on:",
             style: GoogleFonts.poppins(
@@ -281,7 +279,7 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
         ),
         if (size.width > 550) AppConstants.w_10,
-        if (size.width < 550) Spacer(),
+        if (size.width < 550) const Spacer(),
         SizedBox(
             width: size.width * 0.45,
             //height: size.height*0.35,
@@ -293,7 +291,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   fontWeight: FontWeight.w500),
               maxLines: 10,
             )),
-        Spacer()
+        const Spacer()
       ],
     );
   }
@@ -379,7 +377,7 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
         ),
         if (size.width > 550) AppConstants.w_10,
-        if (size.width < 550) Spacer(),
+        if (size.width < 550) const Spacer(),
         SizedBox(
             width: size.width * 0.45,
             //height: size.height*0.35,
@@ -391,13 +389,13 @@ class _QuizScreenState extends State<QuizScreen> {
                   fontWeight: FontWeight.w500),
               maxLines: 10,
             )),
-        Spacer()
+        const Spacer()
       ],
     );
   }
 
   socialMediaBtn(Size size) {
-    return Container(
+    return SizedBox(
       height: size.width < 450 ? 25 : 35,
       child: Row(children: [
         AppConstants.w_5,
@@ -528,7 +526,7 @@ class _QuizScreenState extends State<QuizScreen> {
       color: AppConstants.appYellowBG,
       padding: AppConstants.all_20,
       child: Image.asset(
-        "assets/images/quiz_logo.png",
+        "assets/images/ic_new_logo.png",
       ),
     );
   }

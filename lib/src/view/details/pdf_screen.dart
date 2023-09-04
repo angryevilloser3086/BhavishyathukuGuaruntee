@@ -173,7 +173,9 @@ class _MyPDFState extends State<MyPDF> {
 
   Future<Uint8List> makePDF(BuildContext context) async {
     final pdf = pw.Document();
-    print(widget.rModel.toJSON());
+    if (kDebugMode) {
+      print(widget.rModel.toJSON());
+    }
     pdf.addPage(await createPageOne());
     pdf.addPage(await createPageTwo());
     return pdf.save();

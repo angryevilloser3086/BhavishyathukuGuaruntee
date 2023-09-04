@@ -1,12 +1,7 @@
-import 'dart:developer';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:vregistration/src/model/reg_model.dart';
 import '../../utils/app_localization.dart';
-import '../registration/registration.dart';
 import '/src/provider/details_provider.dart';
 import '/src/utils/app_utils.dart';
 
@@ -20,14 +15,6 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   //Provider.of<DetailsProvider>(context,listen: false).getDetails(widget.id!);
-  //   log("${widget.id}:::");
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -49,10 +36,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   child: Selector<DetailsProvider, bool>(
                       builder: (context, p, _) {
                         if (p) {
-                          print("p:$p");
                           return Consumer<DetailsProvider>(
                             builder: (context, value, child) {
-                              print(value.userDetails?.id);
                               return Align(
                                 alignment: Alignment.center,
                                 child: Padding(
@@ -89,20 +74,26 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                             value.userDetails?.pincode ?? ""),
                                         chilDView("Date Of Registered",
                                             value.userDetails?.date ?? ""),
-                                        if(value.dataPdf!=null)
-                                        InkWell(
-                                          onTap: ()async=>value.downloadFile(context, value.dataPdf!, value.userDetails!),
-                                          child: Container(
-                                            width: 150,
-                                            height: 50,
-                                            decoration: const BoxDecoration(
-                                                color: Colors.red,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(30))),
-                                            child: const Center(
-                                                child: Text("మీ సర్టిఫికేట్ డౌన్‌లోడ్ చేసుకోండి")),
-                                          ),
-                                        )
+                                        if (value.dataPdf != null)
+                                          InkWell(
+                                            onTap: () async =>
+                                                value.downloadFile(
+                                                    context,
+                                                    value.dataPdf!,
+                                                    value.userDetails!),
+                                            child: Container(
+                                              width: 150,
+                                              height: 50,
+                                              decoration: const BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(30))),
+                                              child: const Center(
+                                                  child: Text(
+                                                      "మీ సర్టిఫికేట్ డౌన్‌లోడ్ చేసుకోండి")),
+                                            ),
+                                          )
                                       ],
                                     ),
                                   ),
@@ -112,27 +103,27 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           );
                         } else {
                           return Container(
-                            // child: Column(
-                            //   children: [
-                            //     Text(
-                            //       "వినియోగదారు భవిష్యతుకు హామీతో నమోదు చేసుకోలేదు",
-                            //       style: GoogleFonts.poppins(
-                            //           fontSize: 14,
-                            //           color: Colors.black,
-                            //           fontWeight: FontWeight.bold),
-                            //     ),
-                            //     InkWell(
-                            //       onTap: () => AppConstants.moveNextClearAll(
-                            //           context, RegistratioScreen()),
-                            //       child: Text("Click here to register",
-                            //           style: GoogleFonts.poppins(
-                            //               fontSize: 14,
-                            //               color: Colors.black,
-                            //               fontWeight: FontWeight.bold)),
-                            //     )
-                            //   ],
-                            // ),
-                          );
+                              // child: Column(
+                              //   children: [
+                              //     Text(
+                              //       "వినియోగదారు భవిష్యతుకు హామీతో నమోదు చేసుకోలేదు",
+                              //       style: GoogleFonts.poppins(
+                              //           fontSize: 14,
+                              //           color: Colors.black,
+                              //           fontWeight: FontWeight.bold),
+                              //     ),
+                              //     InkWell(
+                              //       onTap: () => AppConstants.moveNextClearAll(
+                              //           context, RegistratioScreen()),
+                              //       child: Text("Click here to register",
+                              //           style: GoogleFonts.poppins(
+                              //               fontSize: 14,
+                              //               color: Colors.black,
+                              //               fontWeight: FontWeight.bold)),
+                              //     )
+                              //   ],
+                              // ),
+                              );
                         }
                       },
                       selector: (p0, p1) => p1.enableSelector),

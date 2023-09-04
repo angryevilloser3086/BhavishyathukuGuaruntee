@@ -1,17 +1,9 @@
 import 'dart:developer';
-import 'dart:typed_data';
-
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
-import 'package:vregistration/src/view/details/details_screen.dart';
-import 'package:vregistration/src/view/details/pdf_screen.dart';
-import '../utils/svg_Image.dart';
-import '../utils/svg_pg2.dart';
 import '/src/utils/app_utils.dart';
 
 import '../model/reg_model.dart';
@@ -155,14 +147,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: QuizScreen(
                   height: h < 450 ? h * 2 : h,
                 )),
-            // InkWell(
-            //   onTap: () {
-            //     setState(() {
-            //       downloadData();
-            //     });
-            //   },
-            //   child: btnDownload(),
-            // ),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  downloadData();
+                });
+              },
+              child: btnDownload(),
+            ),
           ],
         ),
       )),
@@ -194,40 +186,40 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<Uint8List> makePDF(BuildContext context) async {
-    final pdf = pw.Document();
-    final svgmage = pw.SvgImage(svg: svgImage);
-    final svgmage2 = pw.SvgImage(svg: pg2SVG);
+  // Future<Uint8List> makePDF(BuildContext context) async {
+  //   final pdf = pw.Document();
+  //   final svgmage = pw.SvgImage(svg: svgImage);
+  //   final svgmage2 = pw.SvgImage(svg: pg2SVG);
 
-    pdf.addPage(pw.Page(
-        pageFormat: PdfPageFormat.standard.landscape,
-        build: (pw.Context context) {
-          return pw.FullPage(
-              ignoreMargins: false,
-              child: pw.Container(
-                  decoration: const pw.BoxDecoration(
-                      image: pw.DecorationSvgImage(svg: pg2SVG)))); // Center;
-        }));
-    pdf.addPage(pw.Page(
-        pageFormat: PdfPageFormat.standard.landscape,
-        build: (pw.Context context) {
-          return pw.FullPage(
-              ignoreMargins: true,
-              child: pw.Container(
-                  decoration: const pw.BoxDecoration(
-                      image: pw.DecorationSvgImage(
-                          svg: pg2SVG, fit: pw.BoxFit.contain)))); // Center
-        }));
-    // pdf.addPage(await createPageOne(rModel));
-    // pdf.addPage(await createPageTwo(rModel));
-    return pdf.save();
-  }
+  //   pdf.addPage(pw.Page(
+  //       pageFormat: PdfPageFormat.standard.landscape,
+  //       build: (pw.Context context) {
+  //         return pw.FullPage(
+  //             ignoreMargins: false,
+  //             child: pw.Container(
+  //                 decoration: const pw.BoxDecoration(
+  //                     image: pw.DecorationSvgImage(svg: pg2SVG)))); // Center;
+  //       }));
+  //   pdf.addPage(pw.Page(
+  //       pageFormat: PdfPageFormat.standard.landscape,
+  //       build: (pw.Context context) {
+  //         return pw.FullPage(
+  //             ignoreMargins: true,
+  //             child: pw.Container(
+  //                 decoration: const pw.BoxDecoration(
+  //                     image: pw.DecorationSvgImage(
+  //                         svg: pg2SVG, fit: pw.BoxFit.contain)))); // Center
+  //       }));
+  //   // pdf.addPage(await createPageOne(rModel));
+  //   // pdf.addPage(await createPageTwo(rModel));
+  //   return pdf.save();
+  // }
 
   downloadData() {
-    final FirebaseFirestore _db = FirebaseFirestore.instance;
+    final FirebaseFirestore db = FirebaseFirestore.instance;
     List<RegistrationModel> users = [];
 
-    _db.collection('users').get().then((value) {
+    db.collection('users').get().then((value) {
       QuerySnapshot data = value;
       // print(data.docs.first);
       for (QueryDocumentSnapshot snapshot in data.docs) {
@@ -262,7 +254,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       convertJSONToExcel(users);
     }).catchError((err) {
-      print(err);
     });
   }
 

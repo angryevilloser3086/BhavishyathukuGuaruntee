@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
           AppConstants.h_40,
           Padding(
             padding: AppConstants.all_10,
-            child: Image.asset("assets/images/BG-Logo-small 1.png"),
+            child: Image.asset("assets/images/ic_new_logo.png"),
           ),
           AppConstants.h_20,
           if (showLoader)

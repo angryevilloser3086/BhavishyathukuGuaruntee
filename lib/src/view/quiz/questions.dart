@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../utils/app_utils.dart';
-import 'answer.dart';
 import 'result_screen.dart';
 
 class Questions extends StatefulWidget {
@@ -12,7 +11,7 @@ class Questions extends StatefulWidget {
   final int totalScore;
   final Function(bool) resetQuiz;
   final Size size;
-   Questions(
+   const Questions(
       {super.key,
       required this.questions,
       required this.questionIndex,
@@ -28,16 +27,10 @@ class Questions extends StatefulWidget {
 class _QuestionsState extends State<Questions> {
   int selectedOptionIndex = -1;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    print("called");
-    super.initState();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
-    print(widget.questionIndex);
     return widget.questionIndex < widget.questions.length
         ? Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -77,7 +70,7 @@ class _QuestionsState extends State<Questions> {
           ),
         ),
         if (size.width > 550) AppConstants.w_10,
-        if (size.width < 550) Spacer(),
+        if (size.width < 550) const Spacer(),
         SizedBox(
             width: size.width * 0.45,
             //height: size.height*0.35,
@@ -89,7 +82,7 @@ class _QuestionsState extends State<Questions> {
                   fontWeight: FontWeight.w500),
               maxLines: 10,
             )),
-        Spacer()
+        const Spacer()
       ],
     );
   }
@@ -111,9 +104,9 @@ class _QuestionsState extends State<Questions> {
                 child: Container(
                   padding: AppConstants.all_10,
                   width: MediaQuery.of(context).size.width * 0.45,
-                  decoration:  BoxDecoration(
+                  decoration:  const BoxDecoration(
                       color: AppConstants.appYellowBG,
-                      borderRadius:const BorderRadius.all(Radius.circular(15))),
+                      borderRadius:BorderRadius.all(Radius.circular(15))),
                   child: Text(
                     options[index]['text'],
                     style:

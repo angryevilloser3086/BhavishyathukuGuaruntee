@@ -1,4 +1,5 @@
-import 'dart:developer';
+
+// ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
@@ -12,7 +13,6 @@ import 'package:printing/printing.dart';
 import 'package:vregistration/src/view/registration/registration.dart';
 import '../network/api_request.dart';
 import '../utils/loading_indicator.dart';
-import '../view/details/details_screen.dart';
 import '/src/model/reg_model.dart';
 import '/src/utils/app_utils.dart';
 import '/src/view/home_screen.dart';
@@ -176,7 +176,7 @@ class DetailsProvider extends ChangeNotifier {
     final ByteData i5 = await rootBundle.load('assets/images/Poor.png');
     final Uint8List i5List = i5.buffer.asUint8List();
     final ByteData i6 =
-        await rootBundle.load('assets/images/BG-Logo-small 1.png');
+        await rootBundle.load('assets/images/ic_new_logo.png');
     final Uint8List i6List = i6.buffer.asUint8List();
     List<Uint8List> list1 = [i1List, i2List, i3List];
     List<Uint8List> list2 = [i4List, i5List, i6List];
