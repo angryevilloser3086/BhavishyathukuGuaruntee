@@ -147,14 +147,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: QuizScreen(
                   height: h < 450 ? h * 2 : h,
                 )),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  downloadData();
-                });
-              },
-              child: btnDownload(),
-            ),
+            // InkWell(
+            //   onTap: () {
+            //     setState(() {
+            //       downloadData();
+            //     });
+            //   },
+            //   child: btnDownload(),
+            // ),
           ],
         ),
       )),

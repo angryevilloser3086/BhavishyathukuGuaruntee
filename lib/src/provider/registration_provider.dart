@@ -3625,8 +3625,8 @@ class RegistrationProvider extends ChangeNotifier {
       Navigator.of(context, rootNavigator: true).pop();
       showAlert(
           context,
-          "భవిష్యత్తుకు గ్యారెంటీ... ఇది చంద్రబాబు గ్యారెంటీ తెలుగుదేశం పార్టీ",
-          "దాన్యవాదాలు ${rModel.name},\nమీ భవిష్యత్తుకు గ్యారెంటీ నమోదు సంఖ్య : ${uniqueCode.text} \nభవిష్యత్తుకు గ్యారెంటీ కార్యక్రమంలో మీ పేరు నమోదు చేసుకున్నందుకు కృతజ్ఞతలు.");
+          "బాబు ష్యూరిటీ.. భవిష్యత్తుకు గ్యారెంటీ\n  తెలుగుదేశం పార్టీ",
+          "ధన్యవాదాలు ${rModel.name},\nమీ భవిష్యత్తుకు గ్యారెంటీ నమోదు సంఖ్య : ${uniqueCode.text} \nభవిష్యత్తుకు గ్యారెంటీ కార్యక్రమంలో మీ పేరు నమోదు చేసుకున్నందుకు కృతజ్ఞతలు.");
 
       sendtoMSDB(context, rModel);
     }).catchError((err) {
