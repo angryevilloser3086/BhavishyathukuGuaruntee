@@ -114,6 +114,28 @@ class ApiRequest {
       throw Exception(e);
     }
   }
+
+  Future<bool> uploadRTDB(Map<String,dynamic> json) async {
+    try {
+      var res = await client.post(Uri.parse("https://bgregistrations.firebaseio.com/users"),
+          body: jsonEncode(json),
+         );
+      var body = jsonDecode(utf8.decode(res.bodyBytes));
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception(body);
+      }
+    } on SocketException catch (_) {
+      throw Exception("No Internet Connection");
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+ 
+
+
 }
 
 

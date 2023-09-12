@@ -178,6 +178,7 @@ class RegistratioScreen extends StatelessWidget {
         ),
       ],
     );
+  
   }
 
   didTDPContact(

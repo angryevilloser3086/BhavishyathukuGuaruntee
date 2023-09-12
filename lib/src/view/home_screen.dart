@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
+import 'package:vregistration/src/network/api_request.dart';
 import '/src/utils/app_utils.dart';
 
 import '../model/reg_model.dart';
@@ -71,7 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             AppConstants.h_5,
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -82,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       //     context, MyPDF(data: await makePDF(context)));
                     },
                     child: btn("Register")),
-                    AppConstants.w_5,
+                AppConstants.w_5,
                 // InkWell(
                 //     onTap: () async {
                 //       Navigator.pushNamed(context, DetailsScreen.route);
@@ -92,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 //     child: btn("Already Register?")),
               ],
             ),
-
             CarouselSlider(
               items: [
                 SizedBox(
@@ -133,28 +133,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 //viewportFraction: 0.8,
               ),
             ),
-
             SizedBox(
                 width: w,
                 child: Image.asset(
                   "assets/images/header-website.png1_.png",
                   fit: BoxFit.contain,
                 )),
-
             SizedBox(
                 width: w,
                 height: h < 450 ? h * 2 : h,
                 child: QuizScreen(
                   height: h < 450 ? h * 2 : h,
                 )),
-            // InkWell(
-            //   onTap: () {
-            //     setState(() {
-            //       downloadData();
-            //     });
-            //   },
-            //   child: btnDownload(),
-            // ),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  downloadData();
+                });
+              },
+              child: btnDownload(),
+            ),
           ],
         ),
       )),
@@ -168,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: const BoxDecoration(
           color: Colors.red,
           borderRadius: BorderRadius.all(Radius.circular(30))),
-      child:  Center(child: Text(title)),
+      child: Center(child: Text(title)),
     );
   }
 
@@ -218,10 +216,11 @@ class _HomeScreenState extends State<HomeScreen> {
   downloadData() {
     final FirebaseFirestore db = FirebaseFirestore.instance;
     List<RegistrationModel> users = [];
+    List<Map<String, dynamic>> userList = [];
 
     db.collection('users').get().then((value) {
       QuerySnapshot data = value;
-      // print(data.docs.first);
+      print(data.docs.first);
       for (QueryDocumentSnapshot snapshot in data.docs) {
         RegistrationModel user = RegistrationModel(
             name: snapshot.get('name'),
@@ -250,11 +249,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
         setState(() {
           users.add(user);
+          userList.add(user.toJSON());
         });
       }
+
       convertJSONToExcel(users);
-    }).catchError((err) {
-    });
+    }).catchError((err) {});
   }
 
   void convertJSONToExcel(List<dynamic> jsonData) {

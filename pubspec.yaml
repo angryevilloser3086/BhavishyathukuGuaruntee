@@ -28,7 +28,9 @@ dependencies:
   http:
   printing: ^5.11.0
   syncfusion_flutter_pdf: ^22.2.10
-  geolocator: ^10.0.0
+  firebase_database:
+  firebase_analytics: ^10.4.5
+  firebase_analytics_web: ^0.5.4+5
 
 dev_dependencies:
   flutter_test:
@@ -45,4 +47,3 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
-    - assets/fonts/Noto_Serif_Telugu/NotoSerifTelugu-VariableFont_wght.ttf
