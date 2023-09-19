@@ -26,7 +26,6 @@ class RegistratioScreen extends StatelessWidget {
             padding: AppConstants.all_10,
             child: Consumer<RegistrationProvider>(
                 builder: (context, registrationProvider, child) {
-                  
               return Form(
                 key: registrationProvider.formKey,
                 child: Column(

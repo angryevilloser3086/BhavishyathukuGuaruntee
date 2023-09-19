@@ -903,7 +903,7 @@ class RegistrationProvider extends ChangeNotifier {
         return "239";
       } else if (value == 'Chandragiri/చంద్రగిరి') {
         return "280";
-      } else if (value == 'Sullurpeta/సూళ్లూరుపేట') {
+      } else if (value == 'Tirupati/తిరుపతి') {
         return "291";
       } else if (value == 'Srikalahasti/శ్రీకాళహస్తి') {
         return "289";
